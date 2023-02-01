@@ -34,15 +34,43 @@ public class CameraSetup : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(photonView.Owner.NickName == "1") { MapTrackerPosition(Tracker1); }
-        else if (photonView.Owner.NickName == "2"){ MapTrackerPosition(Tracker2); }
-        else if (photonView.Owner.NickName == "3") { MapTrackerPosition(Tracker3); }
-        else if (photonView.Owner.NickName == "4") { MapTrackerPosition(Tracker4); }
-        else if (photonView.Owner.NickName == "5") { MapTrackerPosition(Tracker5); }
-        else if (photonView.Owner.NickName == "6") { MapTrackerPosition(Tracker6); }
-        else if (photonView.Owner.NickName == "7") { MapTrackerPosition(Tracker7); }
-        else if (photonView.Owner.NickName == "8") { MapTrackerPosition(Tracker8); }
-        else if (photonView.Owner.NickName == "9") { MapTrackerPosition(Tracker9); }
+        if(photonView.Owner.NickName == "1") {
+            MapTrackerPosition(Tracker1);
+            viewFinderCameras[viewFinderCameras.Length].GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("Tracker1"));
+
+        }
+        else if (photonView.Owner.NickName == "2"){
+            MapTrackerPosition(Tracker2);
+            viewFinderCameras[viewFinderCameras.Length].GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("Tracker2"));
+        }
+        else if (photonView.Owner.NickName == "3") {
+            MapTrackerPosition(Tracker3);
+            this.GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("Tracker3"));
+        }
+        else if (photonView.Owner.NickName == "4") {
+            MapTrackerPosition(Tracker4);
+            this.GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("Tracker4"));
+        }
+        else if (photonView.Owner.NickName == "5") {
+            MapTrackerPosition(Tracker5);
+            this.GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("Tracker5"));
+        }
+        else if (photonView.Owner.NickName == "6") {
+            MapTrackerPosition(Tracker6);
+            this.GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("Tracker6"));
+        }
+        else if (photonView.Owner.NickName == "7") {
+            MapTrackerPosition(Tracker7);
+            this.GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("Tracker7"));
+        }
+        else if (photonView.Owner.NickName == "8") {
+            MapTrackerPosition(Tracker8);
+            this.GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("Tracker8"));
+        }
+        else if (photonView.Owner.NickName == "9") {
+            MapTrackerPosition(Tracker9);
+            this.GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("Tracker9"));
+        }
 
 
         //disable the camera that is not my view

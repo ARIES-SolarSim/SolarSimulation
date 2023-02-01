@@ -118,7 +118,7 @@ namespace Valve.VR
         public string Tracker2ID = "LHR-EE4ED1D2";
         public string Tracker6ID = "LHR-A36C3E16";
         public string Tracker8ID = "LHR-4780977C";
-        public string Tracker9ID = "LHR-4F225E25";
+        public string Tracker9ID = "LHR-58A25CC8";
 
         private void Start()
         {

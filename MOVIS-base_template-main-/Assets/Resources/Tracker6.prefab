@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7804781429898612537}
   - component: {fileID: 7804781429898612531}
   - component: {fileID: 7804781429898612530}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Tracker6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ MonoBehaviour:
   Tracker2ID: LHR-EE4ED1D2
   Tracker6ID: LHR-A36C3E16
   Tracker8ID: LHR-4780977C
-  Tracker9ID: LHR-4F225E25
+  Tracker9ID: LHR-58A25CC8
 --- !u!114 &7804781429898612531
 MonoBehaviour:
   m_ObjectHideFlags: 0

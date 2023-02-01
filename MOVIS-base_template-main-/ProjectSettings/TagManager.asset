@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - ViewFinderCamera
+  - projectile
+  - FxTemporaire
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -13,15 +16,15 @@ TagManager:
   - Water
   - UI
   - Post Processing
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Tracker1
+  - Tracker2
+  - Tracker3
+  - Tracker4
+  - Tracker5
+  - Tracker6
+  - Tracker7
+  - Tracker8
+  - Tracker9
   - 
   - 
   - 
