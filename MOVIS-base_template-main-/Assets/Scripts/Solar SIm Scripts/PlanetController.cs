@@ -30,32 +30,28 @@ public class PlanetController : MonoBehaviour
         mesh.transform.localScale = Vector3.one * diameter; //Could move to editmode script if needed
         transform.localPosition = InitialPosition;
         MathPosition = transform.localPosition * privateOrbitScale;
-        transform.eulerAngles = new Vector3(0, 0, tiltAngle);
+        mesh.transform.eulerAngles += new Vector3((ID == 3) ? tiltAngle : 0, 0, (ID != 3) ? tiltAngle : 0);
+
+        if (ID == 4)
+        {
+            this.gameObject.SetActive(false);
+        }
     }
 
     public void updateLocation()
     {
         MathPosition = controller.points.First.Value;
         transform.localPosition = (MathPosition - GetComponentInParent<UniverseController>().cameraLockedPlanet.controller.points.First.Value) * UniverseController.orbitScale * privateOrbitScale;
-        /*
-        if (!isPined)
-        {
-            MathPosition = controller.points.First.Value;
-            transform.localPosition = (MathPosition * UniverseController.orbitScale * privateOrbitScale) - GetComponentInParent<UniverseController>().cameraLockedPlanet.controller.points.First.Value;
-        }
-        else
-        {
-            //transform.localPosition = GetComponentInParent<UniverseController>().cameraLockedPlanet.InitialPosition;
-        }
-        */
-        //transform.eulerAngles += new Vector3(0, rotationSpeed / UniverseController.orbitSpeedK, 0);
+        /*if (!(FindObjectOfType<ViewTypeObserver>().currentViewType == 3 && ID == 3))
+        { //Source of Lag
+            mesh.transform.localEulerAngles += new Vector3(0, ((ID == 3) ? 0 : (UniverseController.orbitSpeedK == 0) ? 0 : rotationSpeed / UniverseController.orbitSpeedK), ((ID != 3) ? 0 : (UniverseController.orbitSpeedK == 0) ? 0 : rotationSpeed / UniverseController.orbitSpeedK));
+        }*/
     }
 
     public void UpdateScale()
     {
-        if (ID == 3)
+        if (ID == 3) //Earth is weird
         {
-            Debug.Log("Diameter: " + diameter);
             mesh.transform.localScale = Vector3.one * diameter * UniverseController.planetScale * 0.5f;
         }
         else
@@ -67,7 +63,6 @@ public class PlanetController : MonoBehaviour
     public void changeViewType(int ViewType)
     {
         PlanetData pd = GetComponentInParent<PlanetData>();
-
         float[][] changeMatrix = new float[2][];
         for (int i = 0; i < changeMatrix.Length; i++) //Sets up the changematrices
         {
@@ -87,7 +82,6 @@ public class PlanetController : MonoBehaviour
     {
         if (ID == 3)
         {
-            Debug.Log("Diameter: " + diameter);
             mesh.transform.localScale = Vector3.one * diameter * UniverseController.planetScale * 0.5f;
         }
         else

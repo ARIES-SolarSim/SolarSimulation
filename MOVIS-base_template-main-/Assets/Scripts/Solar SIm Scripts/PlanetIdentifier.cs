@@ -45,21 +45,6 @@ public class PlanetIdentifier : MonoBehaviour
         initY = yOffset;
     }
 
-    /*
-     * Used to update visability
-     */
-    public void updateVisability()
-    {
-        if(showArrows)
-        {
-            showArrow();
-        }
-        else
-        {
-            hideArrow();
-        }
-    }
-
     //Hides arrows
     public void hideArrow()
     {

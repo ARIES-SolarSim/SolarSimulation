@@ -14,7 +14,6 @@ public class UniverseController : MonoBehaviour
     public static int displayK = 30; //The rate at which line renderers step through the points list
 
     public static bool orbiting = true; //Used to determine if planets are orbiting or changing view type
-    public static bool changing = false; // True if currently changing viewtypes, false otherwise
     public static int changeSteps = 0; //Used while changing view types
     public static int changeState = 0; //0 = Slowing down (default), 1 = changing orbit, 2 = speeding up, 3/0 = return to orbiting
     public static int currentSpeed = 0; //Current orbitSpeedK when changing
@@ -26,12 +25,14 @@ public class UniverseController : MonoBehaviour
 
     private PlanetController[] Planets; //List of planets to reference
     private VirtualController[] Bodies; //List of the virtual controlles in the planets to reference on build
+    public RotateScript moon;
 
     public static float SigmoidK = 14;
     public static float SigmoidOffset;
     public static float SigmoidOffsetDelta = 0.1f;
     public static float tolerance = 0.001f;
     public static int changeDuration = 500;
+    public static int accDuration = 150;
 
     public PlanetController cameraLockedPlanet; //Which ever planet is currently locked to the camera view. This should replace a pined planet. WIP
 
@@ -42,7 +43,7 @@ public class UniverseController : MonoBehaviour
     {
         Planets = FindObjectsOfType<PlanetController>();
         Bodies = new VirtualController[Planets.Length];
-        for(int i = 0; i < Planets.Length; i ++)
+        for (int i = 0; i < Planets.Length; i++)
         {
             Bodies[i] = new VirtualController(Planets[i]);
         }
@@ -50,7 +51,7 @@ public class UniverseController : MonoBehaviour
         for (int i = 0; i < Planets.Length; i++)
         {
             Planets[i].controller = Bodies[i];
-            Planets[i].mesh.transform.localPosition = Vector3.zero;
+            Planets[i].mesh.transform.localPosition = Vector3.zero; //Not sure if this is needed any longer
         }
         originalTime = new float[Planets.Length];
     }
@@ -60,20 +61,21 @@ public class UniverseController : MonoBehaviour
      */
     private void Start()
     {
-        while(sigmoid(0) > tolerance)
+        while (sigmoid(0) > tolerance)
         {
             SigmoidOffset += SigmoidOffsetDelta;
-        }
-        foreach (PlanetIdentifier pi in FindObjectsOfType<PlanetIdentifier>())
-        {
-            pi.updateVisability();
         }
         //FindObjectOfType<ViewTypeObserver>().changeView(2);
     }
 
     public static float sigmoid(float x)
     {
-        return 1 / (1 + Mathf.Pow((float)System.Math.E, -1 * SigmoidK * (x/changeDuration - SigmoidOffset)));
+        return 1 / (1 + Mathf.Pow((float)System.Math.E, -1 * SigmoidK * (x / changeDuration - SigmoidOffset)));
+    }
+
+    public static float sigmoidRounded(float x)
+    {
+        return (x == changeDuration - 1) ? 1 : sigmoid(x);
     }
 
     /*
@@ -81,26 +83,29 @@ public class UniverseController : MonoBehaviour
      */
     void Update()
     {
-        
-        if(!LobbyManager.userType)
+        if (!LobbyManager.userType) //Only orbit in headset, allow photon viewers to do the rest
         {
-            if(orbiting)
+            if (orbiting)
             {
-                updateTrails();
+                //updateTrails();
                 move();
                 currentSpeed = orbitSpeedK;
+                if (FindObjectOfType<ViewTypeObserver>().currentViewType == 3)
+                {
+                    transform.localEulerAngles += new Vector3(0, (UniverseController.orbitSpeedK == 0) ? 0 : FindObjectOfType<ViewTypeObserver>().earth.rotationSpeed / UniverseController.orbitSpeedK, 0f);
+                }
+                moon.changing = false;
             }
             else //Changing viewtypes
             {
-                hideTrails();
-                changing = true;
-
+                moon.changing = true;
                 //Debug.Log(changeState + " " + changeSteps + " " + orbitSpeedK);
                 if (changeState == 0) //Slowing down
                 {
-                    decreaseSpeed(200f, FindObjectOfType<ViewTypeObserver>().currentViewType == 3 ? 3 : 0); ;
+                    decreaseSpeed(accDuration, FindObjectOfType<ViewTypeObserver>().currentViewType == 3 ? 3 : 0);
+                    //Debug.Log(orbitSpeedK);
                 }
-                if(changeState == 1) //Changing
+                if (changeState == 1) //Changing
                 {
                     foreach (PlanetController pc in Planets)
                     {
@@ -115,15 +120,20 @@ public class UniverseController : MonoBehaviour
                     }
                     changeSteps++;
                 }
-                if(changeState == 2) //Speeding up
+                if (changeState == 2) //Speeding up
                 {
-                    foreach (PlanetIdentifier pi in FindObjectsOfType<PlanetIdentifier>()) //Temp
-                    {
-                        pi.hideArrow();
-                    }
-                    increaseSpeed(200f, currentSpeed);
+                    increaseSpeed(accDuration, (FindObjectOfType<ViewTypeObserver>().currentViewType == 3) ? 3 : 10);
+                    //Debug.Log(orbitSpeedK);
                 }
             }
+        }
+        if (orbiting)
+        {
+            updateTrails();
+        }
+        else
+        {
+            hideTrails();
         }
     }
 
@@ -149,7 +159,6 @@ public class UniverseController : MonoBehaviour
             changeSteps = 0;
             changeState = 0;
             orbiting = true;
-            changing = false;
         }
         changeSteps++;
     }
@@ -158,10 +167,7 @@ public class UniverseController : MonoBehaviour
     {
         foreach (PlanetController pc in Planets)
         {
-            if (pc.ID != 0 || changing) // The sun shouldn't orbit (change later so this is true for view 3 only)
-            {
-                pc.updateLocation();
-            }
+            pc.updateLocation();
         }
         updateVirtualControllers();
     }
@@ -172,10 +178,13 @@ public class UniverseController : MonoBehaviour
         count = 0;
         foreach (PlanetController pc in Planets)
         {
-            if (changed)
+            if(pc.ID != 0)
             {
-                tr = pc.GetComponent<TrailRenderer>();
-                tr.time = originalTime[count];
+                if (changed)
+                {
+                    tr = pc.GetComponent<TrailRenderer>();
+                    tr.time = originalTime[count];
+                }
             }
         }
         changed = false;
@@ -187,13 +196,16 @@ public class UniverseController : MonoBehaviour
         count = 0;
         foreach (PlanetController pc in Planets)
         {
-            tr = pc.GetComponent<TrailRenderer>();
-            if (tr.time != 0) //If the planet's time has not already been captured and changed to 0 previously
+            if(pc.ID != 0)
             {
-                originalTime[count] = tr.time;
-            }
+                tr = pc.GetComponent<TrailRenderer>();
+                if (tr.time != 0) //If the planet's time has not already been captured and changed to 0 previously
+                {
+                    originalTime[count] = tr.time;
+                }
 
-            tr.time = 0;
+                tr.time = 0;
+            }
         }
         changed = true;
     }
@@ -214,6 +226,7 @@ public class UniverseController : MonoBehaviour
                 if (!Bodies[j].isPined)
                 {
                     Bodies[j].velocity = Bodies[j].CalculateVelocity(Bodies, timeStep);
+                    Debug.Log(Bodies[j].velocity);
                 }
             }
             for (int j = 0; j < Bodies.Length; j++)
@@ -237,7 +250,7 @@ public class UniverseController : MonoBehaviour
      */
     public void updateVirtualControllers()
     {
-        foreach(VirtualController vc in Bodies) //Removes the index that planets should currently be at
+        foreach (VirtualController vc in Bodies) //Removes the index that planets should currently be at
         {
             for (int i = 0; i < orbitSpeedK; i++)
             {

@@ -9,6 +9,8 @@ public class HeadsetUserSetup : MonoBehaviour
     private PhotonView photonView;
     public GameObject networkPlayer, networkPlayerHead, networkPlayerLeftHand, networkPlayerRightHand;
     private GameObject myPlayerHead, myPlayerLeftHand, myPlayerRightHand;
+
+    public GameObject cameraRef;
     
     void Start()
     {
@@ -16,9 +18,14 @@ public class HeadsetUserSetup : MonoBehaviour
 
         if (!LobbyManager.userType) // if it is VR Headset User,
         {
-            myPlayerHead = GameObject.Find("VR Controller/[CameraRig]/Camera");
-            myPlayerLeftHand = GameObject.Find("VR Controller/[CameraRig]/Controller (left)");
-            myPlayerRightHand = GameObject.Find("VR Controller/[CameraRig]/Controller (right)");
+            myPlayerHead = GameObject.Find("[CameraRig]/Camera");
+            myPlayerLeftHand = GameObject.Find("[CameraRig]/Controller (left)");
+            myPlayerRightHand = GameObject.Find("[CameraRig]/Controller (right)");
+            /*
+             * Debug.Log(myPlayerHead == null);
+            Debug.Log(myPlayerLeftHand == null);
+            Debug.Log(myPlayerRightHand == null);
+             */
         }
         else // if it is a viewFinder user, disabled this setup.
         {

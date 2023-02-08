@@ -23,9 +23,11 @@ namespace Valve.VR
         {
             if (other.gameObject.tag.Equals("GameController"))
             {
+                Debug.Log("Moving to: " + ViewTypeID);
                 controller.ViewTypeNetworker.transform.localPosition = new Vector3(ViewTypeID, 0f, 0f);
                 controller.removeMenu();
-                controller.isChanging = false;
+                //controller.leftButtonState = 0;
+                //controller.rightButtonState = 0;
             }
         }
     }
