@@ -116,9 +116,11 @@ namespace Valve.VR
         //DO NOT FIX THIS UNLESS YOU ARE REPLACING THE TRACKERS!!!!
         public string Tracker1ID = "LHR-6E6212A4";
         public string Tracker2ID = "LHR-EE4ED1D2";
+        public string Tracker3ID = "LHR-58A25CC8";
         public string Tracker6ID = "LHR-A36C3E16";
         public string Tracker8ID = "LHR-4780977C";
-        public string Tracker9ID = "LHR-58A25CC8";
+        public string Tracker7ID = "LHR-0EBBC26C";
+        public string Tracker9ID = "LHR-4F225E25";
 
         private void Start()
         {
@@ -145,10 +147,28 @@ namespace Valve.VR
                         break;
                     }
                 }
+                
+                if (SerialNumber == Tracker3ID) //if extracted traker number is matched with the TrakcerID,
+                {
+                    if (this.gameObject.name.Contains("3")) //AND, it matches with prefab ID,
+                    {
+                        SetDeviceIndex(i); //Set to designated device number.
+                        break;
+                    }
+                }
 
                 if (SerialNumber == Tracker6ID) //if extracted traker number is matched with the TrakcerID,
                 {
                     if (this.gameObject.name.Contains("6")) //AND, it matches with prefab ID,
+                    {
+                        SetDeviceIndex(i); //Set to designated device number.
+                        break;
+                    }
+                }
+
+                if (SerialNumber == Tracker7ID) //if extracted traker number is matched with the TrakcerID,
+                {
+                    if (this.gameObject.name.Contains("7")) //AND, it matches with prefab ID,
                     {
                         SetDeviceIndex(i); //Set to designated device number.
                         break;
