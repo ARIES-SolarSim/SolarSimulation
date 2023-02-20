@@ -12,11 +12,6 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
     {
         StartCoroutine(EnableJoinedRoomPanelAfterFewSeconds()); //wait for few seconds to connect the server
     }
-    public void ClickedDocent()
-    {
-        PhotonNetwork.NickName = "9";
-        StartCoroutine(EnableJoinedRoomPanelAfterFewSeconds());
-    }
     public void ClickedOne()
     {
         PhotonNetwork.NickName = "1";
@@ -55,6 +50,16 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
     public void ClickedEight()
     {
         PhotonNetwork.NickName = "8";
+        StartCoroutine(EnableJoinedRoomPanelAfterFewSeconds());
+    }
+    public void ClickedNine()
+    {
+        PhotonNetwork.NickName = "9";
+        StartCoroutine(EnableJoinedRoomPanelAfterFewSeconds());
+    }
+    public void ClickedTen()
+    {
+        PhotonNetwork.NickName = "10";
         StartCoroutine(EnableJoinedRoomPanelAfterFewSeconds());
     }
 

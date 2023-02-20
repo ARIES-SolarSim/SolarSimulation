@@ -17,11 +17,6 @@ public class LobbyManager : MonoBehaviour
         userType = true; //set as ViewFinder user
     }
 
-    public void ClickedDocent()
-    {
-        userType = true;
-    }
-
     public void ClickedEnterRoom()
     {
         PhotonNetwork.LoadLevel(1); //load the Scene 1 (Room1)

@@ -6,8 +6,7 @@ using TMPro;
 public class CameraSetup : MonoBehaviour
 {
     private GameObject Tracker1, Tracker2, Tracker3, Tracker4, Tracker5, Tracker6, Tracker7, Tracker8, Tracker9;
-    private Canvas normalCanvas;
-    private Canvas docentCanvas;
+    private Canvas canvas;
     private TextMeshProUGUI deviceNumberText;
 
     private PhotonView photonView;
@@ -17,9 +16,8 @@ public class CameraSetup : MonoBehaviour
     public Quaternion cameraOffset;
     void Start()
     {
-        normalCanvas = GameObject.Find("NormalCanvas").GetComponent<Canvas>();
+        canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
         deviceNumberText = GameObject.Find("Canvas/DeviceNumberTMP").GetComponent<TextMeshProUGUI>();
-        docentCanvas = GameObject.Find("DocentCanvas").GetComponent<Canvas>();
 
         photonView = GetComponent<PhotonView>();
         StartCoroutine(FindTrackerAfterFewSeconds()); //give few seconds for the systems to settle
@@ -36,51 +34,15 @@ public class CameraSetup : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(photonView.Owner.NickName == "1")
-        {
-            MapTrackerPosition(Tracker1);
-            viewFinderCameras[viewFinderCameras.Length].GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("UIDocent"));
-        }
-        else if (photonView.Owner.NickName == "2")
-        {
-            MapTrackerPosition(Tracker2);
-            viewFinderCameras[viewFinderCameras.Length].GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("UIDocent"));
-        }
-        else if (photonView.Owner.NickName == "3")
-        {
-            MapTrackerPosition(Tracker3);
-            viewFinderCameras[viewFinderCameras.Length].GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("UIDocent"));
-        }
-        else if (photonView.Owner.NickName == "4")
-        {
-            MapTrackerPosition(Tracker4);
-            viewFinderCameras[viewFinderCameras.Length].GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("UIDocent"));
-        }
-        else if (photonView.Owner.NickName == "5")
-        {
-            MapTrackerPosition(Tracker5);
-            viewFinderCameras[viewFinderCameras.Length].GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("UIDocent"));
-        }
-        else if (photonView.Owner.NickName == "6")
-        {
-            MapTrackerPosition(Tracker6);
-            viewFinderCameras[viewFinderCameras.Length].GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("UIDocent"));
-        }
-        else if (photonView.Owner.NickName == "7")
-        {
-            MapTrackerPosition(Tracker7);
-            viewFinderCameras[viewFinderCameras.Length].GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("UIDocent"));
-        }
-        else if (photonView.Owner.NickName == "8")
-        {
-            MapTrackerPosition(Tracker8);
-            viewFinderCameras[viewFinderCameras.Length].GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("UIDocent"));
-        }
-        else if (photonView.Owner.NickName == "9")
-        {
-            MapTrackerPosition(Tracker9);
-            viewFinderCameras[viewFinderCameras.Length].GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("UINormal"));
-        }
+        if(photonView.Owner.NickName == "1") { MapTrackerPosition(Tracker1); }
+        else if (photonView.Owner.NickName == "2"){ MapTrackerPosition(Tracker2); }
+        else if (photonView.Owner.NickName == "3") { MapTrackerPosition(Tracker3); }
+        else if (photonView.Owner.NickName == "4") { MapTrackerPosition(Tracker4); }
+        else if (photonView.Owner.NickName == "5") { MapTrackerPosition(Tracker5); }
+        else if (photonView.Owner.NickName == "6") { MapTrackerPosition(Tracker6); }
+        else if (photonView.Owner.NickName == "7") { MapTrackerPosition(Tracker7); }
+        else if (photonView.Owner.NickName == "8") { MapTrackerPosition(Tracker8); }
+        else if (photonView.Owner.NickName == "9") { MapTrackerPosition(Tracker9); }
 
 
         //disable the camera that is not my view
