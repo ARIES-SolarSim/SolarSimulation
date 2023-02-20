@@ -6,11 +6,6 @@ using UnityEngine;
 public class SceneChangeTest : MonoBehaviour
 {
 
-    public void Start()
-    {
-        PhotonNetwork.AutomaticallySyncScene = true;
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Changing Scenes");

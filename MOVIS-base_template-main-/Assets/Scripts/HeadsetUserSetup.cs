@@ -8,7 +8,7 @@ public class HeadsetUserSetup : MonoBehaviour
 {   
     private PhotonView photonView;
     public GameObject networkPlayer, networkPlayerHead, networkPlayerLeftHand, networkPlayerRightHand;
-    //private GameObject myPlayerHead, myPlayerLeftHand, myPlayerRightHand;
+    private GameObject myPlayerHead, myPlayerLeftHand, myPlayerRightHand;
 
     public GameObject cameraRef;
     
@@ -18,7 +18,6 @@ public class HeadsetUserSetup : MonoBehaviour
 
         if (!LobbyManager.userType) // if it is VR Headset User,
         {
-            /*
             myPlayerHead = GameObject.Find("[CameraRig]/Camera");
             myPlayerLeftHand = GameObject.Find("[CameraRig]/Controller (left)");
             myPlayerRightHand = GameObject.Find("[CameraRig]/Controller (right)");
@@ -46,9 +45,9 @@ public class HeadsetUserSetup : MonoBehaviour
             //networkPlayerLeftHand.gameObject.SetActive(false);
             //networkPlayerRightHand.gameObject.SetActive(false);
 
-            //MapTransform(networkPlayerHead.transform, myPlayerHead.transform);
-            //MapTransform(networkPlayerLeftHand.transform, myPlayerLeftHand.transform);
-            //MapTransform(networkPlayerRightHand.transform, myPlayerRightHand.transform);
+            MapTransform(networkPlayerHead.transform, myPlayerHead.transform);
+            MapTransform(networkPlayerLeftHand.transform, myPlayerLeftHand.transform);
+            MapTransform(networkPlayerRightHand.transform, myPlayerRightHand.transform);
 
         }
     }

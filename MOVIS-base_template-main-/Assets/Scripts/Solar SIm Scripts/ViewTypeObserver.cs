@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Photon.Pun;
 using UnityEngine;
 
 /*
@@ -16,7 +15,6 @@ public class ViewTypeObserver : MonoBehaviour
     public Light atmosphereLight;
     public int steps = -1;
     private int arrowTime = 200;
-    public int otherScene; //place holder
 
     public RotateScript tempMoonRotate;
     public MeshScaler tempMoonScale;
@@ -28,28 +26,16 @@ public class ViewTypeObserver : MonoBehaviour
     private void Start()
     {
         currentViewType = 1;
-        targetViewType = 1;
-        PhotonNetwork.AutomaticallySyncScene = true;
     }
 
     void Update()
     {
-        if(transform.localPosition.y == 1)
-        {
-            PhotonNetwork.LoadLevel(otherScene);
-            transform.localPosition = Vector3.zero;
-        }
-        if(transform.localPosition.x == 1 && otherScene == 2) //View Type
+        if(transform.localPosition.x == 1)
         {
             targetViewType = (currentViewType == 1 ? 2 : 1);
-            transform.localPosition = Vector3.zero;
-            steps = 0;
-            FindObjectOfType<RotateScript>().view = targetViewType;
-            FindObjectOfType<RotateScript>().changing = true;
         }
         if(currentViewType != targetViewType)
         {
-            steps++;
             UniverseController.orbiting = false;
             FindObjectOfType<UniverseController>().gameObject.transform.localEulerAngles = Vector3.zero; //May need to become smooth
             foreach (PlanetIdentifier pi in FindObjectsOfType<PlanetIdentifier>())
@@ -71,12 +57,7 @@ public class ViewTypeObserver : MonoBehaviour
             {
                 transistion = true;
             }
-            if (steps == UniverseController.changeDuration && transistion)
-            {
-                Debug.Log("Transistion Complete, returning steps to -1");
-                steps = 0; //Finished view type transistion
-                currentViewType = targetViewType;
-            }
+            steps = 0;
         }
         /*
         if(transform.localPosition.x != currentViewType)
@@ -238,7 +219,7 @@ public class ViewTypeObserver : MonoBehaviour
                         FindObjectOfType<UniverseController>().gameObject.transform.position = new Vector3(0f, 1f, 0f);
                     }
                 }*/
-            //}
+            }
             /*
             if (changeCode == 1 || changeCode == 2) //From View3
             {
@@ -273,6 +254,6 @@ public class ViewTypeObserver : MonoBehaviour
                 steps = -1; //Finished view type transistion
                 transistion = false;
             }
-        }*/
-    }
+        }
+    }*/
 }

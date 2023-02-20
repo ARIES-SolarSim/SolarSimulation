@@ -56,7 +56,22 @@ namespace Photon.Pun
 
         public void Update()
         {
-            
+            var tr = transform;
+
+            if (!this.photonView.IsMine)
+            {
+                if (m_UseLocal)
+
+                {
+                    tr.localPosition = Vector3.MoveTowards(tr.localPosition, this.m_NetworkPosition, this.m_Distance  * Time.deltaTime * PhotonNetwork.SerializationRate);
+                    tr.localRotation = Quaternion.RotateTowards(tr.localRotation, this.m_NetworkRotation, this.m_Angle * Time.deltaTime * PhotonNetwork.SerializationRate);
+                }
+                else
+                {
+                    tr.position = Vector3.MoveTowards(tr.position, this.m_NetworkPosition, this.m_Distance * Time.deltaTime * PhotonNetwork.SerializationRate);
+                    tr.rotation = Quaternion.RotateTowards(tr.rotation, this.m_NetworkRotation, this.m_Angle * Time.deltaTime *  PhotonNetwork.SerializationRate);
+                }
+            }
         }
 
         public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -64,8 +79,75 @@ namespace Photon.Pun
             var tr = transform;
 
             // Write
-         
-            
+            if (stream.IsWriting)
+            {
+                if (this.m_SynchronizePosition)
+                {
+                    if (m_UseLocal)
+                    {
+                        this.m_Direction = tr.localPosition - this.m_StoredPosition;
+                        this.m_StoredPosition = tr.localPosition;
+                        stream.SendNext(tr.localPosition);
+                        stream.SendNext(this.m_Direction);
+                    }
+                    else
+                    {
+                        this.m_Direction = tr.position - this.m_StoredPosition;
+                        this.m_StoredPosition = tr.position;
+                        stream.SendNext(tr.position);
+                        stream.SendNext(this.m_Direction);
+                    }
+                }
+
+                if (this.m_SynchronizeRotation)
+                {
+                    if (m_UseLocal)
+                    {
+                        stream.SendNext(tr.localRotation);
+                    }
+                    else
+                    {
+                        stream.SendNext(tr.rotation);
+                    }
+                }
+
+                if (this.m_SynchronizeScale)
+                {
+                    stream.SendNext(tr.localScale);
+                }
+            }
+            // Read
+            else
+            {
+                if (this.m_SynchronizePosition)
+                {
+                    this.m_NetworkPosition = (Vector3)stream.ReceiveNext();
+                    this.m_Direction = (Vector3)stream.ReceiveNext();
+
+                    if (m_firstTake)
+                    {
+                        if (m_UseLocal)
+                            tr.localPosition = this.m_NetworkPosition;
+                        else
+                            tr.position = this.m_NetworkPosition;
+
+                        this.m_Distance = 0f;
+                    }
+                    else
+                    {
+                        float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
+                        this.m_NetworkPosition += this.m_Direction * lag;
+                        if (m_UseLocal)
+                        {
+                            this.m_Distance = Vector3.Distance(tr.localPosition, this.m_NetworkPosition);
+                        }
+                        else
+                        {
+                            this.m_Distance = Vector3.Distance(tr.position, this.m_NetworkPosition);
+                        }
+                    }
+
+                }
 
                 if (this.m_SynchronizeRotation)
                 {
@@ -109,3 +191,4 @@ namespace Photon.Pun
             }
         }
     }
+}

@@ -21,14 +21,14 @@ namespace Valve.VR
          */
         private void OnTriggerEnter(Collider other)
         {
-            /*if (other.gameObject.tag.Equals("GameController"))
+            if (other.gameObject.tag.Equals("GameController"))
             {
                 Debug.Log("Moving to: " + ViewTypeID);
                 controller.ViewTypeNetworker.transform.localPosition = new Vector3(ViewTypeID, 0f, 0f);
                 controller.removeMenu();
                 //controller.leftButtonState = 0;
                 //controller.rightButtonState = 0;
-            }*/
+            }
         }
     }
 
