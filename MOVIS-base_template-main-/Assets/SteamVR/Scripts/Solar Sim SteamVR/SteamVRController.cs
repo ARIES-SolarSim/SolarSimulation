@@ -43,25 +43,44 @@ namespace Valve.VR
         //0 Means pressing will open menu, 1 Means currently pressed showing menu, 2 means unpressed with next press removing items, 3 means pressed and removing items
         public bool isChanging = false;
 
-        private int ViewTypeCount = 2;//If adding a viewtype, change this value AND the one in PlanetData
-        private GameObject[] deleteList; //An array of the menu objects created while in use.
+        //private int ViewTypeCount = 2;//If adding a viewtype, change this value AND the one in PlanetData
+        //private GameObject[] deleteList; //An array of the menu objects created while in use.
 
         public int leftControllerRotationCount = 0;
         public int rightControllerRotationCount = 0;
-        private float leftPreviousRot = 0f;
-        private float rightPreviousRot = 0f;
+        //private float leftPreviousRot = 0f;
+        //private float rightPreviousRot = 0f;
+
+        private float deltaTime = 0f;
+        private bool placeHolder = false;
 
         //Start method
         private void Start()
         {
-            deleteList = new GameObject[Mathf.Max(ViewTypeCount, MenuItems.Length)]; 
+            //deleteList = new GameObject[Mathf.Max(ViewTypeCount, MenuItems.Length)]; 
         }
 
         //Upate method
         private void Update()
         {
             CalcMovement();//Only for testing, remove for demo.
-            CheckMenu();
+            //CheckMenu();
+            if (LeftButton.state && !isChanging) //Change view type
+            {
+                isChanging = true;
+                ViewTypeNetworker.transform.localPosition = new Vector3(1, 0, 0);
+                deltaTime = 0;
+            }
+            if (RightButton.state && !placeHolder) //Change scene
+            {
+                ViewTypeNetworker.transform.localPosition = new Vector3(0, 1, 0);
+                placeHolder = true;
+            }
+            if(deltaTime >= 5f)
+            {
+                isChanging = false;
+            }
+            deltaTime += Time.deltaTime;
         }
 
         /*
@@ -70,11 +89,6 @@ namespace Valve.VR
          */
         private void CheckMenu()
         {
-            if((LeftButton.state || RightButton.state) && !isChanging)
-            {
-                isChanging = true;
-                ViewTypeNetworker.transform.localPosition = new Vector3(1, ViewTypeNetworker.transform.localPosition.y, ViewTypeNetworker.transform.localPosition.z);
-            }
             /*
             if(LeftButton.state && leftButtonState == 0 && rightButtonState == 0) //Left Hand Changes Viewtype
             {
@@ -131,14 +145,6 @@ namespace Valve.VR
             {
                 rightButtonState = 0;
             } //Make this into enum states at some point*/
-        }
-
-        public void removeMenu()
-        {
-            foreach (GameObject go in deleteList)
-            {
-                Destroy(go);
-            }
         }
 
         /*

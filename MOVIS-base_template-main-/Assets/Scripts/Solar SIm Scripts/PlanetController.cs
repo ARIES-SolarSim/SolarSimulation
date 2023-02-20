@@ -40,8 +40,11 @@ public class PlanetController : MonoBehaviour
 
     public void updateLocation()
     {
-        MathPosition = controller.points.First.Value;
-        transform.localPosition = (MathPosition - GetComponentInParent<UniverseController>().cameraLockedPlanet.controller.points.First.Value) * UniverseController.orbitScale * privateOrbitScale;
+        if (!LobbyManager.userType)
+        {
+            MathPosition = controller.points.First.Value;
+            transform.localPosition = (MathPosition - GetComponentInParent<UniverseController>().cameraLockedPlanet.controller.points.First.Value) * UniverseController.orbitScale * privateOrbitScale;
+        }
         /*if (!(FindObjectOfType<ViewTypeObserver>().currentViewType == 3 && ID == 3))
         { //Source of Lag
             mesh.transform.localEulerAngles += new Vector3(0, ((ID == 3) ? 0 : (UniverseController.orbitSpeedK == 0) ? 0 : rotationSpeed / UniverseController.orbitSpeedK), ((ID != 3) ? 0 : (UniverseController.orbitSpeedK == 0) ? 0 : rotationSpeed / UniverseController.orbitSpeedK));
