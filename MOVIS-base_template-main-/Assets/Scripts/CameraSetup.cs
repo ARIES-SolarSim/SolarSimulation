@@ -16,8 +16,9 @@ public class CameraSetup : MonoBehaviour
     public Quaternion cameraOffset;
     void Start()
     {
-        canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
-        deviceNumberText = GameObject.Find("Canvas/DeviceNumberTMP").GetComponent<TextMeshProUGUI>();
+        trackerSetup();
+
+        setCanvas();
 
         photonView = GetComponent<PhotonView>();
         StartCoroutine(FindTrackerAfterFewSeconds()); //give few seconds for the systems to settle
@@ -34,15 +35,51 @@ public class CameraSetup : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(photonView.Owner.NickName == "1") { MapTrackerPosition(Tracker1); }
-        else if (photonView.Owner.NickName == "2"){ MapTrackerPosition(Tracker2); }
-        else if (photonView.Owner.NickName == "3") { MapTrackerPosition(Tracker3); }
-        else if (photonView.Owner.NickName == "4") { MapTrackerPosition(Tracker4); }
-        else if (photonView.Owner.NickName == "5") { MapTrackerPosition(Tracker5); }
-        else if (photonView.Owner.NickName == "6") { MapTrackerPosition(Tracker6); }
-        else if (photonView.Owner.NickName == "7") { MapTrackerPosition(Tracker7); }
-        else if (photonView.Owner.NickName == "8") { MapTrackerPosition(Tracker8); }
-        else if (photonView.Owner.NickName == "9") { MapTrackerPosition(Tracker9); }
+        if (photonView.Owner.NickName == "1")
+        {
+            MapTrackerPosition(Tracker1);
+            //this.GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("DocentUI"));
+        }
+        else if (photonView.Owner.NickName == "2")
+        {
+            MapTrackerPosition(Tracker2);
+            //this.GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("DocentUI"));
+        }
+        else if (photonView.Owner.NickName == "3")
+        {
+            MapTrackerPosition(Tracker3);
+            //this.GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("DocentUI"));
+        }
+        else if (photonView.Owner.NickName == "4")
+        {
+            MapTrackerPosition(Tracker4);
+            //this.GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("DocentUI"));
+        }
+        else if (photonView.Owner.NickName == "5")
+        {
+            MapTrackerPosition(Tracker5);
+            //this.GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("DocentUI"));
+        }
+        else if (photonView.Owner.NickName == "6")
+        {
+            MapTrackerPosition(Tracker6);
+            //this.GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("DocentUI"));
+        }
+        else if (photonView.Owner.NickName == "7")
+        {
+            MapTrackerPosition(Tracker7);
+            //this.GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("DocentUI"));
+        }
+        else if (photonView.Owner.NickName == "8")
+        {
+            MapTrackerPosition(Tracker8);
+            //this.GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("DocentUI"));
+        }
+        else if (photonView.Owner.NickName == "9")
+        {
+            MapTrackerPosition(Tracker9);
+            //this.GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("NormalUI"));
+        }
 
 
         //disable the camera that is not my view
@@ -52,6 +89,68 @@ public class CameraSetup : MonoBehaviour
             viewFinderCameras[i].SetActive(false);
         }
 
+    }
+
+    void trackerSetup()
+    {
+        Tracker1 = PhotonNetwork.Instantiate("Tracker1", transform.position, transform.rotation);
+        Tracker2 = PhotonNetwork.Instantiate("Tracker2", transform.position, transform.rotation);
+        Tracker3 = PhotonNetwork.Instantiate("Tracker3", transform.position, transform.rotation);
+        Tracker4 = PhotonNetwork.Instantiate("Tracker4", transform.position, transform.rotation);
+        Tracker5 = PhotonNetwork.Instantiate("Tracker5", transform.position, transform.rotation);
+        Tracker6 = PhotonNetwork.Instantiate("Tracker6", transform.position, transform.rotation);
+        Tracker7 = PhotonNetwork.Instantiate("Tracker7", transform.position, transform.rotation);
+        Tracker8 = PhotonNetwork.Instantiate("Tracker8", transform.position, transform.rotation);
+        Tracker9 = PhotonNetwork.Instantiate("Tracker9", transform.position, transform.rotation);
+    }
+
+    void setCanvas()
+    {
+        if (photonView.Owner.NickName == "1")
+        {
+            canvas = GameObject.Find("Canvases/Canvas1").GetComponent<Canvas>();
+            canvas.worldCamera = this.GetComponent<Camera>();
+        }
+        else if (photonView.Owner.NickName == "2")
+        {
+            canvas = GameObject.Find("Canvases/Canvas2").GetComponent<Canvas>();
+            canvas.worldCamera = this.GetComponent<Camera>();
+        }
+        else if (photonView.Owner.NickName == "3")
+        {
+            canvas = GameObject.Find("Canvases/Canvas3").GetComponent<Canvas>();
+            canvas.worldCamera = this.GetComponent<Camera>();
+        }
+        else if (photonView.Owner.NickName == "4")
+        {
+            canvas = GameObject.Find("Canvases/Canvas4").GetComponent<Canvas>();
+            canvas.worldCamera = this.GetComponent<Camera>();
+        }
+        else if (photonView.Owner.NickName == "5")
+        {
+            canvas = GameObject.Find("Canvases/Canvas5").GetComponent<Canvas>();
+            canvas.worldCamera = this.GetComponent<Camera>();
+        }
+        else if (photonView.Owner.NickName == "6")
+        {
+            canvas = GameObject.Find("Canvases/Canvas6").GetComponent<Canvas>();
+            canvas.worldCamera = this.GetComponent<Camera>();
+        }
+        else if (photonView.Owner.NickName == "7")
+        {
+            canvas = GameObject.Find("Canvases/Canvas7").GetComponent<Canvas>();
+            canvas.worldCamera = this.GetComponent<Camera>();
+        }
+        else if (photonView.Owner.NickName == "8")
+        {
+            canvas = GameObject.Find("Canvases/Canvas8").GetComponent<Canvas>();
+            canvas.worldCamera = this.GetComponent<Camera>();
+        }
+        else if (photonView.Owner.NickName == "9")
+        {
+            canvas = GameObject.Find("Canvases/DocentCanvas").GetComponent<Canvas>();
+            canvas.worldCamera = this.GetComponent<Camera>();
+        }
     }
 
     void MapTrackerPosition(GameObject tracker)

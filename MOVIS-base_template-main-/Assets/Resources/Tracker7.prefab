@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7804781429898612541}
-  - component: {fileID: 7804781429898612540}
   - component: {fileID: 7804781429898612543}
   - component: {fileID: 7804781429898612537}
   - component: {fileID: 7804781429898612531}
@@ -35,14 +34,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &7804781429898612540
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7804781429898612536}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &7804781429898612543
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -102,9 +93,9 @@ MonoBehaviour:
   Tracker2ID: LHR-EE4ED1D2
   Tracker3ID: LHR-58A25CC8
   Tracker6ID: LHR-A36C3E16
+  Tracker7ID: LHR-4F225E25
   Tracker8ID: LHR-4780977C
-  Tracker7ID: LHR-0EBBC26C
-  Tracker9ID: LHR-4F225E25
+  Tracker9ID: LHR-0EBBC26C
 --- !u!114 &7804781429898612531
 MonoBehaviour:
   m_ObjectHideFlags: 0
