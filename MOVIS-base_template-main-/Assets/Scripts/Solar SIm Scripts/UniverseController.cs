@@ -92,7 +92,7 @@ public class UniverseController : MonoBehaviour
                 currentSpeed = orbitSpeedK;
                 if (FindObjectOfType<ViewTypeObserver>().currentViewType == 3)
                 {
-                    transform.localEulerAngles += new Vector3(0, (UniverseController.orbitSpeedK == 0) ? 0 : FindObjectOfType<ViewTypeObserver>().earth.rotationSpeed / UniverseController.orbitSpeedK, 0f);
+                    //transform.localEulerAngles += new Vector3(0, (UniverseController.orbitSpeedK == 0) ? 0 : FindObjectOfType<ViewTypeObserver>().earth.rotationSpeed / UniverseController.orbitSpeedK, 0f);
                 }
                 moon.changing = false;
             }
