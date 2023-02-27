@@ -9,7 +9,7 @@ public class UniverseController : MonoBehaviour
     public static float orbitScale = 1; //The scale of all orbits - can be used to scale the entire system at once rather than each individually
 
     public static int steps = 100; //How many steps the orbit of planets is calculated ahead of time. Affects the maximum speed.
-    public static float timeStep = 0.001f; //The frequency which the planets position is calculated
+    public static float timeStep = 0.0005f; //The frequency which the planets position is calculated
     public static int orbitSpeedK = 10; //The rate at which planets step through the points list
     public static int displayK = 30; //The rate at which line renderers step through the points list
 
@@ -31,7 +31,7 @@ public class UniverseController : MonoBehaviour
     public static float SigmoidOffset;
     public static float SigmoidOffsetDelta = 0.1f;
     public static float tolerance = 0.001f;
-    public static int changeDuration = 500;
+    public static int changeDuration = 800;
     public static int accDuration = 150;
 
     public PlanetController cameraLockedPlanet; //Which ever planet is currently locked to the camera view. This should replace a pined planet. WIP
@@ -90,10 +90,6 @@ public class UniverseController : MonoBehaviour
                 //updateTrails();
                 move();
                 currentSpeed = orbitSpeedK;
-                if (FindObjectOfType<ViewTypeObserver>().currentViewType == 3)
-                {
-                    //transform.localEulerAngles += new Vector3(0, (UniverseController.orbitSpeedK == 0) ? 0 : FindObjectOfType<ViewTypeObserver>().earth.rotationSpeed / UniverseController.orbitSpeedK, 0f);
-                }
                 moon.changing = false;
             }
             else //Changing viewtypes
@@ -102,7 +98,7 @@ public class UniverseController : MonoBehaviour
                 //Debug.Log(changeState + " " + changeSteps + " " + orbitSpeedK);
                 if (changeState == 0) //Slowing down
                 {
-                    decreaseSpeed(accDuration, FindObjectOfType<ViewTypeObserver>().currentViewType == 3 ? 3 : 0);
+                    decreaseSpeed(accDuration, 0);
                     //Debug.Log(orbitSpeedK);
                 }
                 if (changeState == 1) //Changing
@@ -122,7 +118,7 @@ public class UniverseController : MonoBehaviour
                 }
                 if (changeState == 2) //Speeding up
                 {
-                    increaseSpeed(accDuration, (FindObjectOfType<ViewTypeObserver>().currentViewType == 3) ? 3 : 10);
+                    increaseSpeed(accDuration, 10);
                     //Debug.Log(orbitSpeedK);
                 }
             }

@@ -8,17 +8,15 @@ using UnityEngine;
  */
 public class ViewTypeObserver : MonoBehaviour
 {
-    public int currentViewType; //The current viewtype that the scene is displaying
-    public int targetViewType;
-    public int steps = -1;
+    private int currentViewType; //The current viewtype that the scene is displaying
+    private int targetViewType;
+    private int steps = -1;
     public int otherScene; //place holder
 
-    public GameObject earth;
+    //public GameObject earth;
 
     public RotateScript tempMoonRotate;
     public MeshScaler tempMoonScale;
-
-    public float viewThreeY = -34.29f; //May need to double check
 
     private bool transistion = false;
 
