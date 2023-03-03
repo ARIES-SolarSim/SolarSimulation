@@ -178,7 +178,8 @@ public class CameraSetup : MonoBehaviour
         }
         catch
         {
-            Debug.Log("Loading a player...");
+            Debug.Log("Failed mapping of tracker: " + tracker.name + " , Attempting to connect again");
+            FindTrackers();
         }
     }
 
