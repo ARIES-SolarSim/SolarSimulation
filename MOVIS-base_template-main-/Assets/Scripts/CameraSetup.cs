@@ -34,6 +34,11 @@ public class CameraSetup : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(photonView == null)
+        {
+            photonView = GetComponent<PhotonView>();
+        }
+    
         if (photonView.Owner.NickName == "1")
         {
             MapTrackerPosition(Tracker1);
