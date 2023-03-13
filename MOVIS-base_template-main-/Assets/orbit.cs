@@ -20,10 +20,10 @@ public class orbit : MonoBehaviour
         float u = G * (GetComponent<Rigidbody>().mass + earth.GetComponent<Rigidbody>().mass);
         
         float e = (u / (2 * .0384400f));
-        Debug.Log(e);
+        //Debug.Log(e);
         float h = transform.position.y * earth.transform.position.y;
         float y = Mathf.Sqrt(((2 * e * h * h) / (u * u)));
-        Debug.Log(y);
+        //Debug.Log(y);
         transform.position = new Vector3(transform.position.x, y, transform.position.z);
 
     }

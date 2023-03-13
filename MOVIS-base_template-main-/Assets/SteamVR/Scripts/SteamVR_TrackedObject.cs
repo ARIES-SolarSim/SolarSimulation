@@ -114,14 +114,16 @@ namespace Valve.VR
         #region TrackerAutoMaticSetting
 
         //DO NOT FIX THIS UNLESS YOU ARE REPLACING THE TRACKERS!!!!
-        public string Tracker1ID = "LHR-6E6212A4";
-        public string Tracker2ID = "LHR-EE4ED1D2";
-        public string Tracker3ID = "LHR-58A25CC8";
-        public string Tracker6ID = "LHR-A36C3E16";
-        //public string Tracker8ID = "LHR-4780977C";
-        public string Tracker7ID = "LHR-4F225E25";
-        public string Tracker8ID = "LHR-0EB8815F";
-        public string Tracker9ID = "LHR-0EBBC26C";
+
+        public string Tracker1ID = "LHR-E66AE7F2";
+        public string Tracker2ID = "LHR-0826191F";
+        public string Tracker3ID = "LHR-6C7536DB";
+        public string Tracker4ID = "LHR-225139C6";
+        public string Tracker5ID = "LHR-7F7C9F3E";
+        public string Tracker6ID = "LHR-C57C3B1A";
+        public string Tracker7ID = "LHR-6B3E45E5C";
+        public string Tracker8ID = "LHR-70CC7F0F";
+        public string Tracker9ID = "LHR-88D33ED6";
 
         private void Start()
         {
@@ -148,10 +150,37 @@ namespace Valve.VR
                         break;
                     }
                 }
-                
+
+                if (SerialNumber == Tracker2ID) //if extracted traker number is matched with the TrakcerID,
+                {
+                    if (this.gameObject.name.Contains("2")) //AND, it matches with prefab ID,
+                    {
+                        SetDeviceIndex(i); //Set to designated device number.
+                        break;
+                    }
+                }
+
                 if (SerialNumber == Tracker3ID) //if extracted traker number is matched with the TrakcerID,
                 {
                     if (this.gameObject.name.Contains("3")) //AND, it matches with prefab ID,
+                    {
+                        SetDeviceIndex(i); //Set to designated device number.
+                        break;
+                    }
+                }
+
+                if (SerialNumber == Tracker4ID) //if extracted traker number is matched with the TrakcerID,
+                {
+                    if (this.gameObject.name.Contains("4")) //AND, it matches with prefab ID,
+                    {
+                        SetDeviceIndex(i); //Set to designated device number.
+                        break;
+                    }
+                }
+
+                if (SerialNumber == Tracker5ID) //if extracted traker number is matched with the TrakcerID,
+                {
+                    if (this.gameObject.name.Contains("5")) //AND, it matches with prefab ID,
                     {
                         SetDeviceIndex(i); //Set to designated device number.
                         break;
@@ -184,22 +213,15 @@ namespace Valve.VR
                         break;
                     }
                 }
-                if (SerialNumber == Tracker9ID)
-                {
-                    if (this.gameObject.name.Contains("9"))
-                    {
-                        SetDeviceIndex(i);
-                        break;
-                    }
-                }
-                if (SerialNumber == Tracker2ID)
-                {
-                    if (this.gameObject.name.Contains("2"))
-                    {
-                        SetDeviceIndex(i);
-                        break;
-                    }
-                }
+                //if (SerialNumber == Tracker9ID)
+                // {
+                //if (this.gameObject.name.Contains("9"))
+                //{
+                //SetDeviceIndex(i);
+                //break;
+                //}
+                //}
+
 
             }
         }

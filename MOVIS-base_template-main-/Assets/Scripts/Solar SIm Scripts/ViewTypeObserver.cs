@@ -12,6 +12,7 @@ public class ViewTypeObserver : MonoBehaviour
     private int targetViewType;
     private int steps = -1;
     public int otherScene; //place holder
+    private GameObject Tracker1, Tracker2, Tracker3, Tracker4, Tracker5, Tracker6, Tracker7, Tracker8, Tracker9;
 
     //public GameObject earth;
 
@@ -33,6 +34,7 @@ public class ViewTypeObserver : MonoBehaviour
         {
             PhotonNetwork.LoadLevel(otherScene);
             transform.localPosition = Vector3.zero;
+            updateCameras();
         }
         if(transform.localPosition.x == 1 && otherScene == 2) //View Type
         {
@@ -72,6 +74,106 @@ public class ViewTypeObserver : MonoBehaviour
                 steps = 0; //Finished view type transistion
                 currentViewType = targetViewType;
             }
+        }
+    }
+
+    void updateCameras()
+    {
+        Object[] all = FindObjectsOfType(this.gameObject.GetType(), true);
+
+        for (int i = 0; i < all.Length; i++)
+        {
+            if (all[i].name == "1")
+            {
+                Tracker1 = all[i] as GameObject;
+            }
+
+            else if (all[i].name == "2")
+            {
+                Tracker2 = all[i] as GameObject;
+            }
+
+            else if (all[i].name == "3")
+            {
+                Tracker3 = all[i] as GameObject;
+            }
+
+            else if (all[i].name == "4")
+            {
+                Tracker4 = all[i] as GameObject;
+            }
+
+            else if (all[i].name == "5")
+            {
+                Tracker5 = all[i] as GameObject;
+            }
+
+            else if (all[i].name == "6")
+            {
+                Tracker6 = all[i] as GameObject;
+            }
+
+            else if (all[i].name == "7")
+            {
+                Tracker7 = all[i] as GameObject;
+            }
+
+            else if (all[i].name == "8")
+            {
+                Tracker8 = all[i] as GameObject;
+            }
+
+            else if (all[i].name == "9")
+            {
+                Tracker9 = all[i] as GameObject;
+            }
+
+        }
+
+        if (Tracker1 != null)
+        {
+            Tracker1.SetActive(true);
+            Tracker1.GetComponent<CameraSetup>().reset();
+        }
+
+        if (Tracker2 != null)
+        {
+            Tracker2.GetComponent<CameraSetup>().reset();
+        }
+
+        if (Tracker3 != null)
+        {
+            Tracker3.GetComponent<CameraSetup>().reset();
+        }
+
+        if (Tracker4 != null)
+        {
+            Tracker4.GetComponent<CameraSetup>().reset();
+        }
+
+        if (Tracker5 != null)
+        {
+            Tracker5.GetComponent<CameraSetup>().reset();
+        }
+
+        if (Tracker6 != null)
+        {
+            Tracker6.GetComponent<CameraSetup>().reset();
+        }
+
+        if (Tracker7 != null)
+        {
+            Tracker7.GetComponent<CameraSetup>().reset();
+        }
+
+        if (Tracker8 != null)
+        {
+            Tracker8.GetComponent<CameraSetup>().reset();
+        }
+
+        if (Tracker9 != null)
+        {
+            Tracker9.GetComponent<CameraSetup>().reset();
         }
     }
 }

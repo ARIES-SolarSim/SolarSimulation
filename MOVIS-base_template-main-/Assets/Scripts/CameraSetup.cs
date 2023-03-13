@@ -5,7 +5,7 @@ using Photon.Pun;
 using TMPro;
 public class CameraSetup : MonoBehaviour
 {
-    private GameObject Tracker1, Tracker2, Tracker3, Tracker4, Tracker5, Tracker6, Tracker7, Tracker8, Tracker9;
+    public GameObject Tracker1, Tracker2, Tracker3, Tracker4, Tracker5, Tracker6, Tracker7, Tracker8, Tracker9;
     private Canvas canvas;
     private TextMeshProUGUI deviceNumberText;
 
@@ -16,7 +16,21 @@ public class CameraSetup : MonoBehaviour
     public Quaternion cameraOffset;
     void Start()
     {
-        photonView = GetComponent<PhotonView>();
+        if (photonView == null)
+        {
+            photonView = GetComponent<PhotonView>();
+        }
+
+        Tracker1 = GameObject.Find("Tracker1(Clone)");
+        Tracker2 = GameObject.Find("Tracker2(Clone)");
+        Tracker3 = GameObject.Find("Tracker3(Clone)");
+        Tracker4 = GameObject.Find("Tracker4(Clone)");
+        Tracker5 = GameObject.Find("Tracker5(Clone)");
+        Tracker6 = GameObject.Find("Tracker6(Clone)");
+        Tracker7 = GameObject.Find("Tracker7(Clone)");
+        Tracker8 = GameObject.Find("Tracker8(Clone)");
+        Tracker9 = GameObject.Find("Tracker9(Clone)");
+
         StartCoroutine(FindTrackerAfterFewSeconds()); //give few seconds for the systems to settle
         this.gameObject.name = photonView.Owner.NickName;
 
@@ -34,11 +48,19 @@ public class CameraSetup : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(photonView == null)
+        if (Tracker1 == null)
         {
-            photonView = GetComponent<PhotonView>();
+            Tracker1 = GameObject.Find("Tracker1(Clone)");
+            Tracker2 = GameObject.Find("Tracker2(Clone)");
+            Tracker3 = GameObject.Find("Tracker3(Clone)");
+            Tracker4 = GameObject.Find("Tracker4(Clone)");
+            Tracker5 = GameObject.Find("Tracker5(Clone)");
+            Tracker6 = GameObject.Find("Tracker6(Clone)");
+            Tracker7 = GameObject.Find("Tracker7(Clone)");
+            Tracker8 = GameObject.Find("Tracker8(Clone)");
+            Tracker9 = GameObject.Find("Tracker9(Clone)");
         }
-    
+
         if (photonView.Owner.NickName == "1")
         {
             MapTrackerPosition(Tracker1);
@@ -181,11 +203,25 @@ public class CameraSetup : MonoBehaviour
             //transform.position = tracker.transform.position;
             //transform.rotation = tracker.transform.rotation;
         }
+        
         catch
         {
-            Debug.Log("Failed mapping of tracker: " + tracker.name + " , Attempting to connect again");
-            FindTrackers();
+            Debug.Log("Failed mapping of tracker: " + photonView.Owner.NickName + " , Attempting to connect again");
+            Tracker1 = GameObject.Find("Tracker1(Clone)");
+            Tracker2 = GameObject.Find("Tracker2(Clone)");
+            Tracker3 = GameObject.Find("Tracker3(Clone)");
+            Tracker4 = GameObject.Find("Tracker4(Clone)");
+            Tracker5 = GameObject.Find("Tracker5(Clone)");
+            Tracker6 = GameObject.Find("Tracker6(Clone)");
+            Tracker7 = GameObject.Find("Tracker7(Clone)");
+            Tracker8 = GameObject.Find("Tracker8(Clone)");
+            Tracker9 = GameObject.Find("Tracker9(Clone)");
         }
+    }
+
+    public void reset()
+    {
+        //Start();
     }
 
     IEnumerator FindTrackerAfterFewSeconds()
