@@ -13,6 +13,8 @@ public class ViewTypeObserver : MonoBehaviour
     private int steps = -1;
     public int otherScene; //place holder
     private GameObject Tracker1, Tracker2, Tracker3, Tracker4, Tracker5, Tracker6, Tracker7, Tracker8, Tracker9;
+    private GameObject mercuryTrail;
+    //public PlanetController moon;
 
     //public GameObject earth;
 
@@ -21,17 +23,28 @@ public class ViewTypeObserver : MonoBehaviour
 
     private bool transistion = false;
 
+    public static TrailRenderer[] trails;
+
     private void Start()
     {
         currentViewType = 1;
         targetViewType = 1;
         PhotonNetwork.AutomaticallySyncScene = true;
+        if (otherScene == 2)
+        {
+            trails = new TrailRenderer[FindObjectsOfType<PlanetController>().Length - 2];
+        }
+        mercuryTrail = GameObject.Find("Trail");
     }
 
     void Update()
     {
         if(transform.localPosition.y == 1)
         {
+            if (otherScene == 2)
+            {
+                //moon.gameObject.SetActive(true);
+            }
             PhotonNetwork.LoadLevel(otherScene);
             transform.localPosition = Vector3.zero;
             updateCameras();
@@ -46,6 +59,8 @@ public class ViewTypeObserver : MonoBehaviour
         }
         if(currentViewType != targetViewType)
         {
+            transform.localPosition = new Vector3(0, 0, 3);
+
             steps++;
             UniverseController.orbiting = false;
             FindObjectOfType<UniverseController>().gameObject.transform.localEulerAngles = Vector3.zero; //May need to become smooth
@@ -75,6 +90,48 @@ public class ViewTypeObserver : MonoBehaviour
                 currentViewType = targetViewType;
             }
         }
+
+        if (otherScene == 2)
+        {
+            if (UniverseController.orbiting && !mercuryTrail.activeSelf)
+            {
+                bringTrailsBack();
+            }
+
+            else if (!UniverseController.orbiting && mercuryTrail.activeSelf)
+            {
+                hideTrailsTemp();
+            }
+        }
+    }
+    void bringTrailsBack()
+    {
+        for (int i = 0; i < trails.Length; i++)
+        {
+            // turn on trails
+            trails[i].enabled = true;
+        }
+
+        mercuryTrail.SetActive(true);
+    }
+
+    void hideTrailsTemp()
+    {
+        int i = 0;
+
+        foreach (PlanetController pc in FindObjectsOfType<PlanetController>())
+        {
+            if (pc.ID == 0 || pc.ID == 1)
+            {
+                continue;
+            }
+            // turn off trails
+            trails[i] = pc.gameObject.GetComponent<TrailRenderer>();
+            trails[i].Clear();
+            trails[i].enabled = false;
+            i++;
+        }
+        mercuryTrail.SetActive(false);
     }
 
     void updateCameras()
@@ -138,41 +195,49 @@ public class ViewTypeObserver : MonoBehaviour
 
         if (Tracker2 != null)
         {
+            Tracker2.SetActive(true);
             Tracker2.GetComponent<CameraSetup>().reset();
         }
 
         if (Tracker3 != null)
         {
+            Tracker3.SetActive(true);
             Tracker3.GetComponent<CameraSetup>().reset();
         }
 
         if (Tracker4 != null)
         {
+            Tracker4.SetActive(true);
             Tracker4.GetComponent<CameraSetup>().reset();
         }
 
         if (Tracker5 != null)
         {
+            Tracker5.SetActive(true);
             Tracker5.GetComponent<CameraSetup>().reset();
         }
 
         if (Tracker6 != null)
         {
+            Tracker6.SetActive(true);
             Tracker6.GetComponent<CameraSetup>().reset();
         }
 
         if (Tracker7 != null)
         {
+            Tracker7.SetActive(true);
             Tracker7.GetComponent<CameraSetup>().reset();
         }
 
         if (Tracker8 != null)
         {
+            Tracker8.SetActive(true);
             Tracker8.GetComponent<CameraSetup>().reset();
         }
 
         if (Tracker9 != null)
         {
+            Tracker9.SetActive(true);
             Tracker9.GetComponent<CameraSetup>().reset();
         }
     }

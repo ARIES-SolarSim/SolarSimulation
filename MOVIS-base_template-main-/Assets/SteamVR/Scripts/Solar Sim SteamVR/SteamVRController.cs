@@ -63,7 +63,7 @@ namespace Valve.VR
         //Upate method
         private void Update()
         {
-            CalcMovement();//Only for testing, remove for demo.
+            //CalcMovement();//Only for testing, remove for demo.
             //CheckMenu();
             if (LeftButton.state && !isChanging) //Change view type
             {
@@ -71,7 +71,7 @@ namespace Valve.VR
                 ViewTypeNetworker.transform.localPosition = new Vector3(1, 0, 0);
                 deltaTime = 0;
             }
-            if (RightButton.state && !placeHolder) //Change scene
+            if (LeftTrigger.GetAxis(SteamVR_Input_Sources.Any) > sensitivity && !placeHolder) //Change scene
             {
                 ViewTypeNetworker.transform.localPosition = new Vector3(0, 1, 0);
                 placeHolder = true;

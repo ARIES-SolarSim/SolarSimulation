@@ -43,6 +43,28 @@ public class PlanetController : MonoBehaviour
         if (!LobbyManager.userType)
         {
             MathPosition = controller.points.First.Value;
+            /*
+                if(ID == 4)
+                {
+                    Debug.Log("MathPos " + MathPosition);
+                    Debug.Log("CameraLockPointFirst " + GetComponentInParent<UniverseController>().cameraLockedPlanet.controller.points.First.Value);
+                    Debug.Log("Orbit Scale " + UniverseController.orbitScale);
+                    Debug.Log("Private Scale " + privateOrbitScale);
+                    Debug.Log("Next " + controller.points.First.Next.Value);
+                }
+            */
+            /*
+            if (float.IsNaN(MathPosition.x))
+            {
+                MathPosition = Vector3.zero;
+            }
+
+            if (float.IsNaN(controller.points.First.Next.Value.x))
+            {
+                controller.points.First.Next.Value = Vector3.zero;
+            }
+            */
+
             transform.localPosition = (MathPosition - GetComponentInParent<UniverseController>().cameraLockedPlanet.controller.points.First.Value) * UniverseController.orbitScale * privateOrbitScale;
         }
         /*if (!(FindObjectOfType<ViewTypeObserver>().currentViewType == 3 && ID == 3))

@@ -103,6 +103,7 @@ public class UniverseController : MonoBehaviour
                 }
                 if (changeState == 1) //Changing
                 {
+                    MeshScaler.isChanging = true;
                     foreach (PlanetController pc in Planets)
                     {
                         pc.diameter = pc.ViewTypeChangeMatrix[0][changeSteps];
@@ -113,6 +114,8 @@ public class UniverseController : MonoBehaviour
                     {
                         changeState = 2;
                         changeSteps = 0;
+                        MeshScaler.isChanging = false;
+                        MeshScaler.view = (MeshScaler.view == 1) ? 0 : 1;
                     }
                     changeSteps++;
                 }
@@ -222,7 +225,10 @@ public class UniverseController : MonoBehaviour
                 if (!Bodies[j].isPined)
                 {
                     Bodies[j].velocity = Bodies[j].CalculateVelocity(Bodies, timeStep);
-                    Debug.Log(Bodies[j].velocity);
+                    //if(float.IsNaN(Bodies[j].velocity.x))
+                    //{
+                    //    Bodies[j].velocity = Vector3.zero;
+                    //}
                 }
             }
             for (int j = 0; j < Bodies.Length; j++)
@@ -230,8 +236,15 @@ public class UniverseController : MonoBehaviour
                 if (!Bodies[j].isPined)
                 {
                     Vector3 newPos = Bodies[j].position + Bodies[j].velocity * timeStep;
+                    //Debug.Log(newPos.x + " " + Bodies[j].mass);
+                    //if (float.IsNaN(newPos.x))
+                    //{
+                    //    Debug.Log(newPos.x + " " + Bodies[j].mass + "AHAAAA");
+                    //    newPos = Vector3.zero;
+                    //}
                     Bodies[j].position = newPos;
                     Bodies[j].points.AddLast(newPos); //Points list does not change when orbit scale is changed. That should occur within PlanetController
+                    //Debug.Log(newPos + " " + Bodies[j].mass);
                 }
                 else
                 {

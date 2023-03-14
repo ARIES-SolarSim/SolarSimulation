@@ -40,12 +40,14 @@ public class RotateScript : MonoBehaviour
             {
                 correct = true;
 
-                gameObject.GetComponent<TrailRenderer>().Clear();
+                TrailRenderer trail = gameObject.GetComponent<TrailRenderer>();
+                trail.Clear();
+                trail.enabled = false;
 
-                Debug.Log(transform.position);
+                //Debug.Log(transform.position);
                 transform.position = positions[view - 1] + target.transform.position; //target.transform.position + 
-                Debug.Log(transform.position);
-                Debug.Log(transform.position + new Vector3(targetController.diameter, 0, 0));
+                //Debug.Log(transform.position);
+                //Debug.Log(transform.position + new Vector3(targetController.diameter, 0, 0));
                 //transform.localScale = scales[view - 1];
 
                 //theMesh.transform.localScale = Vector3.one * scales[view - 1].x * UniverseController.planetScale;
@@ -70,6 +72,8 @@ public class RotateScript : MonoBehaviour
                     gameObject.GetComponent<TrailRenderer>().enabled = true;
                     arrow.SetActive(false);
                 }
+
+                trail.enabled = true;
             }
 
             if (view == 1)

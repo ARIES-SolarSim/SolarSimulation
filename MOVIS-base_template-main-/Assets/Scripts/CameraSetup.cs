@@ -16,11 +16,14 @@ public class CameraSetup : MonoBehaviour
     public Quaternion cameraOffset;
     void Start()
     {
+        Debug.Log("Started");
         if (photonView == null)
         {
+            Debug.Log("making new photon view");
             photonView = GetComponent<PhotonView>();
         }
 
+        Debug.Log("Got photon viewer");
         Tracker1 = GameObject.Find("Tracker1(Clone)");
         Tracker2 = GameObject.Find("Tracker2(Clone)");
         Tracker3 = GameObject.Find("Tracker3(Clone)");
@@ -42,13 +45,17 @@ public class CameraSetup : MonoBehaviour
             this.gameObject.tag = "Untagged";
         }
 
+        Debug.Log("Setting parent");
+        this.gameObject.transform.SetParent(GameObject.Find("[CameraRig]").transform);
+        Debug.Log("Set parent");
         //deviceNumberText.text = "#" + photonView.Owner.NickName; //print the device number on the screen
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Tracker1 == null)
+        Debug.Log("Update");
+        if (Tracker3 == null)
         {
             Tracker1 = GameObject.Find("Tracker1(Clone)");
             Tracker2 = GameObject.Find("Tracker2(Clone)");
