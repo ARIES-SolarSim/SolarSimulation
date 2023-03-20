@@ -16,6 +16,9 @@ public class CameraSetup : MonoBehaviour
     public Quaternion cameraOffset;
     void Start()
     {
+        // ONLY UNCOMMENT IF DEBUGGING WITH UNITY REMOTE
+        //trackerSetup();
+
         Debug.Log("Started");
         if (photonView == null)
         {
@@ -44,11 +47,9 @@ public class CameraSetup : MonoBehaviour
         {
             this.gameObject.tag = "Untagged";
         }
-
-        Debug.Log("Setting parent");
-        this.gameObject.transform.SetParent(GameObject.Find("[CameraRig]").transform);
-        Debug.Log("Set parent");
         //deviceNumberText.text = "#" + photonView.Owner.NickName; //print the device number on the screen
+
+        //this.gameObject.transform.SetParent(GameObject.Find("[CameraRig]").transform);
     }
 
     // Update is called once per frame

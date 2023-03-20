@@ -8,8 +8,8 @@ using UnityEngine;
  */
 public class ViewTypeObserver : MonoBehaviour
 {
-    private int currentViewType; //The current viewtype that the scene is displaying
-    private int targetViewType;
+    public int currentViewType; //The current viewtype that the scene is displaying
+    public int targetViewType;
     private int steps = -1;
     public int otherScene; //place holder
     private GameObject Tracker1, Tracker2, Tracker3, Tracker4, Tracker5, Tracker6, Tracker7, Tracker8, Tracker9;
@@ -27,25 +27,33 @@ public class ViewTypeObserver : MonoBehaviour
 
     private void Start()
     {
-        currentViewType = 1;
-        targetViewType = 1;
         PhotonNetwork.AutomaticallySyncScene = true;
         if (otherScene == 2)
         {
             trails = new TrailRenderer[FindObjectsOfType<PlanetController>().Length - 2];
         }
         mercuryTrail = GameObject.Find("Trail");
+
+        // ONLY UNCOMMENT IF DEBUGGING WITH UNITY REMOTE
+        //trackerSetup();
     }
 
     void Update()
     {
-        if(transform.localPosition.y == 1)
+        if(transform.localPosition.y != 0)
         {
             if (otherScene == 2)
             {
                 //moon.gameObject.SetActive(true);
             }
-            PhotonNetwork.LoadLevel(otherScene);
+            if (transform.localPosition.y == 1)
+            {
+                PhotonNetwork.LoadLevel(1);
+            }
+            else
+            {
+                PhotonNetwork.LoadLevel((int)transform.localPosition.y - 1);
+            }
             transform.localPosition = Vector3.zero;
             updateCameras();
         }
@@ -104,6 +112,27 @@ public class ViewTypeObserver : MonoBehaviour
             }
         }
     }
+
+    public void changeScene(int i)
+    {
+        if ((i == 2 && currentViewType == 1) || (i == 1 && currentViewType == 2))
+        {
+            Debug.Log("going to view 2");
+            transform.position = new Vector3(1, 0, 0);
+        }
+
+        else if (i == 2)
+        {
+            PhotonNetwork.LoadLevel(1);
+            transform.position = new Vector3(1, 0, 0);
+        }
+
+        else if (currentViewType != i)
+        {
+            transform.position = new Vector3(0, i, 0);
+        }
+    }
+
     void bringTrailsBack()
     {
         for (int i = 0; i < trails.Length; i++)
@@ -240,5 +269,18 @@ public class ViewTypeObserver : MonoBehaviour
             Tracker9.SetActive(true);
             Tracker9.GetComponent<CameraSetup>().reset();
         }
+    }
+
+    void trackerSetup()
+    {
+        PhotonNetwork.Instantiate("Tracker1", transform.position, transform.rotation);
+        PhotonNetwork.Instantiate("Tracker2", transform.position, transform.rotation);
+        PhotonNetwork.Instantiate("Tracker3", transform.position, transform.rotation);
+        PhotonNetwork.Instantiate("Tracker4", transform.position, transform.rotation);
+        PhotonNetwork.Instantiate("Tracker5", transform.position, transform.rotation);
+        PhotonNetwork.Instantiate("Tracker6", transform.position, transform.rotation);
+        PhotonNetwork.Instantiate("Tracker7", transform.position, transform.rotation);
+        PhotonNetwork.Instantiate("Tracker8", transform.position, transform.rotation);
+        PhotonNetwork.Instantiate("Tracker9", transform.position, transform.rotation);
     }
 }

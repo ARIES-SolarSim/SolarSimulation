@@ -43,16 +43,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 3105333490271458132}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 27a81de972c98da4fbf737617098a540, type: 3}
+  m_Script: {fileID: 11500000, guid: 4c003520e8fcb5b49ab3bf26d6ba1c93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   targetController: {fileID: 0}
   changing: 0
-  correct: 1
+  correct: 0
   view: 1
-  theMesh: {fileID: 7570262278042977720}
-  arrow: {fileID: 468746084750504022}
+  theMesh: {fileID: 0}
+  arrow: {fileID: 0}
 --- !u!1 &3105333490825941964
 GameObject:
   m_ObjectHideFlags: 0
@@ -211,11 +211,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c51d90594b3f754281d809ecb78992b, type: 3}
---- !u!1 &468746084750504022 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3285673137819889996, guid: 0c51d90594b3f754281d809ecb78992b, type: 3}
-  m_PrefabInstance: {fileID: 3105333489464279322}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7280142044647054230 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5625029767003003532, guid: 0c51d90594b3f754281d809ecb78992b, type: 3}
@@ -312,4 +307,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e064dabf27986fd42918cf545f909e47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  view: 0
+  steps: 0
