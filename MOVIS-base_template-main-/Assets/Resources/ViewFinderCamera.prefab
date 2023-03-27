@@ -88,6 +88,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c3772281e160a444ac7e0d02a51914f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Tracker1: {fileID: 7804781429898612536, guid: f14891360f33ec64493fd94e339aaa8e, type: 3}
+  Tracker2: {fileID: 7804781429898612536, guid: 01cc0b5f7ca24e44690e83b5fe67a05b, type: 3}
+  Tracker3: {fileID: 7804781429898612536, guid: df251a7e8ffd958439ae62941ce7acc4, type: 3}
+  Tracker4: {fileID: 7804781429898612536, guid: 0b2ce95a83f26dd47a05125888bdb23e, type: 3}
+  Tracker5: {fileID: 7804781429898612536, guid: 7bb01f2d6e73334418737ca0598997bb, type: 3}
+  Tracker6: {fileID: 7804781429898612536, guid: 7bb7a9a2bd1a3784581a7d21acea750a, type: 3}
+  Tracker7: {fileID: 7804781429898612536, guid: 8a88efeb3b349284ca966d8f5e0a80df, type: 3}
+  Tracker8: {fileID: 7804781429898612536, guid: f96eb49add7b4d24aa395103b646af84, type: 3}
+  Tracker9: {fileID: 7804781429898612536, guid: bfbfebb6a80909d4ab65efd74adbf2c4, type: 3}
   viewFinderCameras: []
   cameraOffset: {x: 0.70710677, y: 0, z: 0, w: 0.70710677}
 --- !u!114 &6747746944674162525

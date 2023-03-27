@@ -122,7 +122,6 @@ public class UniverseController : MonoBehaviour
                 if (changeState == 2) //Speeding up
                 {
                     increaseSpeed(accDuration, 10);
-                    //Debug.Log(orbitSpeedK);
                 }
             }
         }
@@ -169,7 +168,6 @@ public class UniverseController : MonoBehaviour
             pc.updateLocation();
         }
         updateVirtualControllers();
-
     }
 
     /*
@@ -212,6 +210,7 @@ public class UniverseController : MonoBehaviour
                 vc.points.RemoveFirst();
             }
         }
+        
         for (int i = 0; i < orbitSpeedK; i++) //Similar to initiateVirtualController, this calculates the next orbitSpeedK number of points
         {
             for (int j = 0; j < Bodies.Length; j++)

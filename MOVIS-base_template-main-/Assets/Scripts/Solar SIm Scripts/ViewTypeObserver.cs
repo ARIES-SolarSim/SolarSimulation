@@ -12,6 +12,7 @@ public class ViewTypeObserver : MonoBehaviour
     private int targetViewType; //The view type that should be traveled to
     private int steps = -1; //Used for scene transitons
     public int otherScene; //place holder to represent the other scene to travel to (Once more than 2 scenes exist, this needs to be redone)
+    
     private GameObject Tracker1, Tracker2, Tracker3, Tracker4, Tracker5, Tracker6, Tracker7, Tracker8, Tracker9;
     public RotateScript tempMoonRotate;
     public MeshScaler tempMoonScale;
@@ -22,8 +23,6 @@ public class ViewTypeObserver : MonoBehaviour
 
     private void Start()
     {
-        currentViewType = 1;
-        targetViewType = 1;
         PhotonNetwork.AutomaticallySyncScene = true;
         if (otherScene == 2)
         {
@@ -33,13 +32,20 @@ public class ViewTypeObserver : MonoBehaviour
 
     void Update()
     {
-        if(transform.localPosition.y == 1)
+        if(transform.localPosition.y != 0)
         {
             if (otherScene == 2)
             {
                 //moon.gameObject.SetActive(true);
             }
-            PhotonNetwork.LoadLevel(otherScene);
+            if (transform.localPosition.y == 1)
+            {
+                PhotonNetwork.LoadLevel(1);
+            }
+            else
+            {
+                PhotonNetwork.LoadLevel((int)transform.localPosition.y - 1);
+            }
             transform.localPosition = Vector3.zero;
             updateCameras();
         }
@@ -117,32 +123,23 @@ public class ViewTypeObserver : MonoBehaviour
     /*
     void bringTrailsBack()
     {
-        for (int i = 0; i < trails.Length; i++)
+        if ((i == 2 && currentViewType == 1) || (i == 1 && currentViewType == 2))
         {
-            // turn on trails
-            trails[i].enabled = true;
+            Debug.Log("going to view 2");
+            transform.position = new Vector3(1, 0, 0);
         }
-        //mercuryTrail.SetActive(true);
+
+        else if (i == 2)
+        {
+            PhotonNetwork.LoadLevel(1);
+            transform.position = new Vector3(1, 0, 0);
+        }
+
+        else if (currentViewType != i)
+        {
+            transform.position = new Vector3(0, i, 0);
+        }
     }
-
-    void hideTrailsTemp()
-    {
-        int i = 0;
-
-        foreach (PlanetController pc in FindObjectsOfType<PlanetController>())
-        {
-            if (pc.ID == 0 || pc.ID == 1)
-            {
-                continue;
-            }
-            // turn off trails
-            trails[i] = pc.gameObject.GetComponent<TrailRenderer>();
-            trails[i].Clear();
-            trails[i].enabled = false;
-            i++;
-        }
-        //mercuryTrail.SetActive(false);
-    }*/
 
     /**
      * Gets all the ViewFinderCameras and remaps them to the proper tracker.
