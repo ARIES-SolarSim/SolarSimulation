@@ -85,6 +85,35 @@ public class ViewTypeObserver : MonoBehaviour
             }
         }
     }
+
+    /**
+     * Called by pressing the scene buttons on the docent UI tablet
+     */
+    public void changeScene(int i)
+    {
+        if (i > 3) // disregards scenes 4-6 for now, since there's nothing there
+        {
+            return;
+        }
+
+        if ((i == 2 && currentViewType == 1) || (i == 1 && currentViewType == 2))
+        {
+            Debug.Log("going to view 2");
+            transform.position = new Vector3(1, 0, 0);
+        }
+
+        else if (i == 2)
+        {
+            PhotonNetwork.LoadLevel(1);
+            transform.position = new Vector3(1, 0, 0);
+        }
+
+        else if (currentViewType != i)
+        {
+            transform.position = new Vector3(0, i, 0);
+        }
+    }
+
     /*
     void bringTrailsBack()
     {
@@ -115,6 +144,11 @@ public class ViewTypeObserver : MonoBehaviour
         //mercuryTrail.SetActive(false);
     }*/
 
+    /**
+     * Gets all the ViewFinderCameras and remaps them to the proper tracker.
+     * Currently kind of useless, but may be necessary if we have issues jumping scenes
+     * when the tablet is used.
+     */
     void updateCameras()
     {
         Object[] all = FindObjectsOfType(this.gameObject.GetType(), true);
@@ -221,5 +255,5 @@ public class ViewTypeObserver : MonoBehaviour
             Tracker9.SetActive(true);
             Tracker9.GetComponent<CameraSetup>().reset();
         }
-    } //Macey What does this do? Can't we remove it or make this more efficient
+    }
 }

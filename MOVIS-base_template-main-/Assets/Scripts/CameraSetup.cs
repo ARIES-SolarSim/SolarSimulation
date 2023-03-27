@@ -7,7 +7,6 @@ public class CameraSetup : MonoBehaviour
 {
     public GameObject Tracker1, Tracker2, Tracker3, Tracker4, Tracker5, Tracker6, Tracker7, Tracker8, Tracker9;
     private Canvas canvas;
-    private TextMeshProUGUI deviceNumberText;
 
     private PhotonView photonView;
     [SerializeField]
@@ -16,98 +15,66 @@ public class CameraSetup : MonoBehaviour
     public Quaternion cameraOffset;
     void Start()
     {
-        Debug.Log("Started");
         if (photonView == null)
         {
-            Debug.Log("making new photon view");
             photonView = GetComponent<PhotonView>();
         }
 
-        Debug.Log("Got photon viewer");
-        Tracker1 = GameObject.Find("Tracker1(Clone)");
-        Tracker2 = GameObject.Find("Tracker2(Clone)");
-        Tracker3 = GameObject.Find("Tracker3(Clone)");
-        Tracker4 = GameObject.Find("Tracker4(Clone)");
-        Tracker5 = GameObject.Find("Tracker5(Clone)");
-        Tracker6 = GameObject.Find("Tracker6(Clone)");
-        Tracker7 = GameObject.Find("Tracker7(Clone)");
-        Tracker8 = GameObject.Find("Tracker8(Clone)");
-        Tracker9 = GameObject.Find("Tracker9(Clone)");
-
+        trackerSetup();
         StartCoroutine(FindTrackerAfterFewSeconds()); //give few seconds for the systems to settle
         this.gameObject.name = photonView.Owner.NickName;
 
-        //trackerSetup();
         setCanvas();
 
         if (photonView.IsMine) //revmoe the tag so that myself is not disabled in the update funciton
         {
             this.gameObject.tag = "Untagged";
         }
-        //deviceNumberText.text = "#" + photonView.Owner.NickName; //print the device number on the screen
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log("Update");
         if (Tracker3 == null)
         {
-            Tracker1 = GameObject.Find("Tracker1(Clone)");
-            Tracker2 = GameObject.Find("Tracker2(Clone)");
-            Tracker3 = GameObject.Find("Tracker3(Clone)");
-            Tracker4 = GameObject.Find("Tracker4(Clone)");
-            Tracker5 = GameObject.Find("Tracker5(Clone)");
-            Tracker6 = GameObject.Find("Tracker6(Clone)");
-            Tracker7 = GameObject.Find("Tracker7(Clone)");
-            Tracker8 = GameObject.Find("Tracker8(Clone)");
-            Tracker9 = GameObject.Find("Tracker9(Clone)");
+            trackerSetup();
         }
 
         if (photonView.Owner.NickName == "1")
         {
             MapTrackerPosition(Tracker1);
-            //this.GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("DocentUI"));
         }
         else if (photonView.Owner.NickName == "2")
         {
             MapTrackerPosition(Tracker2);
-            //this.GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("DocentUI"));
         }
         else if (photonView.Owner.NickName == "3")
         {
             MapTrackerPosition(Tracker3);
-            //this.GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("DocentUI"));
         }
         else if (photonView.Owner.NickName == "4")
         {
             MapTrackerPosition(Tracker4);
-            //this.GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("DocentUI"));
         }
         else if (photonView.Owner.NickName == "5")
         {
             MapTrackerPosition(Tracker5);
-            //this.GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("DocentUI"));
         }
         else if (photonView.Owner.NickName == "6")
         {
             MapTrackerPosition(Tracker6);
-            //this.GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("DocentUI"));
         }
         else if (photonView.Owner.NickName == "7")
         {
             MapTrackerPosition(Tracker7);
-            //this.GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("DocentUI"));
         }
         else if (photonView.Owner.NickName == "8")
         {
             MapTrackerPosition(Tracker8);
-            //this.GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("DocentUI"));
         }
         else if (photonView.Owner.NickName == "9")
         {
             MapTrackerPosition(Tracker9);
-            //this.GetComponent<Camera>().cullingMask &= ~(1 << LayerMask.NameToLayer("NormalUI"));
         }
 
 
@@ -120,19 +87,9 @@ public class CameraSetup : MonoBehaviour
 
     }
 
-    void trackerSetup()
-    {
-        Tracker1 = PhotonNetwork.Instantiate("Tracker1", transform.position, transform.rotation);
-        Tracker2 = PhotonNetwork.Instantiate("Tracker2", transform.position, transform.rotation);
-        Tracker3 = PhotonNetwork.Instantiate("Tracker3", transform.position, transform.rotation);
-        Tracker4 = PhotonNetwork.Instantiate("Tracker4", transform.position, transform.rotation);
-        Tracker5 = PhotonNetwork.Instantiate("Tracker5", transform.position, transform.rotation);
-        Tracker6 = PhotonNetwork.Instantiate("Tracker6", transform.position, transform.rotation);
-        Tracker7 = PhotonNetwork.Instantiate("Tracker7", transform.position, transform.rotation);
-        Tracker8 = PhotonNetwork.Instantiate("Tracker8", transform.position, transform.rotation);
-        Tracker9 = PhotonNetwork.Instantiate("Tracker9", transform.position, transform.rotation);
-    }
-
+    /**
+     * Sets the canvases of each tablet so it has its own UI
+     */
     void setCanvas()
     {
         if (photonView.Owner.NickName == "1")
@@ -191,6 +148,9 @@ public class CameraSetup : MonoBehaviour
         }
     }
 
+    /**
+     * Maps the ViewFinderCamera to the tracker position
+     */
     void MapTrackerPosition(GameObject tracker)
     {
         try
@@ -210,23 +170,37 @@ public class CameraSetup : MonoBehaviour
         catch
         {
             Debug.Log("Failed mapping of tracker: " + photonView.Owner.NickName + " , Attempting to connect again");
-            Tracker1 = GameObject.Find("Tracker1(Clone)");
-            Tracker2 = GameObject.Find("Tracker2(Clone)");
-            Tracker3 = GameObject.Find("Tracker3(Clone)");
-            Tracker4 = GameObject.Find("Tracker4(Clone)");
-            Tracker5 = GameObject.Find("Tracker5(Clone)");
-            Tracker6 = GameObject.Find("Tracker6(Clone)");
-            Tracker7 = GameObject.Find("Tracker7(Clone)");
-            Tracker8 = GameObject.Find("Tracker8(Clone)");
-            Tracker9 = GameObject.Find("Tracker9(Clone)");
+            trackerSetup();
         }
     }
 
+    /**
+     * Going to be used if necessary for when tablets change scenes
+     */
     public void reset()
     {
         //Start();
     }
 
+    /**
+     * Immediately finds trackers
+     */
+    public void trackerSetup()
+    {
+        Tracker1 = GameObject.Find("Tracker1(Clone)");
+        Tracker2 = GameObject.Find("Tracker2(Clone)");
+        Tracker3 = GameObject.Find("Tracker3(Clone)");
+        Tracker4 = GameObject.Find("Tracker4(Clone)");
+        Tracker5 = GameObject.Find("Tracker5(Clone)");
+        Tracker6 = GameObject.Find("Tracker6(Clone)");
+        Tracker7 = GameObject.Find("Tracker7(Clone)");
+        Tracker8 = GameObject.Find("Tracker8(Clone)");
+        Tracker9 = GameObject.Find("Tracker9(Clone)");
+    }
+
+    /**
+     * Finds trackers after a few seconds
+     */
     IEnumerator FindTrackerAfterFewSeconds()
     {
         yield return new WaitForSeconds(3f);
