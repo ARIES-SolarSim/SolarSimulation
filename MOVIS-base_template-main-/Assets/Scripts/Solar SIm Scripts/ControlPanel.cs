@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ControlPanel : MonoBehaviour
 {
+    /*
     public GameObject OrbitScaleLever;
     public GameObject PlanetScaleLever;
     public GameObject speedLever;
@@ -40,7 +41,7 @@ public class ControlPanel : MonoBehaviour
             isReleased = true;
         }
         ArrowSwitch.transform.localEulerAngles = new Vector3((UniverseController.showArrows ? -1 : 1) * maxSwitch, 0, 0);*/
-    }
+    /*}
 
     void leverUpdate()
     {
@@ -93,4 +94,5 @@ public class ControlPanel : MonoBehaviour
         }
         return false;
     }
+*/
 }
