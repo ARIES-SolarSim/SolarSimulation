@@ -9,15 +9,10 @@ using UnityEngine;
 public class ViewTypeObserver : MonoBehaviour
 {
     private int currentViewType; //The current viewtype that the scene is displaying
-    private int targetViewType;
-    private int steps = -1;
-    public int otherScene; //place holder
+    private int targetViewType; //The view type that should be traveled to
+    private int steps = -1; //Used for scene transitons
+    public int otherScene; //place holder to represent the other scene to travel to (Once more than 2 scenes exist, this needs to be redone)
     private GameObject Tracker1, Tracker2, Tracker3, Tracker4, Tracker5, Tracker6, Tracker7, Tracker8, Tracker9;
-    private GameObject mercuryTrail;
-    //public PlanetController moon;
-
-    //public GameObject earth;
-
     public RotateScript tempMoonRotate;
     public MeshScaler tempMoonScale;
 
@@ -34,7 +29,6 @@ public class ViewTypeObserver : MonoBehaviour
         {
             trails = new TrailRenderer[FindObjectsOfType<PlanetController>().Length - 2];
         }
-        mercuryTrail = GameObject.Find("Trail");
     }
 
     void Update()
@@ -59,7 +53,7 @@ public class ViewTypeObserver : MonoBehaviour
         }
         if(currentViewType != targetViewType)
         {
-            transform.localPosition = new Vector3(0, 0, 3);
+            transform.localPosition = new Vector3(0, 0, 1);
 
             steps++;
             UniverseController.orbiting = false;
@@ -85,25 +79,13 @@ public class ViewTypeObserver : MonoBehaviour
             }
             if (steps == UniverseController.changeDuration && transistion)
             {
-                Debug.Log("Transistion Complete, returning steps to -1");
+                transform.localPosition = new Vector3(0, 0, 0);
                 steps = 0; //Finished view type transistion
                 currentViewType = targetViewType;
             }
         }
-
-        if (otherScene == 2)
-        {
-            if (UniverseController.orbiting && !mercuryTrail.activeSelf)
-            {
-                bringTrailsBack();
-            }
-
-            else if (!UniverseController.orbiting && mercuryTrail.activeSelf)
-            {
-                hideTrailsTemp();
-            }
-        }
     }
+    /*
     void bringTrailsBack()
     {
         for (int i = 0; i < trails.Length; i++)
@@ -111,8 +93,7 @@ public class ViewTypeObserver : MonoBehaviour
             // turn on trails
             trails[i].enabled = true;
         }
-
-        mercuryTrail.SetActive(true);
+        //mercuryTrail.SetActive(true);
     }
 
     void hideTrailsTemp()
@@ -131,8 +112,8 @@ public class ViewTypeObserver : MonoBehaviour
             trails[i].enabled = false;
             i++;
         }
-        mercuryTrail.SetActive(false);
-    }
+        //mercuryTrail.SetActive(false);
+    }*/
 
     void updateCameras()
     {
@@ -240,5 +221,5 @@ public class ViewTypeObserver : MonoBehaviour
             Tracker9.SetActive(true);
             Tracker9.GetComponent<CameraSetup>().reset();
         }
-    }
+    } //Macey What does this do? Can't we remove it or make this more efficient
 }

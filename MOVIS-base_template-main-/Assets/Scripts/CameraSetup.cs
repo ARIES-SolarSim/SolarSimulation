@@ -44,10 +44,6 @@ public class CameraSetup : MonoBehaviour
         {
             this.gameObject.tag = "Untagged";
         }
-
-        Debug.Log("Setting parent");
-        this.gameObject.transform.SetParent(GameObject.Find("[CameraRig]").transform);
-        Debug.Log("Set parent");
         //deviceNumberText.text = "#" + photonView.Owner.NickName; //print the device number on the screen
     }
 

@@ -137,6 +137,12 @@ namespace Valve.VR
 
             for (int i = 0; i <= 16; i++) //check all device from 0 - 16;
             {
+                /*
+                Debug.Log((uint)i);
+                Debug.Log(ETrackedDeviceProperty.Prop_SerialNumber_String);
+                Debug.Log(sb);
+                Debug.Log(OpenVR.k_unMaxPropertyStringSize);
+                */
                 OpenVR.System.GetStringTrackedDeviceProperty((uint)i, ETrackedDeviceProperty.Prop_SerialNumber_String, sb, OpenVR.k_unMaxPropertyStringSize, ref error);
                 var SerialNumber = sb.ToString(); //it will extract the tracker number.
 

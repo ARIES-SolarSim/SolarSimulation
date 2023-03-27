@@ -1,39 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class UniverseController : MonoBehaviour
 {
     public static float bigG = 6.67428f * Mathf.Pow(10, -11); //G used for gravitation force calculating
     public static float planetScale = 1; //The scale planets are displayed
     public static float orbitScale = 1; //The scale of all orbits - can be used to scale the entire system at once rather than each individually
-
     public static int steps = 100; //How many steps the orbit of planets is calculated ahead of time. Affects the maximum speed.
     public static float timeStep = 0.0005f; //The frequency which the planets position is calculated
     public static int orbitSpeedK = 10; //The rate at which planets step through the points list
-    public static int displayK = 30; //The rate at which line renderers step through the points list
 
     public static bool orbiting = true; //Used to determine if planets are orbiting or changing view type
     public static int changeSteps = 0; //Used while changing view types
     public static int changeState = 0; //0 = Slowing down (default), 1 = changing orbit, 2 = speeding up, 3/0 = return to orbiting
     public static int currentSpeed = 0; //Current orbitSpeedK when changing
-
-    private static TrailRenderer tr; //used to pause the trailrenderer when changing viewtypes
     public static float[] originalTime; //Will be used to store each planets time for trail renderer
     public static bool changed = false; //Not sure if actually needed but is here for now
     public static int count; //Created because of the way the for loops are done for now
-
     private PlanetController[] Planets; //List of planets to reference
     private VirtualController[] Bodies; //List of the virtual controlles in the planets to reference on build
     public RotateScript moon;
 
+    //The values below are placeholder for the motion profiling set up to smooth out the orbit scale transitions
+    //Would be cool if this was done with cubic splines instead
     public static float SigmoidK = 14;
     public static float SigmoidOffset;
     public static float SigmoidOffsetDelta = 0.1f;
     public static float tolerance = 0.001f;
-    public static int changeDuration = 800;
+    public static int changeDuration = 400;
     public static int accDuration = 150;
-
     public PlanetController cameraLockedPlanet; //Which ever planet is currently locked to the camera view. This should replace a pined planet. WIP
 
     /*
@@ -41,13 +36,13 @@ public class UniverseController : MonoBehaviour
      */
     private void Awake()
     {
-        Planets = FindObjectsOfType<PlanetController>();
-        Bodies = new VirtualController[Planets.Length];
+        Planets = FindObjectsOfType<PlanetController>(); //Fills the Planet list with all planets
+        Bodies = new VirtualController[Planets.Length]; //Creates a list for all the virtual controllers
         for (int i = 0; i < Planets.Length; i++)
         {
-            Bodies[i] = new VirtualController(Planets[i]);
+            Bodies[i] = new VirtualController(Planets[i]); //Sets the virtual controller's planet to one of the planets from the list
         }
-        InitiateVirtualControllers();
+        InitiateVirtualControllers(); //
         for (int i = 0; i < Planets.Length; i++)
         {
             Planets[i].controller = Bodies[i];
@@ -57,7 +52,7 @@ public class UniverseController : MonoBehaviour
     }
 
     /*
-     * Shows all arrows, can be removed eventually (I think)
+     * Generates the best offset value for the sigmoid function being used to smooth out the transistion motion
      */
     private void Start()
     {
@@ -65,14 +60,21 @@ public class UniverseController : MonoBehaviour
         {
             SigmoidOffset += SigmoidOffsetDelta;
         }
-        //FindObjectOfType<ViewTypeObserver>().changeView(2);
+        Debug.Log(SigmoidOffset);
     }
 
+    /*
+     * Returns the y-value of the sigmoid function provided an x value.
+     */
     public static float sigmoid(float x)
     {
         return 1 / (1 + Mathf.Pow((float)System.Math.E, -1 * SigmoidK * (x / changeDuration - SigmoidOffset)));
     }
 
+    /*
+     * Returns the rounded value of the sigmoid function so that once the transition is completed, the planets reach the exact
+     * target orbit.
+     */
     public static float sigmoidRounded(float x)
     {
         return (x == changeDuration - 1) ? 1 : sigmoid(x);
@@ -87,7 +89,6 @@ public class UniverseController : MonoBehaviour
         {
             if (orbiting)
             {
-                //updateTrails();
                 move();
                 currentSpeed = orbitSpeedK;
                 moon.changing = false;
@@ -95,11 +96,9 @@ public class UniverseController : MonoBehaviour
             else //Changing viewtypes
             {
                 moon.changing = true;
-                //Debug.Log(changeState + " " + changeSteps + " " + orbitSpeedK);
                 if (changeState == 0) //Slowing down
                 {
                     decreaseSpeed(accDuration, 0);
-                    //Debug.Log(orbitSpeedK);
                 }
                 if (changeState == 1) //Changing
                 {
@@ -118,6 +117,7 @@ public class UniverseController : MonoBehaviour
                         MeshScaler.view = (MeshScaler.view == 1) ? 0 : 1;
                     }
                     changeSteps++;
+                    Debug.Log(changeSteps);
                 }
                 if (changeState == 2) //Speeding up
                 {
@@ -126,19 +126,13 @@ public class UniverseController : MonoBehaviour
                 }
             }
         }
-        if (orbiting)
-        {
-            updateTrails();
-        }
-        else
-        {
-            hideTrails();
-        }
     }
 
+    /*
+     * Decreases the speed from the current value to the minimum value depending on the ratio of the provided time vs the changeStep
+     */
     public void decreaseSpeed(float time, int min)
     {
-        //orbitSpeedK = Mathf.RoundToInt(currentSpeed * (1f - ((float)changeSteps) / time));
         orbitSpeedK = Mathf.RoundToInt(((min - currentSpeed) / time * changeSteps) + currentSpeed);
         move();
         if (changeSteps == (int)time)
@@ -149,6 +143,9 @@ public class UniverseController : MonoBehaviour
         changeSteps++;
     }
 
+    /*
+     * Increases the speed from the current value to the maximum value depending on the ratio of the provided time vs the changeStep
+     */
     public void increaseSpeed(float time, int max)
     {
         orbitSpeedK = Mathf.RoundToInt(max * ((float)changeSteps) / time);
@@ -162,6 +159,9 @@ public class UniverseController : MonoBehaviour
         changeSteps++;
     }
 
+    /*
+     * This method has each planet move through 1 iteration of points within the list.
+     */
     public void move()
     {
         foreach (PlanetController pc in Planets)
@@ -169,47 +169,14 @@ public class UniverseController : MonoBehaviour
             pc.updateLocation();
         }
         updateVirtualControllers();
-    }
 
-    public void updateTrails()
-    {
-        //Debug.Log("UpdateTrails");
-        count = 0;
-        foreach (PlanetController pc in Planets)
-        {
-            if(pc.ID != 0)
-            {
-                if (changed)
-                {
-                    tr = pc.GetComponent<TrailRenderer>();
-                    tr.time = originalTime[count];
-                }
-            }
-        }
-        changed = false;
-    }
-
-    public void hideTrails()
-    {
-        //Debug.Log("HideTrails");
-        count = 0;
-        foreach (PlanetController pc in Planets)
-        {
-            if(pc.ID != 0)
-            {
-                tr = pc.GetComponent<TrailRenderer>();
-                if (tr.time != 0) //If the planet's time has not already been captured and changed to 0 previously
-                {
-                    originalTime[count] = tr.time;
-                }
-
-                tr.time = 0;
-            }
-        }
-        changed = true;
     }
 
     /*
+     * This method fills the point list with all of the future points that the planet will follow up to a set limit. Once the system is running, the points
+     * list will be periodically updated to show the next steps required. The maximum amount of points calculated is also the maximum speed the planets can
+     * travel.
+     *
      * To use only if each point's list needs to be completely remade. A change in orbit speed or scale does not need a new points list
      */
     public void InitiateVirtualControllers()
@@ -222,39 +189,18 @@ public class UniverseController : MonoBehaviour
         {
             for (int j = 0; j < Bodies.Length; j++) //Sets new Velocities
             {
-                if (!Bodies[j].isPined)
-                {
-                    Bodies[j].velocity = Bodies[j].CalculateVelocity(Bodies, timeStep);
-                    //if(float.IsNaN(Bodies[j].velocity.x))
-                    //{
-                    //    Bodies[j].velocity = Vector3.zero;
-                    //}
-                }
+                Bodies[j].velocity = Bodies[j].CalculateVelocity(Bodies, timeStep);
             }
             for (int j = 0; j < Bodies.Length; j++)
             {
-                if (!Bodies[j].isPined)
-                {
-                    Vector3 newPos = Bodies[j].position + Bodies[j].velocity * timeStep;
-                    //Debug.Log(newPos.x + " " + Bodies[j].mass);
-                    //if (float.IsNaN(newPos.x))
-                    //{
-                    //    Debug.Log(newPos.x + " " + Bodies[j].mass + "AHAAAA");
-                    //    newPos = Vector3.zero;
-                    //}
-                    Bodies[j].position = newPos;
-                    Bodies[j].points.AddLast(newPos); //Points list does not change when orbit scale is changed. That should occur within PlanetController
-                    //Debug.Log(newPos + " " + Bodies[j].mass);
-                }
-                else
-                {
-                    Bodies[j].points.AddLast(Bodies[j].position);
-                }
+                Vector3 newPos = Bodies[j].position + Bodies[j].velocity * timeStep;
+                Bodies[j].position = newPos;
+                Bodies[j].points.AddLast(newPos); //Points list do not change when orbit scale is changed. That should occur within PlanetController
             }
         }
     }
-
     /*
+     * This method removes the points that the planet has traveled through and refreshes the other side of the list with an equal amount of new points.
      * Used to find the next orbitSpeedK spaces in points
      */
     public void updateVirtualControllers()
@@ -266,8 +212,7 @@ public class UniverseController : MonoBehaviour
                 vc.points.RemoveFirst();
             }
         }
-
-        for(int i = 0; i < orbitSpeedK; i ++)
+        for (int i = 0; i < orbitSpeedK; i++) //Similar to initiateVirtualController, this calculates the next orbitSpeedK number of points
         {
             for (int j = 0; j < Bodies.Length; j++)
             {
