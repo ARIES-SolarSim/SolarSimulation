@@ -40,23 +40,14 @@ public class NetworkPlayerSpawn : MonoBehaviourPunCallbacks
     {
         yield return new WaitForSeconds(2f);
         spawnedPlayerPrefab = PhotonNetwork.Instantiate("Tracker1", transform.position, transform.rotation);
-        //spawnedPlayerPrefab.transform.SetParent(GameObject.Find("[CameraRig]").transform);
         spawnedPlayerPrefab = PhotonNetwork.Instantiate("Tracker2", transform.position, transform.rotation);
-        //spawnedPlayerPrefab.transform.SetParent(GameObject.Find("[CameraRig]").transform);
         spawnedPlayerPrefab = PhotonNetwork.Instantiate("Tracker3", transform.position, transform.rotation);
-        //spawnedPlayerPrefab.transform.SetParent(GameObject.Find("[CameraRig]").transform);
         spawnedPlayerPrefab = PhotonNetwork.Instantiate("Tracker4", transform.position, transform.rotation);
-        //spawnedPlayerPrefab.transform.SetParent(GameObject.Find("[CameraRig]").transform);
         spawnedPlayerPrefab = PhotonNetwork.Instantiate("Tracker5", transform.position, transform.rotation);
-        //spawnedPlayerPrefab.transform.SetParent(GameObject.Find("[CameraRig]").transform);
         spawnedPlayerPrefab = PhotonNetwork.Instantiate("Tracker6", transform.position, transform.rotation);
-        //spawnedPlayerPrefab.transform.SetParent(GameObject.Find("[CameraRig]").transform);
         spawnedPlayerPrefab = PhotonNetwork.Instantiate("Tracker7", transform.position, transform.rotation);
-        //spawnedPlayerPrefab.transform.SetParent(GameObject.Find("[CameraRig]").transform);
         spawnedPlayerPrefab = PhotonNetwork.Instantiate("Tracker8", transform.position, transform.rotation);
-        //spawnedPlayerPrefab.transform.SetParent(GameObject.Find("[CameraRig]").transform);
         spawnedPlayerPrefab = PhotonNetwork.Instantiate("Tracker9", transform.position, transform.rotation);
-        //spawnedPlayerPrefab.transform.SetParent(GameObject.Find("[CameraRig]").transform);
     }
 
     IEnumerator InstantiateViewFinderCamerAfterFewSeconds()

@@ -1,13 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class UniverseController : MonoBehaviour
 {
     public static float bigG = 6.67428f * Mathf.Pow(10, -11); //G used for gravitation force calculating
     public static float planetScale = 1; //The scale planets are displayed
     public static float orbitScale = 1; //The scale of all orbits - can be used to scale the entire system at once rather than each individually
-
     public static int steps = 100; //How many steps the orbit of planets is calculated ahead of time. Affects the maximum speed.
     public static float timeStep = 0.0005f; //The frequency which the planets position is calculated
     public static int orbitSpeedK = 10; //The rate at which planets step through the points list
@@ -16,12 +14,9 @@ public class UniverseController : MonoBehaviour
     public static int changeSteps = 0; //Used while changing view types
     public static int changeState = 0; //0 = Slowing down (default), 1 = changing orbit, 2 = speeding up, 3/0 = return to orbiting
     public static int currentSpeed = 0; //Current orbitSpeedK when changing
-
-    private static TrailRenderer tr; //used to pause the trailrenderer when changing viewtypes
     public static float[] originalTime; //Will be used to store each planets time for trail renderer
     public static bool changed = false; //Not sure if actually needed but is here for now
     public static int count; //Created because of the way the for loops are done for now
-
     private PlanetController[] Planets; //List of planets to reference
     private VirtualController[] Bodies; //List of the virtual controlles in the planets to reference on build
     public RotateScript moon;
@@ -34,7 +29,6 @@ public class UniverseController : MonoBehaviour
     public static float tolerance = 0.001f;
     public static int changeDuration = 400;
     public static int accDuration = 150;
-
     public PlanetController cameraLockedPlanet; //Which ever planet is currently locked to the camera view. This should replace a pined planet. WIP
 
     /*
@@ -131,16 +125,11 @@ public class UniverseController : MonoBehaviour
                 }
             }
         }
-        if (orbiting)
-        {
-            updateTrails();
-        }
-        else
-        {
-            hideTrails();
-        }
     }
 
+    /*
+     * Decreases the speed from the current value to the minimum value depending on the ratio of the provided time vs the changeStep
+     */
     public void decreaseSpeed(float time, int min)
     {
         orbitSpeedK = Mathf.RoundToInt(((min - currentSpeed) / time * changeSteps) + currentSpeed);
@@ -153,6 +142,9 @@ public class UniverseController : MonoBehaviour
         changeSteps++;
     }
 
+    /*
+     * Increases the speed from the current value to the maximum value depending on the ratio of the provided time vs the changeStep
+     */
     public void increaseSpeed(float time, int max)
     {
         orbitSpeedK = Mathf.RoundToInt(max * ((float)changeSteps) / time);
@@ -176,44 +168,6 @@ public class UniverseController : MonoBehaviour
             pc.updateLocation();
         }
         updateVirtualControllers();
-    }
-
-    public void updateTrails()
-    {
-        //Debug.Log("UpdateTrails");
-        count = 0;
-        foreach (PlanetController pc in Planets)
-        {
-            if(pc.ID != 0)
-            {
-                if (changed)
-                {
-                    tr = pc.GetComponent<TrailRenderer>();
-                    tr.time = originalTime[count];
-                }
-            }
-        }
-        changed = false;
-    }
-
-    public void hideTrails()
-    {
-        //Debug.Log("Hiding Trails");
-        count = 0;
-        foreach (PlanetController pc in Planets)
-        {
-            if(pc.ID != 0)
-            {
-                tr = pc.GetComponent<TrailRenderer>();
-                if (tr.time != 0) //If the planet's time has not already been captured and changed to 0 previously
-                {
-                    originalTime[count] = tr.time;
-                }
-
-                tr.time = 0;
-            }
-        }
-        changed = true;
     }
 
     /*
@@ -243,10 +197,8 @@ public class UniverseController : MonoBehaviour
             }
         }
     }
-
     /*
      * This method removes the points that the planet has traveled through and refreshes the other side of the list with an equal amount of new points.
-     * 
      * Used to find the next orbitSpeedK spaces in points
      */
     public void updateVirtualControllers()
@@ -258,8 +210,8 @@ public class UniverseController : MonoBehaviour
                 vc.points.RemoveFirst();
             }
         }
-
-        for(int i = 0; i < orbitSpeedK; i ++) //Similar to initiateVirtualController, this calculates the next orbitSpeedK number of points
+        
+        for (int i = 0; i < orbitSpeedK; i++) //Similar to initiateVirtualController, this calculates the next orbitSpeedK number of points
         {
             for (int j = 0; j < Bodies.Length; j++)
             {

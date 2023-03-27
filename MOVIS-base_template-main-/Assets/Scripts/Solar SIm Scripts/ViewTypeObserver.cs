@@ -8,16 +8,12 @@ using UnityEngine;
  */
 public class ViewTypeObserver : MonoBehaviour
 {
-    public int currentViewType; //The current viewtype that the scene is displaying
-    public int targetViewType;
-    private int steps = -1;
-    public int otherScene; //place holder
+    private int currentViewType; //The current viewtype that the scene is displaying
+    private int targetViewType; //The view type that should be traveled to
+    private int steps = -1; //Used for scene transitons
+    public int otherScene; //place holder to represent the other scene to travel to (Once more than 2 scenes exist, this needs to be redone)
+    
     private GameObject Tracker1, Tracker2, Tracker3, Tracker4, Tracker5, Tracker6, Tracker7, Tracker8, Tracker9;
-    private GameObject mercuryTrail;
-    //public PlanetController moon;
-
-    //public GameObject earth;
-
     public RotateScript tempMoonRotate;
     public MeshScaler tempMoonScale;
 
@@ -32,10 +28,6 @@ public class ViewTypeObserver : MonoBehaviour
         {
             trails = new TrailRenderer[FindObjectsOfType<PlanetController>().Length - 2];
         }
-        mercuryTrail = GameObject.Find("Trail");
-
-        // ONLY UNCOMMENT IF DEBUGGING WITH UNITY REMOTE
-        //trackerSetup();
     }
 
     void Update()
@@ -67,7 +59,7 @@ public class ViewTypeObserver : MonoBehaviour
         }
         if(currentViewType != targetViewType)
         {
-            transform.localPosition = new Vector3(0, 0, 3);
+            transform.localPosition = new Vector3(0, 0, 1);
 
             steps++;
             UniverseController.orbiting = false;
@@ -93,22 +85,9 @@ public class ViewTypeObserver : MonoBehaviour
             }
             if (steps == UniverseController.changeDuration && transistion)
             {
-                Debug.Log("Transistion Complete, returning steps to -1");
+                transform.localPosition = new Vector3(0, 0, 0);
                 steps = 0; //Finished view type transistion
                 currentViewType = targetViewType;
-            }
-        }
-
-        if (otherScene == 2)
-        {
-            if (UniverseController.orbiting && !mercuryTrail.activeSelf)
-            {
-                bringTrailsBack();
-            }
-
-            else if (!UniverseController.orbiting && mercuryTrail.activeSelf)
-            {
-                hideTrailsTemp();
             }
         }
     }
@@ -131,36 +110,6 @@ public class ViewTypeObserver : MonoBehaviour
         {
             transform.position = new Vector3(0, i, 0);
         }
-    }
-
-    void bringTrailsBack()
-    {
-        for (int i = 0; i < trails.Length; i++)
-        {
-            // turn on trails
-            trails[i].enabled = true;
-        }
-
-        mercuryTrail.SetActive(true);
-    }
-
-    void hideTrailsTemp()
-    {
-        int i = 0;
-
-        foreach (PlanetController pc in FindObjectsOfType<PlanetController>())
-        {
-            if (pc.ID == 0 || pc.ID == 1)
-            {
-                continue;
-            }
-            // turn off trails
-            trails[i] = pc.gameObject.GetComponent<TrailRenderer>();
-            trails[i].Clear();
-            trails[i].enabled = false;
-            i++;
-        }
-        mercuryTrail.SetActive(false);
     }
 
     void updateCameras()
@@ -269,18 +218,4 @@ public class ViewTypeObserver : MonoBehaviour
             Tracker9.SetActive(true);
             Tracker9.GetComponent<CameraSetup>().reset();
         }
-    }
-
-    void trackerSetup()
-    {
-        PhotonNetwork.Instantiate("Tracker1", transform.position, transform.rotation);
-        PhotonNetwork.Instantiate("Tracker2", transform.position, transform.rotation);
-        PhotonNetwork.Instantiate("Tracker3", transform.position, transform.rotation);
-        PhotonNetwork.Instantiate("Tracker4", transform.position, transform.rotation);
-        PhotonNetwork.Instantiate("Tracker5", transform.position, transform.rotation);
-        PhotonNetwork.Instantiate("Tracker6", transform.position, transform.rotation);
-        PhotonNetwork.Instantiate("Tracker7", transform.position, transform.rotation);
-        PhotonNetwork.Instantiate("Tracker8", transform.position, transform.rotation);
-        PhotonNetwork.Instantiate("Tracker9", transform.position, transform.rotation);
-    }
 }
