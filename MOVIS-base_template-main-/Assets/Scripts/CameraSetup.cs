@@ -148,6 +148,11 @@ public class CameraSetup : MonoBehaviour
         }
     }
 
+    public void setCanvasInactive()
+    {
+        canvas.gameObject.SetActive(false);
+    }
+
     /**
      * Maps the ViewFinderCamera to the tracker position
      */
