@@ -24,11 +24,17 @@ public class CameraSetup : MonoBehaviour
         StartCoroutine(FindTrackerAfterFewSeconds()); //give few seconds for the systems to settle
         this.gameObject.name = photonView.Owner.NickName;
 
+        if (photonView.Owner.NickName == "9")
+        {
+            adjustCameraSize();
+        }
+
         setCanvas();
 
         if (photonView.IsMine) //revmoe the tag so that myself is not disabled in the update funciton
         {
-            this.gameObject.tag = "Untagged";
+            Debug.Log("setting tag myself for " + photonView.Owner.NickName);
+            this.gameObject.tag = "Myself";
         }
     }
 
@@ -179,6 +185,21 @@ public class CameraSetup : MonoBehaviour
         }
     }
 
+    void adjustCameraSize()
+    {
+        // DOESNT WORK RIGHT NOW
+        // Orthographic isn't supported with XR
+        float viewPosX = -73.5f;
+        float viewPosY = 53f;
+
+        float viewWidth = 602.5f;
+        float viewHeight = 305f;
+        
+        //this.GetComponent<Camera>().orthographic = true;
+        //this.GetComponent<Camera>().orthographicSize = 5f;
+        //this.GetComponent<Camera>().rect = new Rect(viewPosX, viewPosY, viewWidth, viewHeight);
+    }
+
     /**
      * Going to be used if necessary for when tablets change scenes
      */
@@ -220,5 +241,37 @@ public class CameraSetup : MonoBehaviour
         Tracker9 = GameObject.Find("Tracker9(Clone)");
     }
 
+    public void CallRPCChangeCamera(int CameraNumber)
+    {
+        photonView.RPC("ChangeCamera", RpcTarget.MasterClient, CameraNumber);
+    }
+
+    public void CallRPCResetCamera()
+    {
+        photonView.RPC("ResetCamera", RpcTarget.MasterClient);
+    }
+
+    public void CallRPCChangeScene(int scene)
+    {
+        photonView.RPC("ChangeScene", RpcTarget.MasterClient);
+    }
+
+    [PunRPC]
+    public void ChangeCamera(int CameraNumber)
+    {
+        DocentManager.inst.ChangeCamera(CameraNumber);
+    }
+
+    [PunRPC]
+    public void ResetCamera()
+    {
+        DocentManager.inst.ResetCamera();
+    }
+
+    [PunRPC]
+    public void ChangeScene(int scene)
+    {
+        DocentManager.inst.ChangeScene(scene);
+    }
 }
 
