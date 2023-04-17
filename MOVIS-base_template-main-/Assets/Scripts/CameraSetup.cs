@@ -256,6 +256,11 @@ public class CameraSetup : MonoBehaviour
         photonView.RPC("ChangeScene", RpcTarget.MasterClient);
     }
 
+    public void CallRPCOpenHamburger()
+    {
+        photonView.RPC("OpenHamburger", RpcTarget.MasterClient);
+    }
+
     [PunRPC]
     public void ChangeCamera(int CameraNumber)
     {
@@ -272,6 +277,12 @@ public class CameraSetup : MonoBehaviour
     public void ChangeScene(int scene)
     {
         DocentManager.inst.ChangeScene(scene);
+    }
+
+    [PunRPC]
+    public void OpenHamburger()
+    {
+        DocentManager.inst.OpenHamburger();
     }
 }
 

@@ -132,6 +132,7 @@ namespace Valve.VR
 
         void TrackerSetup()
         {
+            //Debug.Log("Tracker setup");
             ETrackedPropertyError error = new ETrackedPropertyError();
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
 
@@ -219,14 +220,14 @@ namespace Valve.VR
                         break;
                     }
                 }
-                //if (SerialNumber == Tracker9ID)
-                // {
-                //if (this.gameObject.name.Contains("9"))
-                //{
-                //SetDeviceIndex(i);
-                //break;
-                //}
-                //}
+                if (SerialNumber == Tracker9ID)
+                {
+                    if (this.gameObject.name.Contains("9"))
+                    {
+                        SetDeviceIndex(i);
+                        break;
+                    }
+                }
 
 
             }

@@ -47,6 +47,14 @@ public class DocentManager : MonoBehaviour
         myself.GetComponent<CameraSetup>().ChangeScene(scene);
     }
 
+    public void CallPVOpenHamburger()
+    {
+        Debug.Log("open hamburger PVC");
+        if (myself == null)
+            myself = GameObject.FindGameObjectWithTag("Myself");
+        myself.GetComponent<CameraSetup>().OpenHamburger();
+    }
+
     public void ResetCamera()
     {
         Debug.Log("reset camera");
@@ -63,9 +71,15 @@ public class DocentManager : MonoBehaviour
     {
         Debug.Log("change scene");
         if (observer == null) {
-            observer = GameObject.Find("NetworkObservers/ViewTypeNetworkDevicce").GetComponent<ViewTypeObserver>();
+            observer = GameObject.Find("NetworkObservers/ViewTypeNetworkDevice").GetComponent<ViewTypeObserver>();
         }
 
         observer.changeScene(scene);
+    }
+
+    public void OpenHamburger()
+    {
+        Debug.Log("open hamburger");
+        myself.gameObject.GetComponent<HamburgerMenu>().openMenu();
     }
 }
