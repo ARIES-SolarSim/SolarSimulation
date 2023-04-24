@@ -115,13 +115,21 @@ namespace Valve.VR
 
         //DO NOT FIX THIS UNLESS YOU ARE REPLACING THE TRACKERS!!!!
 
+        [Tooltip("If you want to use the trackers specified in the code, check this to true")]
+        public bool hardCodeTrackers = true;
+
+        [Tooltip("Only if the trackers are hard coded, this enum will hard code the trackers" +
+            "to the current system, depending on what system it is using specified from input" +
+            "This means that this can change at the instantiation scene or in the editor not in play but not live")]
+        public CurrentSystem currentSystem;
+
         public string Tracker1ID = "LHR-E66AE7F2";
         public string Tracker2ID = "LHR-0826191F";
         public string Tracker3ID = "LHR-6C7536DB";
         public string Tracker4ID = "LHR-225139C6";
         public string Tracker5ID = "LHR-7F7C9F3E";
         public string Tracker6ID = "LHR-C57C3B1A";
-        public string Tracker7ID = "LHR-6B3E45E5C";
+        public string Tracker7ID = "LHR-6B3E4E5C";
         public string Tracker8ID = "LHR-70CC7F0F";
         public string Tracker9ID = "LHR-88D33ED6";
 
@@ -132,6 +140,41 @@ namespace Valve.VR
 
         void TrackerSetup()
         {
+            if (hardCodeTrackers)
+            {
+                switch (currentSystem)
+                {
+                    case CurrentSystem.ARIES:
+                        //Do nothing, default
+                        break;
+                    case CurrentSystem.MOVIS:
+                        Tracker1ID = "LHR-A36C3E16";
+                        Tracker2ID = "LHR-4780977C";
+                        Tracker3ID = "LHR-4F225E25";
+                        Tracker4ID = "LHR-B664C378";
+                        Tracker5ID = "LHR-A43DC925";
+                        Tracker6ID = "LHR-69199DDE";
+                        Tracker7ID = "LHR-9EF9F428";
+                        Tracker8ID = "LHR-2430F038";
+                        Tracker9ID = "LHR-C54B6AFF";
+                        break;
+                    case CurrentSystem.MUSUEM:
+                        Tracker1ID = "LHR-A36C3E16";
+                        Tracker2ID = "LHR-4780977C";
+                        Tracker3ID = "LHR-4F225E25";
+                        Tracker4ID = "LHR-B664C378";
+                        Tracker5ID = "LHR-A43DC925";
+                        Tracker6ID = "LHR-69199DDE";
+                        Tracker7ID = "LHR-9EF9F428";
+                        Tracker8ID = "LHR-2430F038";
+                        Tracker9ID = "LHR-C54B6AFF";
+                        break;
+
+                }
+            }
+
+
+
             ETrackedPropertyError error = new ETrackedPropertyError();
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
 
@@ -230,4 +273,11 @@ namespace Valve.VR
 
 
 
+}
+
+public enum CurrentSystem
+{
+    MOVIS,
+    ARIES,
+    MUSUEM
 }
