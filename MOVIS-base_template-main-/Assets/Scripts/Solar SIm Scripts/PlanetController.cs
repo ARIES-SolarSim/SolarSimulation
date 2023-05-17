@@ -87,7 +87,7 @@ public class PlanetController : MonoBehaviour
         }
         if(ID == 5)
         {
-            Debug.Log(pd.PlanetList[ID].Diameter[0] + " " + pd.PlanetList[ID].Diameter[1] + " " + ViewType);
+            //Debug.Log(pd.PlanetList[ID].Diameter[0] + " " + pd.PlanetList[ID].Diameter[1] + " " + ViewType);
         }
         for (int i = 0; i < UniverseController.changeDuration; i++)
         {
@@ -96,7 +96,7 @@ public class PlanetController : MonoBehaviour
             changeMatrix[1][i] = uc.curveInterp(index) * (pd.PlanetList[ID].OrbitScale[ViewType - 1] - privateOrbitScale) + privateOrbitScale;
             if (ID == 5)
             {
-                Debug.Log("I: " + i + " Curve: " + uc.curveInterp(index) + " Matrix: " + changeMatrix[0][i]);
+                //Debug.Log("I: " + i + " Curve: " + uc.curveInterp(index) + " Matrix: " + changeMatrix[0][i]);
             }
         }
         changeMatrix[0][UniverseController.changeDuration - 1] = pd.PlanetList[ID].Diameter[ViewType - 1];

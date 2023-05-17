@@ -24,11 +24,6 @@ public class CameraSetup : MonoBehaviour
         StartCoroutine(FindTrackerAfterFewSeconds()); //give few seconds for the systems to settle
         this.gameObject.name = photonView.Owner.NickName;
 
-        if (photonView.Owner.NickName == "9")
-        {
-            adjustCameraSize();
-        }
-
         setCanvas();
 
         if (photonView.IsMine) //revmoe the tag so that myself is not disabled in the update funciton
@@ -185,21 +180,6 @@ public class CameraSetup : MonoBehaviour
         }
     }
 
-    void adjustCameraSize()
-    {
-        // DOESNT WORK RIGHT NOW
-        // Orthographic isn't supported with XR
-        float viewPosX = -73.5f;
-        float viewPosY = 53f;
-
-        float viewWidth = 602.5f;
-        float viewHeight = 305f;
-        
-        //this.GetComponent<Camera>().orthographic = true;
-        //this.GetComponent<Camera>().orthographicSize = 5f;
-        //this.GetComponent<Camera>().rect = new Rect(viewPosX, viewPosY, viewWidth, viewHeight);
-    }
-
     /**
      * Going to be used if necessary for when tablets change scenes
      */
@@ -241,11 +221,13 @@ public class CameraSetup : MonoBehaviour
         Tracker9 = GameObject.Find("Tracker9(Clone)");
     }
 
+    // Daniel's code
     public void CallRPCChangeCamera(int CameraNumber)
     {
         photonView.RPC("ChangeCamera", RpcTarget.MasterClient, CameraNumber);
     }
 
+    // Daniel's code
     public void CallRPCResetCamera()
     {
         photonView.RPC("ResetCamera", RpcTarget.MasterClient);
@@ -261,12 +243,14 @@ public class CameraSetup : MonoBehaviour
         photonView.RPC("OpenHamburger", RpcTarget.MasterClient);
     }
 
+    // Daniel's code
     [PunRPC]
     public void ChangeCamera(int CameraNumber)
     {
         DocentManager.inst.ChangeCamera(CameraNumber);
     }
 
+    // Daniel's code
     [PunRPC]
     public void ResetCamera()
     {
