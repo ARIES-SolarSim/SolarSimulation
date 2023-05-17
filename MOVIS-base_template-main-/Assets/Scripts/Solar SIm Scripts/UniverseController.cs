@@ -23,14 +23,11 @@ public class UniverseController : MonoBehaviour
 
     //The values below are placeholder for the motion profiling set up to smooth out the orbit scale transitions
     //Would be cool if this was done with cubic splines instead
-    public static float SigmoidK = 14;
-    public static float SigmoidOffset;
-    public static float SigmoidOffsetDelta = 0.1f;
-    public static float tolerance = 0.001f;
-    public static int changeDuration = 400;
+    //public static float tolerance = 0.001f;
+    public static int changeDuration = 800;
     public static int accDuration = 150;
     public PlanetController cameraLockedPlanet; //Which ever planet is currently locked to the camera view. This should replace a pined planet. WIP
-
+    public AnimationCurve interpCurve;
     /*
      * Sets up all planets and virtual controllers
      */
@@ -50,34 +47,10 @@ public class UniverseController : MonoBehaviour
         }
         originalTime = new float[Planets.Length];
     }
-
-    /*
-     * Generates the best offset value for the sigmoid function being used to smooth out the transistion motion
-     */
-    private void Start()
+    public float curveInterp(float x)
     {
-        while (sigmoid(0) > tolerance)
-        {
-            SigmoidOffset += SigmoidOffsetDelta;
-        }
-        Debug.Log(SigmoidOffset);
-    }
-
-    /*
-     * Returns the y-value of the sigmoid function provided an x value.
-     */
-    public static float sigmoid(float x)
-    {
-        return 1 / (1 + Mathf.Pow((float)System.Math.E, -1 * SigmoidK * (x / changeDuration - SigmoidOffset)));
-    }
-
-    /*
-     * Returns the rounded value of the sigmoid function so that once the transition is completed, the planets reach the exact
-     * target orbit.
-     */
-    public static float sigmoidRounded(float x)
-    {
-        return (x == changeDuration - 1) ? 1 : sigmoid(x);
+        //Debug.Log(interpCurve.Evaluate(x));
+        return interpCurve.Evaluate(x);
     }
 
     /*
@@ -98,10 +71,12 @@ public class UniverseController : MonoBehaviour
                 moon.changing = true;
                 if (changeState == 0) //Slowing down
                 {
+                    Debug.Log("Decreasing Speed: " + accDuration + " " + changeSteps);
                     decreaseSpeed(accDuration, 0);
                 }
                 if (changeState == 1) //Changing
                 {
+                    Debug.Log("Changing: " + changeDuration + " " + changeSteps);
                     MeshScaler.isChanging = true;
                     foreach (PlanetController pc in Planets)
                     {
@@ -115,12 +90,21 @@ public class UniverseController : MonoBehaviour
                         changeSteps = 0;
                         MeshScaler.isChanging = false;
                         MeshScaler.view = (MeshScaler.view == 1) ? 0 : 1;
+                        FindObjectOfType<ViewTypeObserver>().transform.localPosition = new Vector3(0, 0, 0);
+                        if(FindObjectOfType<ViewTypeObserver>().targetViewType == 1)
+                        {
+                            foreach (PlanetIdentifier pi in FindObjectsOfType<PlanetIdentifier>())
+                            {
+                                pi.showArrow();
+                            }
+                        }
                     }
                     changeSteps++;
                     Debug.Log(changeSteps);
                 }
                 if (changeState == 2) //Speeding up
                 {
+                    Debug.Log("Speeding Back Up: " + accDuration + " " + changeSteps);
                     increaseSpeed(accDuration, 10);
                 }
             }
@@ -138,6 +122,11 @@ public class UniverseController : MonoBehaviour
         {
             changeSteps = 0;
             changeState = 1;
+            FindObjectOfType<ViewTypeObserver>().transform.localPosition = new Vector3(0, 0, 1);
+            foreach (PlanetIdentifier pi in FindObjectsOfType<PlanetIdentifier>())
+            {
+                pi.hideArrow();
+            }
         }
         changeSteps++;
     }
@@ -199,6 +188,7 @@ public class UniverseController : MonoBehaviour
     }
     /*
      * This method removes the points that the planet has traveled through and refreshes the other side of the list with an equal amount of new points.
+     *
      * Used to find the next orbitSpeedK spaces in points
      */
     public void updateVirtualControllers()

@@ -9,10 +9,10 @@ using UnityEngine;
 public class ViewTypeObserver : MonoBehaviour
 {
     private int currentViewType; //The current viewtype that the scene is displaying
-    private int targetViewType; //The view type that should be traveled to
+    public int targetViewType; //The view type that should be traveled to
     private int steps = -1; //Used for scene transitons
     public int otherScene; //place holder to represent the other scene to travel to (Once more than 2 scenes exist, this needs to be redone)
-    
+
     private GameObject Tracker1, Tracker2, Tracker3, Tracker4, Tracker5, Tracker6, Tracker7, Tracker8, Tracker9;
     public RotateScript tempMoonRotate;
     public MeshScaler tempMoonScale;
@@ -23,79 +23,42 @@ public class ViewTypeObserver : MonoBehaviour
 
     private void Start()
     {
+        currentViewType = 1;
+        targetViewType = 1;
         PhotonNetwork.AutomaticallySyncScene = true;
-        //if (otherScene == 2)
-        //{
-        //    trails = new TrailRenderer[FindObjectsOfType<PlanetController>().Length - 2];
-        //}
-        //currentViewType = 0; // change later to set to whatever IS the starting view
+        if (otherScene == 2)
+        {
+            trails = new TrailRenderer[FindObjectsOfType<PlanetController>().Length - 2];
+        }
     }
 
     void Update()
     {
-        /*
-         * Sorry matt :)
-        if(transform.localPosition.y != 0)
+        if (transform.localPosition.y == 1)
         {
+
+            var i = LoadingScene.Instance;
+            i.LoadScene(2);
+
             if (otherScene == 2)
             {
                 //moon.gameObject.SetActive(true);
             }
-            if (transform.localPosition.y == 1)
-            {
-                PhotonNetwork.LoadLevel(1);
-            }
-            else
-            {
-                PhotonNetwork.LoadLevel((int)transform.localPosition.y - 1);
-            }
+            PhotonNetwork.LoadLevel(otherScene);
             transform.localPosition = Vector3.zero;
             updateCameras();
         }
-        if(transform.localPosition.x == 1 && otherScene == 2) //View Type
+        if (transform.localPosition.x == 1 && otherScene == 2) //View Type
         {
+            Debug.Log("x = 1, otherscene = 2");
             targetViewType = (currentViewType == 1 ? 2 : 1);
             transform.localPosition = Vector3.zero;
             steps = 0;
             FindObjectOfType<RotateScript>().view = targetViewType;
             FindObjectOfType<RotateScript>().changing = true;
         }
-        if(currentViewType != targetViewType)
+        if (currentViewType != targetViewType)
         {
-            transform.localPosition = new Vector3(0, 0, 1);
-
-            steps++;
-            UniverseController.orbiting = false;
-            FindObjectOfType<UniverseController>().gameObject.transform.localEulerAngles = Vector3.zero; //May need to become smooth
-            foreach (PlanetIdentifier pi in FindObjectsOfType<PlanetIdentifier>())
-            {
-                if(targetViewType == 1)
-                {
-                    pi.showArrow();
-                }
-                else
-                {
-                    pi.hideArrow();
-                }
-            }
-            foreach (PlanetController pc in FindObjectsOfType<PlanetController>())
-            {
-                pc.changeViewType(targetViewType);
-            }
-            if (UniverseController.changeState == 1)
-            {
-                transistion = true;
-            }
-            if (steps == UniverseController.changeDuration && transistion)
-            {
-                transform.localPosition = new Vector3(0, 0, 0);
-                steps = 0; //Finished view type transistion
-                currentViewType = targetViewType;
-            }
-        }*/
-        if (targetViewType != currentViewType)
-        {
-            Debug.Log(targetViewType + " " + currentViewType);
             transform.localPosition = new Vector3(0, 0, 1);
 
             steps++;
@@ -115,65 +78,87 @@ public class ViewTypeObserver : MonoBehaviour
             foreach (PlanetController pc in FindObjectsOfType<PlanetController>())
             {
                 pc.changeViewType(targetViewType);
-            }
-            if (UniverseController.changeState == 1)
-            {
-                transistion = true;
-            }
-            if (steps == UniverseController.changeDuration && transistion)
-            {
-                transform.localPosition = new Vector3(0, 0, 0);
-                steps = 0; //Finished view type transistion
-                currentViewType = targetViewType;
-            }
-        }
-
-        if (transform.localPosition.x != 0 && transform.localPosition.x != (currentViewType + 1))
-        {
-            Debug.Log(transform.localPosition.x + " " + currentViewType);
-            if (transform.localPosition.x == 2 || (transform.localPosition.x == 1 && currentViewType == 1))
-            {
-                // view 2 and view 1 flips
-                if (currentViewType != 0)
+                if (pc.ID == 5)
                 {
-                    PhotonNetwork.LoadLevel(1);
+                    Debug.Log(pc.ViewTypeChangeMatrix[0][0] + " " + pc.ViewTypeChangeMatrix[0][100]);
+                }
+                if (steps == UniverseController.changeDuration && transistion)
+                {
+                    transform.localPosition = new Vector3(0, 0, 0);
+                    steps = 0; //Finished view type transistion
+                    currentViewType = targetViewType;
+                }
+            }
+            if (currentViewType != targetViewType)
+            {
+                Debug.Log("Mismatch");
+                steps++;
+                UniverseController.orbiting = false;
+                FindObjectOfType<UniverseController>().gameObject.transform.localEulerAngles = Vector3.zero; //May need to become smooth
+                foreach (PlanetIdentifier pi in FindObjectsOfType<PlanetIdentifier>())
+                {
+                    if (targetViewType == 1)
+                    {
+                        pi.showArrow();
+                    }
+                    else
+                    {
+                        pi.hideArrow();
+                    }
+                }
+                foreach (PlanetController pc in FindObjectsOfType<PlanetController>())
+                {
+                    pc.changeViewType(targetViewType);
+                }
+                if (UniverseController.changeState == 1)
+                {
+                    transistion = true;
+                }
+                if (steps == UniverseController.changeDuration && transistion)
+                {
+                    transform.localPosition = new Vector3(0, 0, 0);
+                    steps = 0; //Finished view type transistion
+                    currentViewType = targetViewType;
                 }
 
-                targetViewType = (int)transform.localPosition.x - 1;
-                transform.localPosition = Vector3.zero;
-                steps = 0;
-                FindObjectOfType<RotateScript>().view = targetViewType;
-                FindObjectOfType<RotateScript>().changing = true;
-            }
-
-            else
-            {
-                Debug.Log("else");
-                // any other view
-                if (transform.position.x == 1)
+                if (transform.localPosition.x != 0 && transform.localPosition.x != (currentViewType + 1))
                 {
-                    PhotonNetwork.LoadLevel(1);
+                    targetViewType = (int)transform.localPosition.x - 1;
+                    transform.localPosition = Vector3.zero;
+                    steps = 0;
+                    FindObjectOfType<RotateScript>().view = targetViewType;
+                    FindObjectOfType<RotateScript>().changing = true;
                 }
 
                 else
                 {
-                    PhotonNetwork.LoadLevel((int)transform.localPosition.x - 1);
-                }
+                    Debug.Log("else");
+                    // any other view
+                    if (transform.position.x == 1)
+                    {
+                        PhotonNetwork.LoadLevel(1);
+                    }
 
-                currentViewType = (int)transform.localPosition.x - 1;
+                    else
+                    {
+                        PhotonNetwork.LoadLevel((int)transform.localPosition.x - 1);
+                    }
+
+                    currentViewType = (int)transform.localPosition.x - 1;
+                    transform.localPosition = Vector3.zero;
+                }
+            }
+
+            else
+            {
                 transform.localPosition = Vector3.zero;
             }
-        }
-
-        else
-        {
-            transform.localPosition = Vector3.zero;
         }
     }
 
     /**
-     * Called by pressing the scene buttons on the docent UI tablet
-     */
+        * Called by pressing the scene buttons on the docent UI tablet
+        */
     public void changeScene(int i)
     {
         if (i > 3) // disregards scenes 4-6 for now, since there's nothing there
@@ -221,10 +206,10 @@ public class ViewTypeObserver : MonoBehaviour
     }
 
     /**
-     * Gets all the ViewFinderCameras and remaps them to the proper tracker.
-     * Currently kind of useless, but may be necessary if we have issues jumping scenes
-     * when the tablet is used.
-     */
+        * Gets all the ViewFinderCameras and remaps them to the proper tracker.
+        * Currently kind of useless, but may be necessary if we have issues jumping scenes
+        * when the tablet is used.
+        */
     void updateCameras()
     {
         Object[] all = FindObjectsOfType(this.gameObject.GetType(), true);

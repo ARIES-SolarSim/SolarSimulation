@@ -8,7 +8,7 @@ using UnityEngine;
 public class PlanetIdentifier : MonoBehaviour
 {
 
-    private float index = 0f; //Used to simulate a slight bobbing up and down 
+    private float index = 0f; //Used to simulate a slight bobbing up and down
     private float initY = 0f; //Used to simulate a slight bobbing up and down
 
     public float ArrowScale = 0.3f; //Scale of arrows
@@ -57,3 +57,13 @@ public class PlanetIdentifier : MonoBehaviour
         transform.localScale = Vector3.one * ArrowScale;
     }
 }
+
+
+
+
+
+
+
+
+
+

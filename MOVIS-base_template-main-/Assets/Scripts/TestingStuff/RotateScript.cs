@@ -22,10 +22,10 @@ public class RotateScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameObject.GetComponent<TrailRenderer>().enabled = false;
+        //gameObject.GetComponent<TrailRenderer>().enabled = false;
         transform.position = new Vector3(0.001f, -0.006858f, 0f) + target.position;
-        gameObject.GetComponent<TrailRenderer>().Clear();
-        gameObject.GetComponent<TrailRenderer>().enabled = true;
+        //gameObject.GetComponent<TrailRenderer>().Clear();
+        //gameObject.GetComponent<TrailRenderer>().enabled = true;
     }
 
     // Update is called once per frame
@@ -36,9 +36,9 @@ public class RotateScript : MonoBehaviour
             if (!correct)
             {
                 correct = true;
-                TrailRenderer trail = gameObject.GetComponent<TrailRenderer>();
-                trail.Clear();
-                trail.enabled = false;
+                //TrailRenderer trail = gameObject.GetComponent<TrailRenderer>();
+                //trail.Clear();
+                //trail.enabled = false;
                 transform.position = positions[view - 1] + target.transform.position; //target.transform.position + 
                 /* if (!UniverseController.orbiting)
                 {
@@ -47,16 +47,16 @@ public class RotateScript : MonoBehaviour
                 */
                 if (view == 1)
                 {
-                    gameObject.GetComponent<TrailRenderer>().enabled = true;
+                    //gameObject.GetComponent<TrailRenderer>().enabled = true;
                     arrow.SetActive(true);
                 }
                 else //view 2
                 {
-                    gameObject.GetComponent<TrailRenderer>().enabled = true;
+                    //gameObject.GetComponent<TrailRenderer>().enabled = true;
                     arrow.SetActive(false);
                 }
 
-                trail.enabled = true;
+                //trail.enabled = true;
             }
 
             if (view == 1)
@@ -72,7 +72,7 @@ public class RotateScript : MonoBehaviour
 
         else
         {
-            gameObject.GetComponent<TrailRenderer>().enabled = false;
+            //gameObject.GetComponent<TrailRenderer>().enabled = false;
             correct = false;
         }
     }

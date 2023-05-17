@@ -25,7 +25,7 @@ public class VirtualController
     }
 
     /*
-     * Calculates the velocity of the planet given all the other planets and a deltaTime. 
+     * Calculates the velocity of the planet given all the other planets and a deltaTime.
      */
     public Vector3 CalculateVelocity(VirtualController[] bodies, float deltaTime)
     {
@@ -42,6 +42,19 @@ public class VirtualController
         }
         return vel;
     }
-
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -18,7 +18,7 @@ public class PlanetController : MonoBehaviour
     /*
      * A matrix used to smooth out the transistion between view 1 and view 2.
      * The first row is the diameter and the second is the orbit scale. Each row
-     * is UniverseController.changeDuration and contains a smooth transition 
+     * is UniverseController.changeDuration and contains a smooth transition
      * between the current and the target values
      */
     public float[][] ViewTypeChangeMatrix { get; set; }
@@ -29,7 +29,7 @@ public class PlanetController : MonoBehaviour
 
     /*
      * The awake initiates several values referencing from the virtualController.
-     * 
+     *
      * MathPos should be used for any velocity, position, or acceleration calculations and is not affected by scale
      * Rigidbody's position values should change due to scale and are not used in any calulations.
      */
@@ -78,16 +78,26 @@ public class PlanetController : MonoBehaviour
      */
     public void changeViewType(int ViewType)
     {
+        UniverseController uc = FindObjectOfType<UniverseController>();
         PlanetData pd = GetComponentInParent<PlanetData>();
         float[][] changeMatrix = new float[2][];
         for (int i = 0; i < changeMatrix.Length; i++) //Sets up the changematrices
         {
             changeMatrix[i] = new float[UniverseController.changeDuration];
         }
+        if(ID == 5)
+        {
+            Debug.Log(pd.PlanetList[ID].Diameter[0] + " " + pd.PlanetList[ID].Diameter[1] + " " + ViewType);
+        }
         for (int i = 0; i < UniverseController.changeDuration; i++)
         {
-            changeMatrix[0][i] = UniverseController.sigmoid(i) * (pd.PlanetList[ID].Diameter[ViewType - 1] - diameter) + diameter;
-            changeMatrix[1][i] = UniverseController.sigmoid(i) * (pd.PlanetList[ID].OrbitScale[ViewType - 1] - privateOrbitScale) + privateOrbitScale;
+            float index = ((float)i) / UniverseController.changeDuration;
+            changeMatrix[0][i] = uc.curveInterp(index) * (pd.PlanetList[ID].Diameter[ViewType - 1] - diameter) + diameter;
+            changeMatrix[1][i] = uc.curveInterp(index) * (pd.PlanetList[ID].OrbitScale[ViewType - 1] - privateOrbitScale) + privateOrbitScale;
+            if (ID == 5)
+            {
+                Debug.Log("I: " + i + " Curve: " + uc.curveInterp(index) + " Matrix: " + changeMatrix[0][i]);
+            }
         }
         changeMatrix[0][UniverseController.changeDuration - 1] = pd.PlanetList[ID].Diameter[ViewType - 1];
         changeMatrix[1][UniverseController.changeDuration - 1] = pd.PlanetList[ID].OrbitScale[ViewType - 1];
@@ -110,3 +120,11 @@ public class PlanetController : MonoBehaviour
         transform.localPosition = (MathPosition * UniverseController.orbitScale * privateOrbitScale);
     }
 }
+
+
+
+
+
+
+
+
