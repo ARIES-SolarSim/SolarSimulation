@@ -11,7 +11,7 @@ namespace Valve.VR
      * This object is attached to the parent object of the controllers. It is responsible for taking any and all inputs from the controllers and
      * doing the correct task depending on the input
      */
-    public class SteamVRController : MonoBehaviour 
+    public class SteamVRController : MonoBehaviour
     {
         public float sensitivity; //How sensitive the trigger is for moving - DEVELOPER USE ONLY
         public float maxSpeed; //How fast the movement is - DEVELOPER USE ONLY
@@ -57,7 +57,7 @@ namespace Valve.VR
         //Start method
         private void Start()
         {
-            //deleteList = new GameObject[Mathf.Max(ViewTypeCount, MenuItems.Length)]; 
+            //deleteList = new GameObject[Mathf.Max(ViewTypeCount, MenuItems.Length)];
         }
 
         //Upate method
@@ -149,9 +149,9 @@ namespace Valve.VR
 
         /*
          * Moves the VR user when either of the triggers have been pulled.
-         * Note that the user moves in the direction that the controller is pointing. 
+         * Note that the user moves in the direction that the controller is pointing.
          * DEVELOPER USE ONLY
-         */ 
+         */
         private void CalcMovement()
         {
             if (LeftTrigger.GetAxis(SteamVR_Input_Sources.Any) > sensitivity)
@@ -170,7 +170,5 @@ namespace Valve.VR
             }
             transform.localPosition += speed;
         }
-
     }
-
 }

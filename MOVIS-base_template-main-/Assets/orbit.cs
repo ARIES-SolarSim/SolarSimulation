@@ -10,8 +10,8 @@ public class orbit : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        bodies = GameObject.FindGameObjectsWithTag("bodies");
-        earth = bodies[1];
+        bodies = GameObject.FindGameObjectsWithTag("proxyBodies");
+        earth = bodies[0];
     }
 
     // Update is called once per frame

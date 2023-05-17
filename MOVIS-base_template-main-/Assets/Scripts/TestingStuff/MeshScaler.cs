@@ -9,8 +9,10 @@ public class MeshScaler : MonoBehaviour
         new Vector3(0.05079997257f, 0.05079997257f, 0.05079997257f)};
     public static int view = 0;
 
+    public float trailTime;
     public static bool isChanging = false;
     public int steps = 0;
+    public TrailRenderer tr;
 
     // Start is called before the first frame update
     void Start()
@@ -23,9 +25,14 @@ public class MeshScaler : MonoBehaviour
     {
         if(isChanging)
         {
+            tr.time = 0;
             int targetView = (view == 1) ? 0 : 1;
             transform.localScale = Vector3.Lerp(scales[view], scales[targetView], (steps * 1f) / (UniverseController.changeDuration * 1f)) * UniverseController.planetScale;
             steps++;
+        }
+        else
+        {
+            tr.time = trailTime;
         }
         //transform.localScale = Vector3.one * scales[view - 1].x * UniverseController.planetScale;
     }

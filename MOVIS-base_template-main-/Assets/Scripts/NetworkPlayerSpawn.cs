@@ -54,16 +54,16 @@ public class NetworkPlayerSpawn : MonoBehaviourPunCallbacks
         type = "tracker";
         if (GameObject.Find("Tracker1(Clone)") == null)
         {
-            spawnedPlayerPrefab = PhotonNetwork.Instantiate("Tracker1", transform.position, transform.rotation);
-            spawnedPlayerPrefab = PhotonNetwork.Instantiate("Tracker2", transform.position, transform.rotation);
-            spawnedPlayerPrefab = PhotonNetwork.Instantiate("Tracker3", transform.position, transform.rotation);
-            spawnedPlayerPrefab = PhotonNetwork.Instantiate("Tracker4", transform.position, transform.rotation);
-            spawnedPlayerPrefab = PhotonNetwork.Instantiate("Tracker5", transform.position, transform.rotation);
-            spawnedPlayerPrefab = PhotonNetwork.Instantiate("Tracker6", transform.position, transform.rotation);
-            spawnedPlayerPrefab = PhotonNetwork.Instantiate("Tracker7", transform.position, transform.rotation);
-            spawnedPlayerPrefab = PhotonNetwork.Instantiate("Tracker8", transform.position, transform.rotation);
-            spawnedPlayerPrefab = PhotonNetwork.Instantiate("Tracker9", transform.position, transform.rotation);
-        }
+        spawnedPlayerPrefab = PhotonNetwork.Instantiate("Tracker1", transform.position, transform.rotation);
+        spawnedPlayerPrefab = PhotonNetwork.Instantiate("Tracker2", transform.position, transform.rotation);
+        spawnedPlayerPrefab = PhotonNetwork.Instantiate("Tracker3", transform.position, transform.rotation);
+        spawnedPlayerPrefab = PhotonNetwork.Instantiate("Tracker4", transform.position, transform.rotation);
+        spawnedPlayerPrefab = PhotonNetwork.Instantiate("Tracker5", transform.position, transform.rotation);
+        spawnedPlayerPrefab = PhotonNetwork.Instantiate("Tracker6", transform.position, transform.rotation);
+        spawnedPlayerPrefab = PhotonNetwork.Instantiate("Tracker7", transform.position, transform.rotation);
+        spawnedPlayerPrefab = PhotonNetwork.Instantiate("Tracker8", transform.position, transform.rotation);
+        spawnedPlayerPrefab = PhotonNetwork.Instantiate("Tracker9", transform.position, transform.rotation);
+    }
     }
 
     IEnumerator InstantiateViewFinderCamerAfterFewSeconds()
@@ -79,7 +79,7 @@ public class NetworkPlayerSpawn : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(2.5f);
         type = "headset";
         if (GameObject.Find("VR Headset Network Player") == null)
-            spawnedPlayerPrefab = PhotonNetwork.Instantiate("HeadsetUser", transform.position, transform.rotation);
+        spawnedPlayerPrefab = PhotonNetwork.Instantiate("HeadsetUser", transform.position, transform.rotation);
         //spawnedPlayerPrefab.transform.SetParent(GameObject.Find("[CameraRig]").transform);
     }
 }
