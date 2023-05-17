@@ -20,6 +20,7 @@ public class UniverseController : MonoBehaviour
     private PlanetController[] Planets; //List of planets to reference
     private VirtualController[] Bodies; //List of the virtual controlles in the planets to reference on build
     public RotateScript moon;
+    public MeshScaler moonMesh;
 
     //The values below are placeholder for the motion profiling set up to smooth out the orbit scale transitions
     //Would be cool if this was done with cubic splines instead
@@ -47,6 +48,11 @@ public class UniverseController : MonoBehaviour
         }
         originalTime = new float[Planets.Length];
     }
+
+    public void Start()
+    {
+        orbiting = true;
+    }
     public float curveInterp(float x)
     {
         //Debug.Log(interpCurve.Evaluate(x));
@@ -71,13 +77,15 @@ public class UniverseController : MonoBehaviour
                 moon.changing = true;
                 if (changeState == 0) //Slowing down
                 {
-                    Debug.Log("Decreasing Speed: " + accDuration + " " + changeSteps);
+                    //Debug.Log("Decreasing Speed: " + accDuration + " " + changeSteps);
                     decreaseSpeed(accDuration, 0);
                 }
+
                 if (changeState == 1) //Changing
                 {
-                    Debug.Log("Changing: " + changeDuration + " " + changeSteps);
-                    MeshScaler.isChanging = true;
+                    //Debug.Log("Changing: " + changeDuration + " " + changeSteps);
+                    moonMesh.changing();
+                    //Debug.Log("Set isChanging to true but is: " + FindObjectOfType<MeshScaler>().isChanging);
                     foreach (PlanetController pc in Planets)
                     {
                         pc.diameter = pc.ViewTypeChangeMatrix[0][changeSteps];
@@ -88,23 +96,32 @@ public class UniverseController : MonoBehaviour
                     {
                         changeState = 2;
                         changeSteps = 0;
-                        MeshScaler.isChanging = false;
                         MeshScaler.view = (MeshScaler.view == 1) ? 0 : 1;
                         FindObjectOfType<ViewTypeObserver>().transform.localPosition = new Vector3(0, 0, 0);
-                        if(FindObjectOfType<ViewTypeObserver>().targetViewType == 1)
+
+                        if(ViewTypeObserver.targetViewType == 1)
                         {
                             foreach (PlanetIdentifier pi in FindObjectsOfType<PlanetIdentifier>())
                             {
                                 pi.showArrow();
                             }
                         }
+
+                        else
+                        {
+                            foreach (PlanetIdentifier pi in FindObjectsOfType<PlanetIdentifier>())
+                            {
+                                pi.hideArrow();
+                            }
+                        }
                     }
                     changeSteps++;
-                    Debug.Log(changeSteps);
+                    //Debug.Log(changeSteps);
                 }
                 if (changeState == 2) //Speeding up
                 {
-                    Debug.Log("Speeding Back Up: " + accDuration + " " + changeSteps);
+                    moonMesh.doneChanging();
+                    //Debug.Log("Speeding Back Up: " + accDuration + " " + changeSteps);
                     increaseSpeed(accDuration, 10);
                 }
             }

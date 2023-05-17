@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Threading.Tasks;
+using Photon.Pun;
 
 public class LoadingScene : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class LoadingScene : MonoBehaviour
         
         if (Instance == null)
         {
+            _loaderCanvas.SetActive(true);
             Debug.Log("here");
             Instance = this;
             DontDestroyOnLoad(gameObject);
@@ -29,10 +31,11 @@ public class LoadingScene : MonoBehaviour
 
     public async void LoadScene(int sceneValue)
     {
-        var scene = SceneManager.LoadSceneAsync(sceneValue);
+        
+        AsyncOperation scene = SceneManager.LoadSceneAsync(sceneValue);
         scene.allowSceneActivation = false;
 
-        _loaderCanvas.SetActive(true);
+        
 
         do
         {

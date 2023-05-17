@@ -10,7 +10,7 @@ public class MeshScaler : MonoBehaviour
     public static int view = 0;
 
     public float trailTime;
-    public static bool isChanging = false;
+    private bool isChanging = false;
     public int steps = 0;
     public TrailRenderer tr;
 
@@ -29,11 +29,26 @@ public class MeshScaler : MonoBehaviour
             int targetView = (view == 1) ? 0 : 1;
             transform.localScale = Vector3.Lerp(scales[view], scales[targetView], (steps * 1f) / (UniverseController.changeDuration * 1f)) * UniverseController.planetScale;
             steps++;
+           // Debug.Log("Changing");
         }
+
         else
         {
             tr.time = trailTime;
         }
+        
         //transform.localScale = Vector3.one * scales[view - 1].x * UniverseController.planetScale;
+    }
+
+    public void changing()
+    {
+        isChanging = true;
+       // Debug.Log("Set true");
+    }
+
+    public void doneChanging()
+    {
+        isChanging = false;
+        //Debug.Log("Set false");
     }
 }

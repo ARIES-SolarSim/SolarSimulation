@@ -20,6 +20,7 @@ public class DocentManager : MonoBehaviour
         Debug.Log("set inst");
     }
 
+    // Daniel's code
     public void CallPVResetCamera()
     {
         Debug.Log("reset camera PVC");
@@ -28,6 +29,7 @@ public class DocentManager : MonoBehaviour
         myself.GetComponent<CameraSetup>().ResetCamera();
     }
 
+    // Daniel's code
     public void CallPVChangeCamera(int CameraNumber)
     {
         Debug.Log("change camera PVC");
@@ -55,12 +57,14 @@ public class DocentManager : MonoBehaviour
         myself.GetComponent<CameraSetup>().OpenHamburger();
     }
 
+    // Daniel's code
     public void ResetCamera()
     {
         Debug.Log("reset camera");
         myself.transform.SetParent(gameObject.transform);
     }
 
+    // Daniel's code
     public void ChangeCamera(int CameraNumber)
     {
         Debug.Log("change camera");
