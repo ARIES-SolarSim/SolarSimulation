@@ -487,6 +487,7 @@ namespace Valve.VR
             if (File.Exists(fullPath))
             {
                 string jsonText = File.ReadAllText(fullPath);
+                Debug.Log(fullPath);
                 SteamVR_Input_ManifestFile existingFile = Valve.Newtonsoft.Json.JsonConvert.DeserializeObject<SteamVR_Input_ManifestFile>(jsonText);
 
                 if (existingFile != null && existingFile.applications != null && existingFile.applications.Count > 0 &&

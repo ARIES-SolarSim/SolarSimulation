@@ -5,11 +5,7 @@
       "app_key": "application.generated.unity.movis.exe",
       "launch_type": "url",
       "url": "steam://launch/",
-<<<<<<< HEAD
-      "action_manifest_path": "D:\\Macey_SolarSim\\SolarSimulation\\MOVIS-base_template-main-\\Assets\\StreamingAssets\\SteamVR\\actions.json",
-=======
-      "action_manifest_path": "D:\\SolarSimulation-main(3-29)\\SolarSimulation-main\\MOVIS-base_template-main-\\Assets\\StreamingAssets\\SteamVR\\actions.json",
->>>>>>> 94a0058 (Merging together existing project files)
+      "action_manifest_path": "D:\\SummerSolarSim\\SolarSimulation-main\\MOVIS-base_template-main-\\Assets\\StreamingAssets\\SteamVR\\actions.json",
       "strings": {
         "en_us": {
           "name": "MOVIS [Testing]"

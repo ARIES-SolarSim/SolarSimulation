@@ -30,7 +30,7 @@ public class SolarSystem : MonoBehaviour
         earth = bodies[1];
 
         //Tis is the little earth inside the big earth
-        lil = GameObject.FindGameObjectsWithTag("lil")[0];
+        //lil = GameObject.FindGameObjectsWithTag("lil")[0];
 
         InitialVelocity();
         
@@ -75,7 +75,7 @@ public class SolarSystem : MonoBehaviour
             }
 
             //This makes little earth positioned where it should be inside of earth
-            lil.transform.position = earth.transform.position;
+            //lil.transform.position = earth.transform.position;
 
         }
     }
@@ -114,7 +114,7 @@ public class SolarSystem : MonoBehaviour
             }
 
             //This makes little earth positioned where it should be inside of earth
-            lil.transform.position = earth.transform.position;
+            //lil.transform.position = earth.transform.position;
         }
     }
 }

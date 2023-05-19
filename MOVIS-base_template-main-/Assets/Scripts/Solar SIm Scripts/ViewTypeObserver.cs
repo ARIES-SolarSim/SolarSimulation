@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 /*
  * This class is responsible for taking in information from the VR user, and telling all the builds to do the same action at the same time.
  */
 public class ViewTypeObserver : MonoBehaviour
 {
+
+    public GameObject loaderCanvas;
+    public Image progressBar;
+    public Image astronaut;
+
     private int currentViewType; //The current viewtype that the scene is displaying
     public static int targetViewType; //The view type that should be traveled to
     private int steps = -1; //Used for scene transitons
@@ -18,6 +24,9 @@ public class ViewTypeObserver : MonoBehaviour
     public MeshScaler tempMoonScale; // moon mesh script
 
     private bool transistion = false;
+
+
+    
 
     public static TrailRenderer[] trails;
 
@@ -42,8 +51,7 @@ public class ViewTypeObserver : MonoBehaviour
         // Switching to different views if the view we try to switch to is not the one we're in already
         if (y > 0 && y <= 6 && y != currentViewType)
         {
-            //var i = LoadingScene.Instance;
-            //i.LoadScene(2);
+            
 
             // Scene 1 has special cases
             if (y == 1)
@@ -88,7 +96,8 @@ public class ViewTypeObserver : MonoBehaviour
             else
             {
                 Debug.Log("Loading scene: " + levelNames[y - 1]);
-                PhotonNetwork.LoadLevel(levelNames[y - 1]);
+                //PhotonNetwork.LoadLevel(levelNames[y - 1]);
+                StartCoroutine(LoadingSomeLevel("Room2"));
                 currentViewType = y;
                 targetViewType = y; // Set this to avoid transition case
                 transform.localPosition = Vector3.zero;
@@ -146,5 +155,33 @@ public class ViewTypeObserver : MonoBehaviour
     public void changeScene(int i)
     {
         transform.localPosition = new Vector3(0, i, 0);
+    }
+
+    IEnumerator LoadingSomeLevel(string SceneValue)
+    {
+        loaderCanvas.SetActive(true);
+
+        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync("Room2");
+        asyncOperation.allowSceneActivation = false;
+
+        float progress = 0;
+
+        while (!asyncOperation.isDone)
+        {
+            
+            progress = Mathf.MoveTowards(progress, asyncOperation.progress, Time.deltaTime);
+            astronaut.rectTransform.localPosition = new  Vector3(-157 +(progress * 300), 25.5f, 0);
+            progressBar.fillAmount = progress;
+
+            if (progress >= 0.9f)
+            {
+                progressBar.fillAmount = 1;
+                astronaut.rectTransform.localPosition = new Vector3(-157 + 300, 25.5f, 0);
+                asyncOperation.allowSceneActivation = true;
+            }
+            yield return new WaitForSeconds(.09f);
+        }
+
+
     }
 }
