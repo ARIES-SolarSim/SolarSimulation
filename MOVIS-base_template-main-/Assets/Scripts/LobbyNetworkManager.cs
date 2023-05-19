@@ -109,7 +109,7 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
             PublishUserId = true
         };
 
-        PhotonNetwork.JoinOrCreateRoom("SplashPage", roomOptions, TypedLobby.Default);
+        PhotonNetwork.JoinOrCreateRoom("Room1", roomOptions, TypedLobby.Default);
     }
 
     public override void OnJoinedRoom()

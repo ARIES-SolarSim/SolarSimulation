@@ -157,19 +157,19 @@ public class ViewTypeObserver : MonoBehaviour
         transform.localPosition = new Vector3(0, i, 0);
     }
 
-    IEnumerator LoadingSomeLevel(string SceneValue)
+    IEnumerator LoadingSomeLevel(string sceneValue)
     {
         loaderCanvas.SetActive(true);
 
-        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync("Room2");
-        asyncOperation.allowSceneActivation = false;
+        
+     
 
-        float progress = 0;
+        float progress = 0f;
 
-        while (!asyncOperation.isDone)
+        while (progress < 1f)
         {
             
-            progress = Mathf.MoveTowards(progress, asyncOperation.progress, Time.deltaTime);
+            progress += 0.5f *0.07f;
             astronaut.rectTransform.localPosition = new  Vector3(-157 +(progress * 300), 25.5f, 0);
             progressBar.fillAmount = progress;
 
@@ -177,11 +177,11 @@ public class ViewTypeObserver : MonoBehaviour
             {
                 progressBar.fillAmount = 1;
                 astronaut.rectTransform.localPosition = new Vector3(-157 + 300, 25.5f, 0);
-                asyncOperation.allowSceneActivation = true;
+                
             }
             yield return new WaitForSeconds(.09f);
         }
-
+        PhotonNetwork.LoadLevel(3);
 
     }
 }
