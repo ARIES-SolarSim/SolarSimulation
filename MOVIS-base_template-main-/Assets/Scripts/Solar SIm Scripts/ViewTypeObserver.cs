@@ -34,8 +34,23 @@ public class ViewTypeObserver : MonoBehaviour
 
     private void Start()
     {
-        currentViewType = System.Array.IndexOf(levelNames, SceneManager.GetActiveScene().name) + 1;
-        targetViewType = currentViewType;
+        currentViewType = System.Array.IndexOf(levelNames, SceneManager.GetActiveScene().name);
+        Debug.Log("Current view: " + currentViewType);
+
+        // Start of application
+        if (targetViewType < 1 || targetViewType > 6)
+        {
+            Debug.Log("Start");
+            targetViewType = currentViewType;
+        }
+
+        // Switched to this scene and we're not in the right view
+        else if (targetViewType != currentViewType)
+        {
+            Debug.Log("Setting target view type to " + targetViewType);
+            transform.localPosition = new Vector3(targetViewType, 0, 0);
+        }
+
         //Debug.Log("Started at " + currentViewType);
         PhotonNetwork.AutomaticallySyncScene = true;
         if (otherScene == 2)
@@ -51,22 +66,21 @@ public class ViewTypeObserver : MonoBehaviour
         // Switching to different views if the view we try to switch to is not the one we're in already
         if (y > 0 && y <= 6 && y != currentViewType)
         {
-            
-
             // Scene 1 has special cases
             if (y == 1)
             {
                 // If not in room 1, go to it
-                if (currentViewType > 2)
+                if (currentViewType > 2 && currentViewType != 6)
                 {
+                    targetViewType = 1;
                     PhotonNetwork.LoadLevel(levelNames[1]);
-                    currentViewType = 1;
                     transform.localPosition = Vector3.zero;
                 }
 
                 // If in room 1, toggle viewtype
                 else
                 {
+                    targetViewType = 1;
                     transform.localPosition = new Vector3(1, 0, 0);
                 }
             }
@@ -77,18 +91,39 @@ public class ViewTypeObserver : MonoBehaviour
                 // If not in room 1, go to it, then immediately toggle to view 2
                 // (does not work because new scene reloads everything. May need a separate
                 // scene for going directly into view 2, but don't worry about that right now)
-                if (currentViewType > 2)
+                if (currentViewType > 2 && currentViewType != 6)
                 {
+                    targetViewType = 2;
                     PhotonNetwork.LoadLevel(levelNames[1]);
-                    currentViewType = 1;
                     transform.localPosition = Vector3.zero;
                 }
 
                 // If in room 1, toggle
                 else
                 {
-                    currentViewType = 1;
-                    transform.localPosition = new Vector3(1, 0, 0);
+                    targetViewType = 2;
+                    transform.localPosition = new Vector3(2, 0, 0);
+                }
+            }
+
+            // Scene 6 has special cases
+            else if (y == 6)
+            {
+                // If not in room 1, go to it, then immediately toggle to view 6
+                // (does not work because new scene reloads everything. May need a separate
+                // scene for going directly into view 6, but don't worry about that right now)
+                if (currentViewType > 2)
+                {
+                    targetViewType = 6;
+                    PhotonNetwork.LoadLevel(levelNames[1]);
+                    transform.localPosition = Vector3.zero;
+                }
+
+                // If in room 1, toggle
+                else
+                {
+                    targetViewType = 6;
+                    transform.localPosition = new Vector3(6, 0, 0);
                 }
             }
 
@@ -97,7 +132,7 @@ public class ViewTypeObserver : MonoBehaviour
             {
                 Debug.Log("Loading scene: " + levelNames[y - 1]);
                 //PhotonNetwork.LoadLevel(levelNames[y - 1]);
-                StartCoroutine(LoadingSomeLevel("Room2"));
+                StartCoroutine(LoadingSomeLevel(levelNames[y - 1]));
                 currentViewType = y;
                 targetViewType = y; // Set this to avoid transition case
                 transform.localPosition = Vector3.zero;
@@ -111,22 +146,9 @@ public class ViewTypeObserver : MonoBehaviour
             transform.localPosition = Vector3.zero;
         }
 
-        // Going from view 1 to view 2 or vice versa
-        if (!(transform.localPosition.x == 0) && otherScene == 2)
+        // Going between view 1, 2, and 6
+        if (transform.localPosition.x != 0)
         {
-            //Debug.Log("x = 1, otherscene = 2");
-            if (transform.localPosition.x == 1)
-            {
-                targetViewType = 1;
-            }
-            else if (transform.localPosition.x == 2)
-            {
-                targetViewType = 2;
-            }
-            else
-            {
-                targetViewType = 3;
-            }
             if (targetViewType != currentViewType)
             {
                 transform.localPosition = Vector3.zero;
@@ -135,29 +157,56 @@ public class ViewTypeObserver : MonoBehaviour
                 FindObjectOfType<RotateScript>().changing = true;
             }
         }
-        // Transitioning between view 1 and view 2 or vice versa
+
+        // Transitions between view 1, view 2, and view 6
         if (currentViewType != targetViewType)
         {
-            //Debug.Log("Mismatch");
-            steps++;
-            UniverseController.orbiting = false;
-            FindObjectOfType<UniverseController>().gameObject.transform.localEulerAngles = Vector3.zero; //May need to become smooth
-
-            foreach (PlanetController pc in FindObjectsOfType<PlanetController>())
+            // Going to view 6
+            if (targetViewType == 6)
             {
-                pc.changeViewType(targetViewType);
+
             }
 
-            if (UniverseController.changeState == 1)
+            // Currently in view 6
+            else if (currentViewType == 6)
             {
-                transistion = true;
+                // Going to view 1
+                if (targetViewType == 1)
+                {
+
+                }
+
+                // Going to view 2
+                else
+                {
+
+                }
             }
 
-            if (steps == UniverseController.changeDuration && transistion)
+            // Going between view 1 and 2 or vice versa
+            else
             {
-                transform.localPosition = new Vector3(0, 0, 0);
-                steps = 0; //Finished view type transistion
-                currentViewType = targetViewType;
+                //Debug.Log("Mismatch");
+                steps++;
+                UniverseController.orbiting = false;
+                FindObjectOfType<UniverseController>().gameObject.transform.localEulerAngles = Vector3.zero; //May need to become smooth
+
+                foreach (PlanetController pc in FindObjectsOfType<PlanetController>())
+                {
+                    pc.changeViewType(targetViewType);
+                }
+
+                if (UniverseController.changeState == 1)
+                {
+                    transistion = true;
+                }
+
+                if (steps == UniverseController.changeDuration && transistion)
+                {
+                    transform.localPosition = new Vector3(0, 0, 0);
+                    steps = 0; //Finished view type transistion
+                    currentViewType = targetViewType;
+                }
             }
         }
     }
