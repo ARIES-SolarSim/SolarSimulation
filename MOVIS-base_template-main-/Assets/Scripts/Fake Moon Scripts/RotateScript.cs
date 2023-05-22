@@ -13,8 +13,8 @@ public class RotateScript : MonoBehaviour
     public int view = 1;
 
     private Vector3[] scales = {new Vector3(0.000003476238745f, 0.000003476238745f, 0.000003476238745f),
-        new Vector3(0.05079997257f, 0.05079997257f, 0.05079997257f) };
-    private Vector3[] positions = {new Vector3(0.001f, -0.006858f, 0f), new Vector3(0.149878f, -0.006858f, 0f) };
+        new Vector3(0.05079997257f, 0.05079997257f, 0.05079997257f), new Vector3(0.228599877f, 0.228599877f, 0.228599877f)};
+    private Vector3[] positions = {new Vector3(0.001f, -0.006858f, 0f), new Vector3(0.149878f, -0.006858f, 0f), new Vector3(0.149878f, -0.006858f, 0f) };
 
     public GameObject theMesh;
     public GameObject arrow;

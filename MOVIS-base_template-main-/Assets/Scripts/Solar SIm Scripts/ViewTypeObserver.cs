@@ -112,16 +112,29 @@ public class ViewTypeObserver : MonoBehaviour
         }
 
         // Going from view 1 to view 2 or vice versa
-        if (transform.localPosition.x == 1 && otherScene == 2)
+        if (!(transform.localPosition.x == 0) && otherScene == 2)
         {
             //Debug.Log("x = 1, otherscene = 2");
-            targetViewType = (currentViewType == 1 ? 2 : 1);
-            transform.localPosition = Vector3.zero;
-            steps = 0;
-            FindObjectOfType<RotateScript>().view = targetViewType;
-            FindObjectOfType<RotateScript>().changing = true;
+            if (transform.localPosition.x == 1)
+            {
+                targetViewType = 1;
+            }
+            else if (transform.localPosition.x == 2)
+            {
+                targetViewType = 2;
+            }
+            else
+            {
+                targetViewType = 3;
+            }
+            if (targetViewType != currentViewType)
+            {
+                transform.localPosition = Vector3.zero;
+                steps = 0;
+                FindObjectOfType<RotateScript>().view = targetViewType;
+                FindObjectOfType<RotateScript>().changing = true;
+            }
         }
-
         // Transitioning between view 1 and view 2 or vice versa
         if (currentViewType != targetViewType)
         {
