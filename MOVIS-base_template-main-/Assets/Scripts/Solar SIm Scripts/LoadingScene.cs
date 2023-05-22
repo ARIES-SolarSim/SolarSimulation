@@ -9,12 +9,17 @@ using Photon.Pun;
 public class LoadingScene : MonoBehaviour
 {
  
-
-    public void LoadScene(string sceneValue)
+    public void LoadScene(string scene)
     {
 
 
-        SceneManager.LoadScene(sceneValue);
+
+        if (PhotonNetwork.IsMasterClient)
+            PhotonNetwork.LoadLevel("Room1");
+
+
+
+
 
 
 

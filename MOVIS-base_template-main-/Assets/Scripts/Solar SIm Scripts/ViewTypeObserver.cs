@@ -30,7 +30,7 @@ public class ViewTypeObserver : MonoBehaviour
 
     public static TrailRenderer[] trails;
 
-    private static string[] levelNames = { "Room1", "Room1", "Room2", "", "", "" }; // names of each scene, in order (update as we add more)
+    private static string[] levelNames = { "Lobby", "Room1", "Room1", "Room2", "", "", "" }; // names of each scene, in order (update as we add more)
 
     private void Start()
     {
@@ -59,7 +59,7 @@ public class ViewTypeObserver : MonoBehaviour
                 // If not in room 1, go to it
                 if (currentViewType > 2)
                 {
-                    PhotonNetwork.LoadLevel(levelNames[0]);
+                    PhotonNetwork.LoadLevel(levelNames[1]);
                     currentViewType = 1;
                     transform.localPosition = Vector3.zero;
                 }
@@ -184,4 +184,6 @@ public class ViewTypeObserver : MonoBehaviour
         PhotonNetwork.LoadLevel(3);
 
     }
+
+    
 }

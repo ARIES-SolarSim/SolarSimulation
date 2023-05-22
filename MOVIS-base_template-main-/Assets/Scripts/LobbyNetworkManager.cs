@@ -10,6 +10,7 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
     public GameObject JoinedRoomPanel;
     public void ClickedHeadsetUser()
     {
+
         StartCoroutine(EnableJoinedRoomPanelAfterFewSeconds()); //wait for few seconds to connect the server
     }
     public void ClickedDocent()
@@ -62,6 +63,7 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
 
     public void ConnectToServer()
     {
+       
         PhotonNetwork.ConnectUsingSettings();
 
         if (LobbyManager.userType) //if it is true, ViewFinder User
@@ -100,6 +102,8 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
     }
     public void InitializeRoom() //join or create room1
     {
+
+        Debug.Log("initialize room");
         //Room option
         RoomOptions roomOptions = new RoomOptions()
         {
@@ -110,23 +114,37 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
         };
 
         PhotonNetwork.JoinOrCreateRoom("Room1", roomOptions, TypedLobby.Default);
+        
     }
 
     public override void OnJoinedRoom()
     {
+        
         Debug.Log("Joined a Room");
         base.OnJoinedRoom();
+        for(int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
+        {
+            Debug.Log(i);
+        }
+      
+        
+    
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         Debug.Log("A new player entered the room");
+        if(newPlayer.NickName == "VR Headset Network Player")
+        {
+            PhotonNetwork.SetMasterClient(newPlayer);
+        }
         base.OnPlayerEnteredRoom(newPlayer);
     }
 
     IEnumerator EnableJoinedRoomPanelAfterFewSeconds()
     {
-        yield return new WaitForSeconds(2.5f);
+        //yield return new WaitForSeconds(2.5f);
+        yield return null;
         JoinedRoomPanel.SetActive(true);
     }
 }

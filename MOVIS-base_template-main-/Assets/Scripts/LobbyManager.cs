@@ -11,6 +11,7 @@ public class LobbyManager : MonoBehaviour
     public void ClickedHeadset()
     {
         userType = false; //set as Headset user
+
     }
     public void ClickedViewFinder()
     {
@@ -24,6 +25,6 @@ public class LobbyManager : MonoBehaviour
 
     public void ClickedEnterRoom()
     {
-        PhotonNetwork.LoadLevel(2); //load the Scene 1 (Room1)
+        PhotonNetwork.LoadLevel(1); //load the Scene 1 (Room1)
     }
 }
