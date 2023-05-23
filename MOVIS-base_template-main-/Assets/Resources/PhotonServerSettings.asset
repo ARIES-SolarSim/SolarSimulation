@@ -43,6 +43,7 @@ MonoBehaviour:
   - ResetCamera
   - ChangeScene
   - OpenHamburger
+  - LoadingSomeLevel
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

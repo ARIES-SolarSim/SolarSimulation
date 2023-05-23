@@ -42,7 +42,7 @@ public class NetworkPlayerSpawn : MonoBehaviourPunCallbacks
         if (type == "camera")
         {
             Debug.Log("called");
-            spawnedPlayerPrefab.GetComponent<CameraSetup>().setCanvasInactive();
+            //spawnedPlayerPrefab.GetComponent<CameraSetup>().setCanvasInactive();
         }
 
         PhotonNetwork.Destroy(spawnedPlayerPrefab);

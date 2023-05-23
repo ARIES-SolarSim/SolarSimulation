@@ -14,9 +14,9 @@ public class LoadingScene : MonoBehaviour
 
 
 
-        if (PhotonNetwork.IsMasterClient)
+       /* if (PhotonNetwork.IsMasterClient)
             PhotonNetwork.LoadLevel("Room1");
-
+*/
 
 
 

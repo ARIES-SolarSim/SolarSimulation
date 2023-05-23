@@ -8,6 +8,9 @@ using UnityEngine.SceneManagement;
 public class LobbyNetworkManager : MonoBehaviourPunCallbacks
 {
     public GameObject JoinedRoomPanel;
+    public GameObject SplashPagePanel;
+    public GameObject image;
+    public GameObject splash;
     public void ClickedHeadsetUser()
     {
 
@@ -146,5 +149,20 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
         //yield return new WaitForSeconds(2.5f);
         yield return null;
         JoinedRoomPanel.SetActive(true);
+    }
+
+    public void clickedStart()
+    {
+        
+        StartCoroutine(EnableSplashScreenAfterFewSeconds());
+    }
+
+    IEnumerator EnableSplashScreenAfterFewSeconds()
+    {
+        yield return null;
+        JoinedRoomPanel.SetActive(false);
+        image.SetActive(false);
+        splash.SetActive(true);
+        SplashPagePanel.SetActive(true);
     }
 }

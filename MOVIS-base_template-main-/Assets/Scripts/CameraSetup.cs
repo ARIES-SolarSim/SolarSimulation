@@ -20,17 +20,19 @@ public class CameraSetup : MonoBehaviour
             photonView = GetComponent<PhotonView>();
         }
 
+        if (photonView.IsMine) //revmoe the tag so that myself is not disabled in the update funciton
+        {
+            Debug.Log("setting tag myself for " + photonView.Owner.NickName);
+            this.gameObject.tag = "Myself";
+        }
+
         trackerSetup();
         StartCoroutine(FindTrackerAfterFewSeconds()); //give few seconds for the systems to settle
         this.gameObject.name = photonView.Owner.NickName;
 
         setCanvas();
 
-        if (photonView.IsMine) //revmoe the tag so that myself is not disabled in the update funciton
-        {
-            Debug.Log("setting tag myself for " + photonView.Owner.NickName);
-            this.gameObject.tag = "Myself";
-        }
+        
     }
 
     // Update is called once per frame
@@ -175,7 +177,7 @@ public class CameraSetup : MonoBehaviour
         
         catch
         {
-            Debug.Log("Failed mapping of tracker: " + photonView.Owner.NickName + " , Attempting to connect again");
+            //Debug.Log("Failed mapping of tracker: " + photonView.Owner.NickName + " , Attempting to connect again");
             trackerSetup();
         }
     }

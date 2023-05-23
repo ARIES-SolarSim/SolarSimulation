@@ -11,9 +11,15 @@ using UnityEngine.UI;
 public class ViewTypeObserver : MonoBehaviour
 {
 
+    public Text fact;
+    public Image astronaut;
+    public Image rocket;
+    public Image planet;
     public GameObject loaderCanvas;
     public Image progressBar;
-    public Image astronaut;
+    public FactData factList;
+    private int character;
+    
 
     private int currentViewType; //The current viewtype that the scene is displaying
     public static int targetViewType; //The view type that should be traveled to
@@ -25,6 +31,8 @@ public class ViewTypeObserver : MonoBehaviour
 
     private bool transistion = false;
 
+    public GameObject canvas7;
+
 
     
 
@@ -34,6 +42,7 @@ public class ViewTypeObserver : MonoBehaviour
 
     private void Start()
     {
+        PhotonNetwork.AutomaticallySyncScene = true;
         currentViewType = System.Array.IndexOf(levelNames, SceneManager.GetActiveScene().name);
         Debug.Log("Current view: " + currentViewType);
 
@@ -52,7 +61,7 @@ public class ViewTypeObserver : MonoBehaviour
         }
 
         //Debug.Log("Started at " + currentViewType);
-        PhotonNetwork.AutomaticallySyncScene = true;
+        
         if (otherScene == 2)
         {
             trails = new TrailRenderer[FindObjectsOfType<PlanetController>().Length - 2];
@@ -126,13 +135,26 @@ public class ViewTypeObserver : MonoBehaviour
                     transform.localPosition = new Vector3(6, 0, 0);
                 }
             }
-
-            // Index of all other scenes is (scene number - 1)
-            else
+            else if (y == 3)
             {
                 Debug.Log("Loading scene: " + levelNames[y - 1]);
                 //PhotonNetwork.LoadLevel(levelNames[y - 1]);
-                StartCoroutine(LoadingSomeLevel(levelNames[y - 1]));
+                
+                if (PhotonNetwork.IsMasterClient)
+                {
+
+                    
+                    Debug.Log("we are the master client");
+                    PhotonView view = GetComponent<PhotonView>();
+                    view.RPC("LoadingSomeLevel", RpcTarget.All, levelNames[y - 1]);
+                    targetViewType = 3;
+                    transform.localPosition = new Vector3(3, 0, 0);
+                }
+            }
+            // Index of all other scenes is (scene number - 1)
+            else
+            {
+               
                 currentViewType = y;
                 targetViewType = y; // Set this to avoid transition case
                 transform.localPosition = Vector3.zero;
@@ -219,31 +241,77 @@ public class ViewTypeObserver : MonoBehaviour
         transform.localPosition = new Vector3(0, i, 0);
     }
 
+    [PunRPC]
     IEnumerator LoadingSomeLevel(string sceneValue)
     {
-        loaderCanvas.SetActive(true);
 
+        loaderCanvas.SetActive(true);
+        character = Random.Range(0, 2);
+        int factInt = Random.Range(0, 31);
+        Debug.Log(factInt);
+        //Debug.Log(factList.FactList[0]);
+        fact.text = factList.FactList[factInt];
         
-     
+
+        Debug.Log("We are in loadingsomelevel");
 
         float progress = 0f;
 
         while (progress < 1f)
         {
-            
+            Debug.Log(character);
             progress += 0.5f *0.07f;
-            astronaut.rectTransform.localPosition = new  Vector3(-157 +(progress * 300), 25.5f, 0);
-            progressBar.fillAmount = progress;
-
-            if (progress >= 0.9f)
+            
+            
+            if (character == 0)
             {
-                progressBar.fillAmount = 1;
-                astronaut.rectTransform.localPosition = new Vector3(-157 + 300, 25.5f, 0);
-                
+                rocket.enabled = false;
+                planet.enabled = false;
+
+                astronaut.rectTransform.localPosition = new Vector3(-157 + (progress * 300), 75f, 0);
+                progressBar.fillAmount = progress;
+
+                if (progress >= 0.9f)
+                {
+                    progressBar.fillAmount = 1;
+                    astronaut.rectTransform.localPosition = new Vector3(-157 + 300, 75f, 0);
+
+                }
+            }else if (character == 1)
+            {
+                astronaut.enabled = false;
+                planet.enabled = false;
+
+                rocket.rectTransform.localPosition = new Vector3(-157 + (progress * 300), 0, 0);
+                progressBar.fillAmount = progress;
+
+                if (progress >= 0.9f)
+                {
+                    progressBar.fillAmount = 1;
+                    rocket.rectTransform.localPosition = new Vector3(-157 + 300, 0, 0);
+
+                }
             }
-            yield return new WaitForSeconds(.09f);
+            else if (character == 2)
+            {
+                astronaut.enabled = false;
+                rocket.enabled = false;
+
+                planet.rectTransform.localPosition = new Vector3(-157 + (progress * 300), 0, 0);
+                progressBar.fillAmount = progress;
+
+                if (progress >= 0.9f)
+                {
+                    progressBar.fillAmount = 1;
+                    planet.rectTransform.localPosition = new Vector3(-157 + 300, 0, 0);
+
+                }
+            }
+
+
+        yield return new WaitForSeconds(.09f);
         }
-        PhotonNetwork.LoadLevel(3);
+        PhotonNetwork.LoadLevel(2);
 
     }
 
