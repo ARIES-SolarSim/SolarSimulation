@@ -19,4 +19,9 @@ public class TempMoonScript : MonoBehaviour
         transform.localPosition = new Vector3(r * Mathf.Cos(lambda * 2 * Mathf.PI / 180f), 0, r * Mathf.Sin(lambda * 2 * Mathf.PI / 180f));
         lambda = lambda + lambdaRate >= 360f ? lambda + lambdaRate - 360 : lambda + lambdaRate;
     }
+
+    public float getLambda()
+    {
+        return lambda;
+    }
 }
