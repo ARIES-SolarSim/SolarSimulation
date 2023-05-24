@@ -12,12 +12,18 @@ public class movement : MonoBehaviour
     void Start()
     {
         bodies = GameObject.FindGameObjectsWithTag("bodies");
-        earth = bodies[1];
+        foreach (GameObject b in bodies)
+        {
+            if(b.name == "proxyEarth")
+            {
+                earth = b;
+            }
+        }
 
         offset = earth.transform.position - transform.position;
     }
     void Update()
     {
-        transform.position = earth.transform.position - offset;
+        transform.position = earth.transform.position;
     }
 }

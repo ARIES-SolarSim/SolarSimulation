@@ -31,7 +31,7 @@ public class SolarSystem : MonoBehaviour
 
         //Tis is the little earth inside the big earth
         //lil = GameObject.FindGameObjectsWithTag("lil")[0];
-        FindObjectOfType<ViewTypeObserver>().transform.localPosition = new Vector3(0, 0, 0);
+       
         InitialVelocity();
         
     }

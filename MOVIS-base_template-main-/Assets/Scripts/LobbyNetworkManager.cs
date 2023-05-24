@@ -1,6 +1,7 @@
  using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
@@ -11,6 +12,7 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
     public GameObject SplashPagePanel;
     public GameObject image;
     public GameObject splash;
+    public Button getStarted;
     public void ClickedHeadsetUser()
     {
 
@@ -146,8 +148,8 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
 
     IEnumerator EnableJoinedRoomPanelAfterFewSeconds()
     {
-        //yield return new WaitForSeconds(2.5f);
-        yield return null;
+        yield return new WaitForSeconds(2.5f);
+        //yield return null;
         JoinedRoomPanel.SetActive(true);
     }
 
@@ -164,5 +166,9 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
         image.SetActive(false);
         splash.SetActive(true);
         SplashPagePanel.SetActive(true);
+    }
+
+    public void disableButtton() {
+        getStarted.enabled = false;
     }
 }

@@ -10,14 +10,14 @@ public class FactData : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        FactList = new string[32];
+        FactList = new string[22];
         ReadCSV();
     }
 
     void ReadCSV()
     {
         string[] data = factSheet.text.Split(new string[] { "\n" }, System.StringSplitOptions.None);
-        for (int i = 0; i < 32; i++)
+        for (int i = 0; i < 22; i++)
         {
             
             FactList[i] = data[i];

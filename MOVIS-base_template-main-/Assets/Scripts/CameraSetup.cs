@@ -26,10 +26,10 @@ public class CameraSetup : MonoBehaviour
             this.gameObject.tag = "Myself";
         }
 
-        trackerSetup();
+        
         StartCoroutine(FindTrackerAfterFewSeconds()); //give few seconds for the systems to settle
         this.gameObject.name = photonView.Owner.NickName;
-
+        trackerSetup();
         setCanvas();
 
         
@@ -85,7 +85,10 @@ public class CameraSetup : MonoBehaviour
         viewFinderCameras = GameObject.FindGameObjectsWithTag("ViewFinderCamera");
         for (int i = 0; i < viewFinderCameras.Length; i++)
         {
-            viewFinderCameras[i].SetActive(false);
+            if (i.ToString() != photonView.Owner.NickName)
+            {
+                viewFinderCameras[i].SetActive(false);
+            }
         }
 
     }
@@ -135,7 +138,7 @@ public class CameraSetup : MonoBehaviour
         {
             GameObject.Find("Canvases").transform.GetChild(6).GetComponent<Canvas>().gameObject.SetActive(true);
             canvas = GameObject.Find("Canvases/Canvas7").GetComponent<Canvas>();
-            canvas.worldCamera = this.GetComponent<Camera>();
+            //canvas.worldCamera = this.GetComponent<Camera>();
         }
         else if (photonView.Owner.NickName == "8")
         {
@@ -163,6 +166,7 @@ public class CameraSetup : MonoBehaviour
     {
         try
         {
+            
             Vector3 newPosition = tracker.transform.position;
             Quaternion newRotation = tracker.transform.rotation;
 
@@ -171,13 +175,14 @@ public class CameraSetup : MonoBehaviour
 
             transform.position = newPosition;
             transform.rotation = newRotation;
+            Debug.Log(transform.position);
             //transform.position = tracker.transform.position;
             //transform.rotation = tracker.transform.rotation;
         }
         
         catch
         {
-            //Debug.Log("Failed mapping of tracker: " + photonView.Owner.NickName + " , Attempting to connect again");
+            Debug.Log("Failed mapping of tracker: " + photonView.Owner.NickName + " , Attempting to connect again");
             trackerSetup();
         }
     }

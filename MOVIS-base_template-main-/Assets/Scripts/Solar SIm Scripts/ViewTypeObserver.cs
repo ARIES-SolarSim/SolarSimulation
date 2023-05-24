@@ -147,9 +147,11 @@ public class ViewTypeObserver : MonoBehaviour
                     Debug.Log("we are the master client");
                     PhotonView view = GetComponent<PhotonView>();
                     view.RPC("LoadingSomeLevel", RpcTarget.All, levelNames[y - 1]);
-                    targetViewType = 3;
-                    transform.localPosition = new Vector3(3, 0, 0);
+                    
+                   
                 }
+                targetViewType = 3;
+                transform.localPosition = new Vector3(3, 0, 0);
             }
             // Index of all other scenes is (scene number - 1)
             else
@@ -169,28 +171,28 @@ public class ViewTypeObserver : MonoBehaviour
         }
 
         // Going between view 1, 2, and 6
-        if (transform.localPosition.x != 0)
+        if (transform.localPosition.x != 0 && transform.localPosition.x != 3)
         {
-            if (targetViewType != currentViewType)
+            /*if (targetViewType != currentViewType)
             {
                 transform.localPosition = Vector3.zero;
                 steps = 0;
                 FindObjectOfType<RotateScript>().view = targetViewType;
                 FindObjectOfType<RotateScript>().changing = true;
-            }
+            }*/
         }
 
         // Transitions between view 1, view 2, and view 6
         if (currentViewType != targetViewType)
         {
             // Going to view 6
-            if (targetViewType == 6)
+            if (targetViewType == 3)
             {
 
             }
 
             // Currently in view 6
-            else if (currentViewType == 6)
+            else if (currentViewType == 3)
             {
                 // Going to view 1
                 if (targetViewType == 1)
@@ -247,7 +249,7 @@ public class ViewTypeObserver : MonoBehaviour
 
         loaderCanvas.SetActive(true);
         character = Random.Range(0, 2);
-        int factInt = Random.Range(0, 31);
+        int factInt = Random.Range(0, 21);
         Debug.Log(factInt);
         //Debug.Log(factList.FactList[0]);
         fact.text = factList.FactList[factInt];
@@ -259,7 +261,7 @@ public class ViewTypeObserver : MonoBehaviour
 
         while (progress < 1f)
         {
-            Debug.Log(character);
+            
             progress += 0.5f *0.07f;
             
             
@@ -268,13 +270,13 @@ public class ViewTypeObserver : MonoBehaviour
                 rocket.enabled = false;
                 planet.enabled = false;
 
-                astronaut.rectTransform.localPosition = new Vector3(-157 + (progress * 300), 75f, 0);
+                astronaut.rectTransform.localPosition = new Vector3(-375 + (progress * 721), 75f, 0);
                 progressBar.fillAmount = progress;
 
                 if (progress >= 0.9f)
                 {
                     progressBar.fillAmount = 1;
-                    astronaut.rectTransform.localPosition = new Vector3(-157 + 300, 75f, 0);
+                    astronaut.rectTransform.localPosition = new Vector3(-375 + 721, 75f, 0);
 
                 }
             }else if (character == 1)
@@ -282,13 +284,13 @@ public class ViewTypeObserver : MonoBehaviour
                 astronaut.enabled = false;
                 planet.enabled = false;
 
-                rocket.rectTransform.localPosition = new Vector3(-157 + (progress * 300), 0, 0);
+                rocket.rectTransform.localPosition = new Vector3(-320 + (progress * 721), 0, 0);
                 progressBar.fillAmount = progress;
 
                 if (progress >= 0.9f)
                 {
                     progressBar.fillAmount = 1;
-                    rocket.rectTransform.localPosition = new Vector3(-157 + 300, 0, 0);
+                    rocket.rectTransform.localPosition = new Vector3(-320 + 721, 0, 0);
 
                 }
             }
@@ -297,13 +299,13 @@ public class ViewTypeObserver : MonoBehaviour
                 astronaut.enabled = false;
                 rocket.enabled = false;
 
-                planet.rectTransform.localPosition = new Vector3(-157 + (progress * 300), 0, 0);
+                planet.rectTransform.localPosition = new Vector3(-300 + (progress * 721), 0, 0);
                 progressBar.fillAmount = progress;
 
                 if (progress >= 0.9f)
                 {
                     progressBar.fillAmount = 1;
-                    planet.rectTransform.localPosition = new Vector3(-157 + 300, 0, 0);
+                    planet.rectTransform.localPosition = new Vector3(-300 + 721, 0, 0);
 
                 }
             }
