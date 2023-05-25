@@ -33,7 +33,7 @@ public class ViewTypeObserver : MonoBehaviour
 
     public GameObject canvas7;
 
-
+    public static bool immediateTransition = false;
     
 
     public static TrailRenderer[] trails;
@@ -102,6 +102,7 @@ public class ViewTypeObserver : MonoBehaviour
                 // scene for going directly into view 2, but don't worry about that right now)
                 if (currentViewType > 2 && currentViewType != 6)
                 {
+                    immediateTransition = true;
                     targetViewType = 2;
                     PhotonNetwork.LoadLevel(levelNames[1]);
                     transform.localPosition = Vector3.zero;
@@ -138,7 +139,7 @@ public class ViewTypeObserver : MonoBehaviour
             else if (y == 3)
             {
                 Debug.Log("Loading scene: " + levelNames[y - 1]);
-                //PhotonNetwork.LoadLevel(levelNames[y - 1]);
+                PhotonNetwork.LoadLevel(levelNames[y - 1]);
                 
                 if (PhotonNetwork.IsMasterClient)
                 {
@@ -156,10 +157,10 @@ public class ViewTypeObserver : MonoBehaviour
             // Index of all other scenes is (scene number - 1)
             else
             {
-               
                 currentViewType = y;
                 targetViewType = y; // Set this to avoid transition case
                 transform.localPosition = Vector3.zero;
+                //PhotonNetwork.LoadLevel(levelNames[y - 1]);
             }
             //Debug.Log("View currently: " + currentViewType + ", target: " + targetViewType);
         }
