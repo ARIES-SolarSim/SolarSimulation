@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ButtonManager : MonoBehaviour
 {
+    /*
     public int height;
     public int width;
     public int kerning;
@@ -26,8 +27,8 @@ public class ButtonManager : MonoBehaviour
 
     public class ButtonList
     {
-        public 
+        //public 
     }
-
+    */
 
 }
