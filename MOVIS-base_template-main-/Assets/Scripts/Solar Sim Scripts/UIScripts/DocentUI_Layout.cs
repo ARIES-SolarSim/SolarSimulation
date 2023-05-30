@@ -65,13 +65,15 @@ public class DocentUI_Layout: MonoBehaviour
             }
         }
 
+        //Vertical is untested. They should work, but they might be backwards lol
+
         else if (dir == Direction.BottomToTop)
         {
             for (int i = 0; i < buttons.Length; i++)
             {
                 rt = buttons[i].GetComponent<RectTransform>();
                 rt.sizeDelta = size;
-                rt.localPosition = new Vector3(0, i * (kerning + rt.rect.height), 0);
+                rt.localPosition = new Vector3(0, i * (kerning + rt.rect.height), 0); 
             }
         }
 
