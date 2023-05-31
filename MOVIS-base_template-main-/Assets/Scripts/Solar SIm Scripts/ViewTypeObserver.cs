@@ -19,12 +19,15 @@ public class ViewTypeObserver : MonoBehaviour
     public Image progressBar;
     public FactData factList;
     private int character;
-    
+
+    // public GameObject docentManager; 
+    // Used for Changing the instance of DocentUI_Manager when ViewTypeObserver changes scenes
+    // Notably, DocentUI_Manager is not in use. If that changes, uncomment the code! 
 
     private int currentViewType; //The current viewtype that the scene is displaying
     public static int targetViewType; //The view type that should be traveled to
     private int steps = -1; //Used for scene transitons
-    public int otherScene; //place holder to represent the other scene to travel to
+    public int otherScene; // place holder to represent the other scene to travel to
 
     public RotateScript tempMoonRotate; // moon rotation script
     public MeshScaler tempMoonScale; // moon mesh script
@@ -143,8 +146,6 @@ public class ViewTypeObserver : MonoBehaviour
                 
                 if (PhotonNetwork.IsMasterClient)
                 {
-
-                    
                     Debug.Log("we are the master client");
                     PhotonView view = GetComponent<PhotonView>();
                     view.RPC("LoadingSomeLevel", RpcTarget.All, levelNames[y]);
@@ -247,6 +248,8 @@ public class ViewTypeObserver : MonoBehaviour
     */
     public void changeScene(int i)
     {
+        // docentManager.GetComponent<DocentUI_Manager>().changeState((int)transform.localPosition.y, i);
+        // Currently, DocentUI_Manager is unused, but if that changes, uncomment - Shane 
         transform.localPosition = new Vector3(0, i, 0);
     }
 
@@ -324,5 +327,4 @@ public class ViewTypeObserver : MonoBehaviour
 
     }
 
-    
 }
