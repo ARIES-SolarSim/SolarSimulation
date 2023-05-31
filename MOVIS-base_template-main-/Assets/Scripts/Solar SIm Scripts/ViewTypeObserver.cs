@@ -138,8 +138,8 @@ public class ViewTypeObserver : MonoBehaviour
             }
             else if (y == 3)
             {
-                Debug.Log("Loading scene: " + levelNames[y - 1]);
-                PhotonNetwork.LoadLevel(levelNames[y - 1]);
+                Debug.Log("Loading scene: " + levelNames[y]);
+                PhotonNetwork.LoadLevel(levelNames[y]);
                 
                 if (PhotonNetwork.IsMasterClient)
                 {
@@ -147,12 +147,13 @@ public class ViewTypeObserver : MonoBehaviour
                     
                     Debug.Log("we are the master client");
                     PhotonView view = GetComponent<PhotonView>();
-                    view.RPC("LoadingSomeLevel", RpcTarget.All, levelNames[y - 1]);
+                    view.RPC("LoadingSomeLevel", RpcTarget.All, levelNames[y]);
                     
                    
                 }
                 targetViewType = 3;
-                transform.localPosition = new Vector3(3, 0, 0);
+                currentViewType = 3;
+                transform.localPosition = new Vector3(0, 0, 0);
             }
             // Index of all other scenes is (scene number - 1)
             else
@@ -187,13 +188,13 @@ public class ViewTypeObserver : MonoBehaviour
         if (currentViewType != targetViewType)
         {
             // Going to view 6
-            if (targetViewType == 3)
+            if (targetViewType == 6)
             {
 
             }
 
             // Currently in view 6
-            else if (currentViewType == 3)
+            else if (currentViewType == 6)
             {
                 // Going to view 1
                 if (targetViewType == 1)
@@ -211,6 +212,9 @@ public class ViewTypeObserver : MonoBehaviour
             // Going between view 1 and 2 or vice versa
             else
             {
+                transform.localPosition = new Vector3(targetViewType, 0, 1);
+                tempMoonScale.changing();
+
                 //Debug.Log("Mismatch");
                 steps++;
                 UniverseController.orbiting = false;
@@ -226,11 +230,13 @@ public class ViewTypeObserver : MonoBehaviour
                     transistion = true;
                 }
 
-                if (steps == UniverseController.changeDuration && transistion)
+                if (steps == UniverseController.changeDuration /*&& transistion*/)
                 {
-                    transform.localPosition = new Vector3(0, 0, 0);
                     steps = 0; //Finished view type transistion
                     currentViewType = targetViewType;
+                    transform.localPosition = new Vector3(0, 0, 0);
+                    tempMoonScale.doneChanging();
+                    Debug.Log("Finished transition");
                 }
             }
         }

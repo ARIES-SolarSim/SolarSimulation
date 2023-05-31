@@ -9,6 +9,7 @@ TagManager:
   - lil
   - Myself
   - ViewFinderCamera
+  - Light me
   layers:
   - Default
   - TransparentFX
@@ -17,7 +18,7 @@ TagManager:
   - Water
   - UI
   - Don't Light
-  - 
+  - Light Me
   - 
   - 
   - 

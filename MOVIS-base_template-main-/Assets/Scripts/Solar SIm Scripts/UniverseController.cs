@@ -56,7 +56,7 @@ public class UniverseController : MonoBehaviour
         {
             changeDuration = 2;
             accDuration = 1;
-            //ViewTypeObserver.immediateTransition = false;
+            orbiting = false;
         }
     }
     public float curveInterp(float x)
@@ -77,19 +77,26 @@ public class UniverseController : MonoBehaviour
                 move();
                 currentSpeed = orbitSpeedK;
                 moon.changing = false;
+
+                if (ViewTypeObserver.immediateTransition == true)
+                {
+                    changeDuration = 800;
+                    accDuration = 150;
+                    ViewTypeObserver.immediateTransition = false;
+                }
             }
             else //Changing viewtypes
             {
                 moon.changing = true;
                 if (changeState == 0) //Slowing down
                 {
-                    Debug.Log("Decreasing Speed: " + accDuration + " " + changeSteps);
+                    //Debug.Log("Decreasing Speed: " + accDuration + " " + changeSteps);
                     decreaseSpeed(accDuration, 0);
                 }
 
                 if (changeState == 1) //Changing
                 {
-                    Debug.Log("Changing: " + changeDuration + " " + changeSteps);
+                    //Debug.Log("Changing: " + changeDuration + " " + changeSteps);
                     moonMesh.changing();
                     //Debug.Log("Set isChanging to true but is: " + FindObjectOfType<MeshScaler>().isChanging);
                     foreach (PlanetController pc in Planets)
@@ -127,15 +134,10 @@ public class UniverseController : MonoBehaviour
                 if (changeState == 2) //Speeding up
                 {
                     moonMesh.doneChanging();
-                    Debug.Log("Speeding Back Up: " + accDuration + " " + changeSteps);
+                    //Debug.Log("Speeding Back Up: " + accDuration + " " + changeSteps);
                     increaseSpeed(accDuration, 10);
                 }
             }
-        }
-        if(ViewTypeObserver.immediateTransition == false)
-        {
-            changeDuration = 800;
-            accDuration = 150;
         }
     }
 
