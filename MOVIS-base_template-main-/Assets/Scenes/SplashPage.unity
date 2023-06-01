@@ -323,7 +323,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 938bff0eaad905c40ab840e98afc2492, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8f386a3e09258ff47bee5d5c8661ce97, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -472,7 +472,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -484,7 +484,7 @@ MonoBehaviour:
     m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 0
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -531,6 +531,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   JoinedRoomPanel: {fileID: 1158124401}
+  SplashPagePanel: {fileID: 0}
+  image: {fileID: 0}
+  splash: {fileID: 0}
+  getStarted: {fileID: 0}
 --- !u!4 &792813541
 Transform:
   m_ObjectHideFlags: 0
@@ -602,12 +606,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48f88bebb6c74bd47b45a0ba20d88a07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fact: {fileID: 0}
+  astronaut: {fileID: 0}
+  rocket: {fileID: 0}
+  planet: {fileID: 0}
   loaderCanvas: {fileID: 0}
   progressBar: {fileID: 0}
-  astronaut: {fileID: 0}
+  factList: {fileID: 0}
   otherScene: 0
   tempMoonRotate: {fileID: 0}
   tempMoonScale: {fileID: 0}
+  canvas7: {fileID: 0}
 --- !u!1 &1320017280
 GameObject:
   m_ObjectHideFlags: 0
@@ -666,12 +675,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48f88bebb6c74bd47b45a0ba20d88a07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fact: {fileID: 0}
+  astronaut: {fileID: 0}
+  rocket: {fileID: 0}
+  planet: {fileID: 0}
   loaderCanvas: {fileID: 0}
   progressBar: {fileID: 0}
-  astronaut: {fileID: 0}
+  factList: {fileID: 0}
   otherScene: 0
   tempMoonRotate: {fileID: 0}
   tempMoonScale: {fileID: 0}
+  canvas7: {fileID: 0}
 --- !u!1 &1503363023
 GameObject:
   m_ObjectHideFlags: 0
@@ -700,7 +714,7 @@ RectTransform:
   m_GameObject: {fileID: 1503363023}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.8}
   m_Children:
   - {fileID: 538055435}
   m_Father: {fileID: 1158124402}
@@ -708,7 +722,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 160, y: 300}
+  m_AnchoredPosition: {x: 305.5, y: 300}
   m_SizeDelta: {x: 180, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1503363025
@@ -780,7 +794,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.54690474, b: 0, a: 1}
+  m_Color: {r: 0.92941177, g: 0.4509804, b: 0.23921569, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
