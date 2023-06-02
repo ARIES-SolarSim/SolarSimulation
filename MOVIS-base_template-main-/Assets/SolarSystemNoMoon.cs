@@ -51,7 +51,7 @@ public class SolarSystemNoMoon : MonoBehaviour
         {
             foreach (GameObject b in proxy)
             {
-                if (!a.Equals(b))
+                if (!a.Equals(b) && a.name != "proxyMoon" && b.name != "proxyMoon")
                 {
                     float m1 = a.GetComponent<Rigidbody>().mass;
                     float m2 = b.GetComponent<Rigidbody>().mass;
@@ -68,7 +68,7 @@ public class SolarSystemNoMoon : MonoBehaviour
             //This loop makes it so the planets we see are circling earth with earth staying still
             foreach (GameObject c in bodies)
             {
-                if (c.name == a.name)
+                if (c.name == a.name && a.name != "proxyMoon" && c.name != "proxyMoon")
                 {
                     c.transform.position = a.transform.position - proxyEarth.transform.position;
                 }

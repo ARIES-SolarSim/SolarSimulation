@@ -114,7 +114,7 @@ public class SolarSystem : MonoBehaviour
             }
 
             //This makes little earth positioned where it should be inside of earth
-            //lil.transform.position = earth.transform.position;
+           // lil.transform.position = earth.transform.position;
         }
     }
 }
