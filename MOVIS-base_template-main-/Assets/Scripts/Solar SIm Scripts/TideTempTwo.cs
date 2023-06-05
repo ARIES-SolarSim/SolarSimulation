@@ -10,46 +10,32 @@ public class TideTempTwo : MonoBehaviour
     public float maxY;
     public float myX;
     public float myZ;
+    public float sunminY;
+    public float sunmaxY;
+    public GameObject proxyMoon;
+    public GameObject proxySun;
 
     private void Start()
     {
         //Moon = FindObjectOfType<RotateAround>();
+        proxyMoon = GameObject.Find("proxyMoon");
+        proxySun = GameObject.Find("proxySun");
     }
 
     // Update is called once per frame
     void Update()
     {
-        float original_number = GameObject.Find("proxyMoon").transform.position.x;
-        float original_number2 = GameObject.Find("proxyMoon").transform.position.z;
-        float subtraction_factor = (float)Math.Atan(myZ / myX);
-        float newNum;
+        float original_number = proxyMoon.transform.position.x;
+        float original_number2 = proxyMoon.transform.position.z;
+        float sun_number = proxySun.transform.position.x;
+        float sun_number2 = proxySun.transform.position.z;
+        float subtraction_factor = Mathf.PI / 4.0f;//(float)Math.Atan(myZ / myX);
+        float newNum, newNum2;
 
-        /*if(original_number >= 0 && original_number2 >= 0) // Pos Pos
-        {
-            newNum = (float)Math.Atan(original_number2 / (original_number));
-            Debug.Log("Pos Pos - " + newNum);
+        newNum = Mathf.Atan2(original_number2, original_number);
+        newNum2 = Mathf.Atan2(sun_number2, sun_number);
+        float newY = ((Mathf.Cos(2 * newNum + subtraction_factor) + 1) / 2.0f) * (maxY - minY) + minY;
+        float newY2 = ((Mathf.Cos(12 * newNum2 + subtraction_factor) + 1) / 2.0f) * (sunmaxY - sunminY) + sunminY;
+        transform.localPosition = new Vector3(5, newY + newY2, 4.67f);
         }
-        else if (original_number >= 0 && original_number2 < 0) // Pos Neg
-        {
-            newNum = (float)Math.PI - (float)Math.Abs((float)Math.Atan(original_number2 / (original_number)));
-            Debug.Log("Pos Neg - " + newNum);
-        }
-        else if (original_number < 0 && original_number2 >= 0) // Neg Pos
-        {
-            newNum = (float)Math.PI +(float)Math.Atan(original_number2 / (original_number));
-            Debug.Log("Neg Pos - " + newNum);
-        }
-        else //Neg Neg
-        {
-            newNum = (float)(2*Math.PI) + (float)Math.Atan(original_number2 / (original_number));
-            Debug.Log("Neg Neg - " + newNum);
-        }*/
-        newNum = Mathf.Atan2(original_number2, original_number) + Mathf.PI;
-        Debug.Log(newNum);
-
-        float newY = (float)(2*Math.Cos(0.5*Math.PI * (newNum+subtraction_factor) + Math.PI) + 5);
-        transform.localPosition = new Vector3(5, newY, 4.67f); 
-        }
-    //x: -4.73547, z:4.226318
-
 }
