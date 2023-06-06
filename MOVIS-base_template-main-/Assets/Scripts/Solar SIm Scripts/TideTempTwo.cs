@@ -20,6 +20,7 @@ public class TideTempTwo : MonoBehaviour
         //Moon = FindObjectOfType<RotateAround>();
         proxyMoon = GameObject.Find("proxyMoon");
         //proxySun = GameObject.Find("proxySun");
+        //x: -5.25763, z: 3.989652
     }
 
     // Update is called once per frame
@@ -29,7 +30,7 @@ public class TideTempTwo : MonoBehaviour
         float original_number2 = proxyMoon.transform.position.z;
         //float sun_number = proxySun.transform.position.x;
         //float sun_number2 = proxySun.transform.position.z;
-        float subtraction_factor = Mathf.PI / 4.0f;//(float)Math.Atan(myZ / myX);
+        float subtraction_factor = Mathf.Atan(myZ / myX);
         float newNum, newNum2;
 
         newNum = Mathf.Atan2(original_number2, original_number);
