@@ -260,7 +260,7 @@ public class ViewTypeObserver : MonoBehaviour
         loaderCanvas.SetActive(true);
         character = Random.Range(0, 2);
         int factInt = Random.Range(0, 21);
-        Debug.Log(factInt);
+        Debug.Log("Fact: " + factInt);
         //Debug.Log(factList.FactList[0]);
         fact.text = factList.FactList[factInt];
         
@@ -321,7 +321,7 @@ public class ViewTypeObserver : MonoBehaviour
             }
 
 
-        yield return new WaitForSeconds(.09f);
+        yield return new WaitForSeconds(0.9f);
         }
         PhotonNetwork.LoadLevel(2);
 
