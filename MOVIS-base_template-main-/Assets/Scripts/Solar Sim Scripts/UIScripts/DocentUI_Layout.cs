@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DocentUI_Layout: MonoBehaviour
-{ 
-    public GameObject[] buttons;
+public class DocentUI_Layout : MonoBehaviour
+{
+    private GameObject[] buttons; // This will generate each of the children
     public Vector2 size;
     /// <summary>
     /// Selects the distance between the objects
@@ -15,9 +15,9 @@ public class DocentUI_Layout: MonoBehaviour
 
     //public string[] options = { "Left to Right", "Right to Left", "Top to Bottom", "Bottom to Top" };
     // Start is called before the first frame update   
-    public enum Direction // unabashedly stolen from Slider
-        // Dev note: This does absolutely nothing and has not been implemented. Ignore for now.
-        // future S, I am so sorry 
+    public enum Direction // shamelessly stolen from Slider
+                          // Dev note: This does absolutely nothing and has not been implemented. Ignore for now.
+                          // future S, I am so sorry 
     {
         /// <summary>
         /// From the left to the right
@@ -42,48 +42,34 @@ public class DocentUI_Layout: MonoBehaviour
 
 
     void Start()
-    {
+    { 
         RectTransform rt;
-        //private Vector3 newPos = ;
-        if (dir == Direction.LeftToRight)
-        {
-            for (int i = 0; i < buttons.Length; i++)
-            {
-                rt = buttons[i].GetComponent<RectTransform>();
-                rt.sizeDelta = size;
-                rt.localPosition = new Vector3(i * (kerning + rt.rect.width), 0, 0);
-            }
+        for (int buttonIter = 0; buttonIter < this.transform.childCount; buttonIter++)
+        {   // Getting each of the children 
+            buttons[buttonIter] = transform.GetChild(buttonIter).gameObject;
         }
 
-        else if (dir == Direction.RightToLeft)
+        for (int i = 0; i < buttons.Length; i++) //Do it for each button
         {
-            for (int i = 0; i < buttons.Length; i++)
+            rt = buttons[i].GetComponent<RectTransform>();
+            rt.sizeDelta = size;
+            switch (dir)
             {
-                rt = buttons[i].GetComponent<RectTransform>();
-                rt.sizeDelta = size;
-                rt.localPosition = new Vector3(- i * (kerning + rt.rect.width), 0, 0);
-            }
-        }
+                case Direction.LeftToRight:
+                    rt.localPosition = new Vector3(i * (kerning + rt.rect.width), 0, 0);
+                    break;
 
-        //Vertical is untested. They should work, but they might be backwards lol
+                case Direction.RightToLeft:
+                    rt.localPosition = new Vector3(-i * (kerning + rt.rect.width), 0, 0);
+                    break;
+                // Vertical is untested, if they're backwards, oops! 
+                case Direction.BottomToTop:
+                    rt.localPosition = new Vector3(0, i * (kerning + rt.rect.height), 0);
+                    break;
 
-        else if (dir == Direction.BottomToTop)
-        {
-            for (int i = 0; i < buttons.Length; i++)
-            {
-                rt = buttons[i].GetComponent<RectTransform>();
-                rt.sizeDelta = size;
-                rt.localPosition = new Vector3(0, i * (kerning + rt.rect.height), 0); 
-            }
-        }
-
-        else if (dir == Direction.TopToBottom)
-        {
-            for (int i = 0; i < buttons.Length; i++)
-            {
-                rt = buttons[i].GetComponent<RectTransform>();
-                rt.sizeDelta = size;
-                rt.localPosition = new Vector3(0, -i * (kerning + rt.rect.height), 0);
+                case Direction.TopToBottom:
+                    rt.localPosition = new Vector3(0, -i * (kerning + rt.rect.height), 0);
+                    break;
             }
         }
     }
