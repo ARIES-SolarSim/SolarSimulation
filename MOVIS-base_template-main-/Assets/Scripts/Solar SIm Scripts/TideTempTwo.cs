@@ -30,7 +30,7 @@ public class TideTempTwo : MonoBehaviour
         float original_number2 = proxyMoon.transform.position.z;
         //float sun_number = proxySun.transform.position.x;
         //float sun_number2 = proxySun.transform.position.z;
-        float subtraction_factor = Mathf.Atan(myZ / myX);
+        float subtraction_factor = Mathf.PI - Mathf.Atan(myZ / myX);
         float newNum, newNum2;
 
         newNum = Mathf.Atan2(original_number2, original_number);
