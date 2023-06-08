@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class DocentUI_Layout : MonoBehaviour
 {
-    private GameObject[] buttons; // This will generate each of the children
     public Vector2 size;
     /// <summary>
     /// Selects the distance between the objects
@@ -42,11 +41,13 @@ public class DocentUI_Layout : MonoBehaviour
 
 
     void Start()
-    { 
+    {
+        GameObject[] buttons = new GameObject[this.transform.childCount];
         RectTransform rt;
         for (int buttonIter = 0; buttonIter < this.transform.childCount; buttonIter++)
         {   // Getting each of the children 
             buttons[buttonIter] = transform.GetChild(buttonIter).gameObject;
+            Debug.Log(buttons[buttonIter]);
         }
 
         for (int i = 0; i < buttons.Length; i++) //Do it for each button

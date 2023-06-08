@@ -475,7 +475,7 @@ RectTransform:
   - {fileID: 4349474273937301138}
   - {fileID: 1319633646308860340}
   m_Father: {fileID: 2380749281939314353}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2390,8 +2390,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 8909530191013840579}
   - {fileID: 3702901075030933970}
+  - {fileID: 8909530191013840579}
   - {fileID: 672530963546189186}
   m_Father: {fileID: 1891749514334727128}
   m_RootOrder: 0
@@ -3096,7 +3096,7 @@ GameObject:
   - component: {fileID: 3554701974418087983}
   - component: {fileID: 7464655314246908921}
   m_Layer: 0
-  m_Name: R1_Right
+  m_Name: ViewChangers_Room1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3136,7 +3136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62c4f96e4272ecf4085b28fac1c60bed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: {x: 50, y: 30}
+  size: {x: 60, y: 40}
   kerning: 5
   dir: 1
 --- !u!1 &5137512018955336834
@@ -3311,7 +3311,7 @@ RectTransform:
   - {fileID: 6991512508611902477}
   - {fileID: 7668197798843251807}
   m_Father: {fileID: 2380749281939314353}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4726,7 +4726,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 6687835179865135142}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 0
@@ -5586,7 +5586,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1319633646308860340
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5604,7 +5604,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 48.6, y: 87.2}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6700777919831151448
@@ -6030,7 +6030,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 8968678378547030287}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 0
@@ -6409,7 +6409,7 @@ GameObject:
   - component: {fileID: 4867006239432580639}
   - component: {fileID: 103283989769672165}
   m_Layer: 0
-  m_Name: R1_Left
+  m_Name: RoomSettings_Room1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6434,7 +6434,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 30.700005, y: 82.69998}
+  m_AnchoredPosition: {x: 1.1, y: -1}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &103283989769672165
@@ -6449,7 +6449,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62c4f96e4272ecf4085b28fac1c60bed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: {x: 50, y: 30}
+  size: {x: 60, y: 40}
   kerning: 5
   dir: 0
 --- !u!1 &7986854770230470677
@@ -7517,8 +7517,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 0, y: -7.9}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &9164602931551978392
 GameObject:
