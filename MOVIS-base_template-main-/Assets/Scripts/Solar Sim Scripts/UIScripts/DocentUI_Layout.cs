@@ -47,7 +47,6 @@ public class DocentUI_Layout : MonoBehaviour
         for (int buttonIter = 0; buttonIter < this.transform.childCount; buttonIter++)
         {   // Getting each of the children 
             buttons[buttonIter] = transform.GetChild(buttonIter).gameObject;
-            Debug.Log(buttons[buttonIter]);
         }
 
         for (int i = 0; i < buttons.Length; i++) //Do it for each button
