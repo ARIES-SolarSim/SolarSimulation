@@ -52,7 +52,7 @@ public class UniverseController : MonoBehaviour
     public void Start()
     {
         orbiting = true;
-        if(ViewTypeObserver.immediateTransition)
+        if (ViewTypeObserver.immediateTransition)
         {
             changeDuration = 2;
             accDuration = 1;
@@ -112,7 +112,7 @@ public class UniverseController : MonoBehaviour
                         MeshScaler.view = (MeshScaler.view == 1) ? 0 : 1;
                         FindObjectOfType<ViewTypeObserver>().transform.localPosition = new Vector3(0, 0, 0);
 
-                        if(ViewTypeObserver.targetViewType == 1)
+                        if (ViewTypeObserver.targetViewType == 1)
                         {
                             foreach (PlanetIdentifier pi in FindObjectsOfType<PlanetIdentifier>())
                             {
@@ -230,7 +230,7 @@ public class UniverseController : MonoBehaviour
                 vc.points.RemoveFirst();
             }
         }
-        
+
         for (int i = 0; i < orbitSpeedK; i++) //Similar to initiateVirtualController, this calculates the next orbitSpeedK number of points
         {
             for (int j = 0; j < Bodies.Length; j++)
@@ -244,5 +244,14 @@ public class UniverseController : MonoBehaviour
                 Bodies[j].points.AddLast(newPos);
             }
         }
+    }
+
+    /**
+     * Added by Shane to help slider functionality 
+     * This might be entirely the wrong thing to do, in which case, execute me
+     */
+    public void OrbitSpeedKChange(int i)
+    {
+        orbitSpeedK = i; 
     }
 }
