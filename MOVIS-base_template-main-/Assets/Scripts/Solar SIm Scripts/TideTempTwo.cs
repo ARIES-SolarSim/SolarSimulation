@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 using System;
 
 public class TideTempTwo : MonoBehaviour
@@ -10,6 +11,9 @@ public class TideTempTwo : MonoBehaviour
     public float maxY;
     public float myX;
     public float myZ;
+    private MeshFilter m;
+    private Mesh p;
+    private Vector3[] VertexList;
     //public float sunminY;
     //public float sunmaxY;
     public GameObject proxyMoon;
@@ -21,6 +25,8 @@ public class TideTempTwo : MonoBehaviour
         proxyMoon = GameObject.Find("proxyMoon");
         //proxySun = GameObject.Find("proxySun");
         //x: -5.25763, z: 3.989652
+
+       
     }
 
     // Update is called once per frame
@@ -38,5 +44,9 @@ public class TideTempTwo : MonoBehaviour
         float newY = ((Mathf.Cos(2 * newNum + subtraction_factor) + 1) / 2.0f) * (maxY - minY) + minY;
         //float newY2 = ((Mathf.Cos(12 * newNum2 + subtraction_factor) + 1) / 2.0f) * (sunmaxY - sunminY) + sunminY;
         transform.localPosition = new Vector3(5, newY, 4.67f);
+
+        
         }
+
+    
 }
