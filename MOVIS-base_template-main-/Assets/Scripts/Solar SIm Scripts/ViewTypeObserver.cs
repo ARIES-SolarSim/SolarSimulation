@@ -41,7 +41,7 @@ public class ViewTypeObserver : MonoBehaviour
 
     public static TrailRenderer[] trails;
 
-    private static string[] levelNames = { "Lobby", "Room1", "Room1", "Room2", "", "", "" }; // names of each scene, in order (update as we add more)
+    private static string[] levelNames = { "Lobby", "Room1", "Room1", "Room2", "Room3", "", "" }; // names of each scene, in order (update as we add more)
 
     private void Start()
     {
@@ -65,7 +65,7 @@ public class ViewTypeObserver : MonoBehaviour
 
         //Debug.Log("Started at " + currentViewType);
         
-        if (otherScene == 2)
+        if (otherScene == 2 && transform.localPosition.y <= 2)
         {
             trails = new TrailRenderer[FindObjectsOfType<PlanetController>().Length - 2];
         }
@@ -125,39 +125,29 @@ public class ViewTypeObserver : MonoBehaviour
                 // If not in room 1, go to it, then immediately toggle to view 6
                 // (does not work because new scene reloads everything. May need a separate
                 // scene for going directly into view 6, but don't worry about that right now)
-                if (currentViewType > 2)
-                {
+                //if (currentViewType > 2)
+                //{
                     targetViewType = 6;
-                    PhotonNetwork.LoadLevel(levelNames[1]);
+                    StartCoroutine(LoadingSomeLevel(levelNames[3]));
                     transform.localPosition = Vector3.zero;
-                }
+                //}
 
                 // If in room 1, toggle
-                else
+                /*else
                 {
                     targetViewType = 6;
                     transform.localPosition = new Vector3(6, 0, 0);
-                }
+                }*/
             }
             else if (y == 3)
             {
-                Debug.Log("Loading scene: " + levelNames[y]);
-                PhotonNetwork.LoadLevel(levelNames[y]);
-                
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    Debug.Log("we are the master client");
-                    PhotonView view = GetComponent<PhotonView>();
-                    view.RPC("LoadingSomeLevel", RpcTarget.All, levelNames[y]);
-                    
-                   
-                }
                 targetViewType = 3;
-                currentViewType = 3;
-                transform.localPosition = new Vector3(0, 0, 0);
+                StartCoroutine(LoadingSomeLevel(levelNames[4]));
+                transform.localPosition = Vector3.zero;
             }
+
             // Index of all other scenes is (scene number - 1)
-            else
+                    else
             {
                 currentViewType = y;
                 targetViewType = y; // Set this to avoid transition case
@@ -174,7 +164,7 @@ public class ViewTypeObserver : MonoBehaviour
         }
 
         // Going between view 1, 2, and 6
-        if (transform.localPosition.x != 0 && transform.localPosition.x != 3)
+        if (transform.localPosition.x != 0 && transform.localPosition.x != 6)
         {
             /*if (targetViewType != currentViewType)
             {
@@ -272,13 +262,14 @@ public class ViewTypeObserver : MonoBehaviour
         while (progress < 1f)
         {
             
-            progress += 0.5f *0.07f;
+            progress += 0.5f *0.009f;
             
             
             if (character == 0)
             {
                 rocket.enabled = false;
                 planet.enabled = false;
+                astronaut.enabled = true;
 
                 astronaut.rectTransform.localPosition = new Vector3(-375 + (progress * 721), 75f, 0);
                 progressBar.fillAmount = progress;
@@ -293,6 +284,7 @@ public class ViewTypeObserver : MonoBehaviour
             {
                 astronaut.enabled = false;
                 planet.enabled = false;
+                rocket.enabled = true;
 
                 rocket.rectTransform.localPosition = new Vector3(-320 + (progress * 721), 0, 0);
                 progressBar.fillAmount = progress;
@@ -308,6 +300,7 @@ public class ViewTypeObserver : MonoBehaviour
             {
                 astronaut.enabled = false;
                 rocket.enabled = false;
+                planet.enabled = true;
 
                 planet.rectTransform.localPosition = new Vector3(-300 + (progress * 721), 0, 0);
                 progressBar.fillAmount = progress;
@@ -321,9 +314,9 @@ public class ViewTypeObserver : MonoBehaviour
             }
 
 
-        yield return new WaitForSeconds(0.9f);
+        yield return new WaitForSeconds(0.05f);
         }
-        PhotonNetwork.LoadLevel(2);
+        PhotonNetwork.LoadLevel(sceneValue);
 
     }
 
