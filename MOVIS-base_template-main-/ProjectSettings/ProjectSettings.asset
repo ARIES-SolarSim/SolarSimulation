@@ -12,8 +12,8 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: Comet's VR
-  productName: MOVIS
+  companyName: ARIES VT
+  productName: Solar Simulation
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -272,7 +272,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: 7749a69148e6bac4a9a8118657b42d05, type: 3}
+      m_Icon: {fileID: 2800000, guid: 8c0dc8d75fd7e3249985654f2dae0b0a, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0
