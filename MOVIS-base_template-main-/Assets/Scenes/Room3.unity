@@ -1849,12 +1849,24 @@ PrefabInstance:
       propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3028221085884958818, guid: 0b51da08ab073844199d1ccf26b010d3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3130192373502034862, guid: 0b51da08ab073844199d1ccf26b010d3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3758536069819587109, guid: 0b51da08ab073844199d1ccf26b010d3, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3919836100987772183, guid: 0b51da08ab073844199d1ccf26b010d3, type: 3}
       propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4272988123067509628, guid: 0b51da08ab073844199d1ccf26b010d3, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4410091204017686207, guid: 0b51da08ab073844199d1ccf26b010d3, type: 3}
@@ -1872,6 +1884,10 @@ PrefabInstance:
     - target: {fileID: 5330473144908751175, guid: 0b51da08ab073844199d1ccf26b010d3, type: 3}
       propertyPath: m_Name
       value: Canvas+NetworkObservers
+      objectReference: {fileID: 0}
+    - target: {fileID: 7816086835840705117, guid: 0b51da08ab073844199d1ccf26b010d3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b51da08ab073844199d1ccf26b010d3, type: 3}
