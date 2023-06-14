@@ -19,6 +19,7 @@ public class CrabMovement : MonoBehaviour
        
        
         transform.position =new Vector3(Mathf.PingPong(Time.time*2,max-min)+min, transform.position.y, transform.position.z);
+        transform.localEulerAngles = new Vector3(180, Mathf.PingPong((Time.time *7) * -10, 10), 180);
        
     }
 }
