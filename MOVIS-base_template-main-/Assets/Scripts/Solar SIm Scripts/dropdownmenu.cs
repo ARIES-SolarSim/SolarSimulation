@@ -27,6 +27,7 @@ public class dropdownmenu : MonoBehaviour
 
         }
         //Egypt
+        /*
         if (index == 1)
         {
             tide.GetComponent<TideTempTwo>().enabled = false;
@@ -37,8 +38,9 @@ public class dropdownmenu : MonoBehaviour
             tide.GetComponent<TideTempTwo>().minY = 8 + (30.0444f / 90) * (12);
 
         }
+        */
         //Japan
-        if (index == 2)
+        if (index == 1)
         {
             tide.GetComponent<TideTempTwo>().enabled = false;
             tide.GetComponent<TideTempTwo>().enabled = true;
@@ -49,6 +51,20 @@ public class dropdownmenu : MonoBehaviour
 
         }
         //India
+        if (index == 2)
+        {
+            //Destroy(tide.GetComponent<TideTempTwo>());
+            //tide.AddComponent<TideTempTwo>();
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            tide.GetComponent<TideTempTwo>().enabled = false;
+            tide.GetComponent<TideTempTwo>().enabled = true;
+            image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-290, -85, 0);
+            tide.GetComponent<TideTempTwo>().myX = 3.646949f;
+            tide.GetComponent<TideTempTwo>().myZ = -4.234735f;
+            tide.GetComponent<TideTempTwo>().minY = 8 + (8.5241f / 90) * (12);
+
+        }
+        //North Pole
         if (index == 3)
         {
             //Destroy(tide.GetComponent<TideTempTwo>());
@@ -56,13 +72,13 @@ public class dropdownmenu : MonoBehaviour
             //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             tide.GetComponent<TideTempTwo>().enabled = false;
             tide.GetComponent<TideTempTwo>().enabled = true;
-            image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-270, -50, 0);
+            image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-390, 20, 0);
             tide.GetComponent<TideTempTwo>().myX = 4.203157f;
             tide.GetComponent<TideTempTwo>().myZ = -5.088562f;
-            tide.GetComponent<TideTempTwo>().minY = 8 + (28.6139f / 90) * (12);
+            tide.GetComponent<TideTempTwo>().minY = 8 + (90.00f / 90) * (12);
 
         }
-        //North Pole
+        //Singapore
         if (index == 4)
         {
             //Destroy(tide.GetComponent<TideTempTwo>());
@@ -70,24 +86,10 @@ public class dropdownmenu : MonoBehaviour
             //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             tide.GetComponent<TideTempTwo>().enabled = false;
             tide.GetComponent<TideTempTwo>().enabled = true;
-            image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-270, -50, 0);
+            image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-260, -40, 0);
             tide.GetComponent<TideTempTwo>().myX = 4.203157f;
             tide.GetComponent<TideTempTwo>().myZ = -5.088562f;
-            tide.GetComponent<TideTempTwo>().minY = 8 + (90.00f / 90) * (12);
-
-        }
-        //Singapore
-        if (index == 5)
-        {
-            //Destroy(tide.GetComponent<TideTempTwo>());
-            //tide.AddComponent<TideTempTwo>();
-            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            tide.GetComponent<TideTempTwo>().enabled = false;
-            tide.GetComponent<TideTempTwo>().enabled = true;
-            image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-270, -50, 0);
-            tide.GetComponent<TideTempTwo>().myX = 4.203157f;
-            tide.GetComponent<TideTempTwo>().myZ = -5.088562f;
-            tide.GetComponent<TideTempTwo>().minY = 8 + (0.0f / 90) * (12);
+            tide.GetComponent<TideTempTwo>().minY = 8 + (1.3521f / 90) * (12);
 
         }
 
