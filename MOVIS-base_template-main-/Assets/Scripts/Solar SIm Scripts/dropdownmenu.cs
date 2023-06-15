@@ -8,7 +8,7 @@ using TMPro;
 public class dropdownmenu : MonoBehaviour
 {
     // Start is called before the first frame update
-    public GameObject image;
+    public GameObject Square;
     public GameObject tide;
     
     public void DropdownSample(int index)
@@ -16,11 +16,13 @@ public class dropdownmenu : MonoBehaviour
         //image = GameObject.Find("Image");
         //tide = GameObject.Find("Tide");
         //United Kingdom
+        Square = GameObject.Find("Square");
         if (index == 0)
         {
             tide.GetComponent<TideTempTwo>().enabled = false;
             tide.GetComponent<TideTempTwo>().enabled = true;
-            image.GetComponent<RectTransform>().anchoredPosition  = new Vector3(-420, -45, 0);
+            Square.transform.localPosition = new Vector3(0.2f, 1, -0.02f);
+            //image.GetComponent<RectTransform>().anchoredPosition  = new Vector3(-420, -45, 0);
             tide.GetComponent<TideTempTwo>().myX = -5.401577f;
             tide.GetComponent<TideTempTwo>().myZ = -3.792488f;
             tide.GetComponent<TideTempTwo>().minY = 8 + (51.5072f/90)*(12);
@@ -44,7 +46,8 @@ public class dropdownmenu : MonoBehaviour
         {
             tide.GetComponent<TideTempTwo>().enabled = false;
             tide.GetComponent<TideTempTwo>().enabled = true;
-            image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-280, 40, 0);
+            Square.transform.localPosition = new Vector3(-0.32f, 1, 0.24f);
+            //image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-280, 40, 0);
             tide.GetComponent<TideTempTwo>().myX = 3.621747f;
             tide.GetComponent<TideTempTwo>().myZ = 5.517513f;
             tide.GetComponent<TideTempTwo>().minY = 8 + (35.6762f / 90) * (12);
@@ -58,7 +61,7 @@ public class dropdownmenu : MonoBehaviour
             //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             tide.GetComponent<TideTempTwo>().enabled = false;
             tide.GetComponent<TideTempTwo>().enabled = true;
-            image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-290, -85, 0);
+            //image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-290, -85, 0);
             tide.GetComponent<TideTempTwo>().myX = 3.646949f;
             tide.GetComponent<TideTempTwo>().myZ = -4.234735f;
             tide.GetComponent<TideTempTwo>().minY = 8 + (8.5241f / 90) * (12);
@@ -72,7 +75,7 @@ public class dropdownmenu : MonoBehaviour
             //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             tide.GetComponent<TideTempTwo>().enabled = false;
             tide.GetComponent<TideTempTwo>().enabled = true;
-            image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-390, 20, 0);
+            //image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-390, 20, 0);
             tide.GetComponent<TideTempTwo>().myX = 4.203157f;
             tide.GetComponent<TideTempTwo>().myZ = -5.088562f;
             tide.GetComponent<TideTempTwo>().minY = 8 + (90.00f / 90) * (12);
@@ -86,7 +89,7 @@ public class dropdownmenu : MonoBehaviour
             //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             tide.GetComponent<TideTempTwo>().enabled = false;
             tide.GetComponent<TideTempTwo>().enabled = true;
-            image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-260, -40, 0);
+            //image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-260, -40, 0);
             tide.GetComponent<TideTempTwo>().myX = 4.203157f;
             tide.GetComponent<TideTempTwo>().myZ = -5.088562f;
             tide.GetComponent<TideTempTwo>().minY = 8 + (1.3521f / 90) * (12);
