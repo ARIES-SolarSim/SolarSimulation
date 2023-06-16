@@ -46,7 +46,7 @@ public class dropdownmenu : MonoBehaviour
         {
             tide.GetComponent<TideTempTwo>().enabled = false;
             tide.GetComponent<TideTempTwo>().enabled = true;
-            Square.transform.localPosition = new Vector3(-0.32f, 1, 0.24f);
+            Square.transform.localPosition = new Vector3(-0.34f, 1, 0.24f);
             //image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-280, 40, 0);
             tide.GetComponent<TideTempTwo>().myX = 3.621747f;
             tide.GetComponent<TideTempTwo>().myZ = 5.517513f;
@@ -61,6 +61,7 @@ public class dropdownmenu : MonoBehaviour
             //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             tide.GetComponent<TideTempTwo>().enabled = false;
             tide.GetComponent<TideTempTwo>().enabled = true;
+            Square.transform.localPosition = new Vector3(0.06f, 1, 0.46f);
             //image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-290, -85, 0);
             tide.GetComponent<TideTempTwo>().myX = 3.646949f;
             tide.GetComponent<TideTempTwo>().myZ = -4.234735f;
@@ -75,6 +76,7 @@ public class dropdownmenu : MonoBehaviour
             //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             tide.GetComponent<TideTempTwo>().enabled = false;
             tide.GetComponent<TideTempTwo>().enabled = true;
+            Square.transform.localPosition = new Vector3(-0.05f, 1, -0.01f);
             //image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-390, 20, 0);
             tide.GetComponent<TideTempTwo>().myX = 4.203157f;
             tide.GetComponent<TideTempTwo>().myZ = -5.088562f;
@@ -89,6 +91,7 @@ public class dropdownmenu : MonoBehaviour
             //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             tide.GetComponent<TideTempTwo>().enabled = false;
             tide.GetComponent<TideTempTwo>().enabled = true;
+            Square.transform.localPosition = new Vector3(-0.17f, 1, 0.46f);
             //image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-260, -40, 0);
             tide.GetComponent<TideTempTwo>().myX = 4.203157f;
             tide.GetComponent<TideTempTwo>().myZ = -5.088562f;
