@@ -21,6 +21,9 @@ public class UniverseController : MonoBehaviour
     private VirtualController[] Bodies; //List of the virtual controlles in the planets to reference on build
     public RotateScript moon;
     public MeshScaler moonMesh;
+    public bool isPlanetBuilder;
+    public static int trailDelay = 5;
+    public static int trailCount = 0;
 
     //The values below are placeholder for the motion profiling set up to smooth out the orbit scale transitions
     //Would be cool if this was done with cubic splines instead
@@ -34,6 +37,13 @@ public class UniverseController : MonoBehaviour
      */
     private void Awake()
     {
+        if(isPlanetBuilder)
+        {
+            timeStep = 0.00005f;
+            orbitScale = 16; //Scale to have first 4 planets to fill the space
+            planetScale = 5;
+
+        }
         Planets = FindObjectsOfType<PlanetController>(); //Fills the Planet list with all planets
         Bodies = new VirtualController[Planets.Length]; //Creates a list for all the virtual controllers
         for (int i = 0; i < Planets.Length; i++)
@@ -70,6 +80,13 @@ public class UniverseController : MonoBehaviour
      */
     void Update()
     {
+        if(isPlanetBuilder)
+        {
+            if(trailCount < trailDelay)
+            {
+                trailCount++;
+            }
+        }
         if (!LobbyManager.userType) //Only orbit in headset, allow photon viewers to do the rest
         {
             if (orbiting)

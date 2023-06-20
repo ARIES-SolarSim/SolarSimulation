@@ -37,7 +37,7 @@ public class PlanetController : MonoBehaviour
     {
         Velocity = InitialVelocity;
         mesh.transform.localScale = Vector3.one * diameter; //Could move to editmode script if needed
-        transform.localPosition = InitialPosition;
+        transform.localPosition = InitialPosition * UniverseController.orbitScale;
         MathPosition = transform.localPosition * privateOrbitScale;
         mesh.transform.eulerAngles += new Vector3((ID == 3) ? tiltAngle : 0, 0, (ID != 3) ? tiltAngle : 0);
         if (ID == 4) //Disables the current moon
@@ -60,15 +60,32 @@ public class PlanetController : MonoBehaviour
 
     public void Update()
     {
-        if(ID != 0 && ID != 4)
+        if (FindObjectOfType<UniverseController>().isPlanetBuilder)
         {
-            if (trailObserver.transform.localPosition.z == 1)
+            if (ID != 0 && ID != 4)
             {
-                tr.time = 0;
+                if (UniverseController.trailCount >= UniverseController.trailDelay)
+                {
+                    tr.time = trailTime;
+                }
+                else
+                {
+                    tr.time = 0;
+                }
             }
-            else
+        }
+        else
+        {
+            if (ID != 0 && ID != 4)
             {
-                tr.time = trailTime;
+                if (trailObserver.transform.localPosition.z == 1)
+                {
+                    tr.time = 0;
+                }
+                else
+                {
+                    tr.time = trailTime;
+                }
             }
         }
     }
@@ -118,6 +135,12 @@ public class PlanetController : MonoBehaviour
             mesh.transform.localScale = Vector3.one * diameter * UniverseController.planetScale;
         }
         transform.localPosition = (MathPosition * UniverseController.orbitScale * privateOrbitScale);
+    }
+
+    //Placeholder
+    public void updateScale()
+    {
+        mesh.transform.localScale = Vector3.one * diameter * UniverseController.planetScale;
     }
 }
 
