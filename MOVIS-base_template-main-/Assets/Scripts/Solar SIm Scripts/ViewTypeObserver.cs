@@ -27,21 +27,23 @@ public class ViewTypeObserver : MonoBehaviour
     private int currentViewType; //The current viewtype that the scene is displaying
     public static int targetViewType; //The view type that should be traveled to
     private int steps = -1; //Used for scene transitons
-    public int otherScene; // place holder to represent the other scene to travel to
+
+    private GameObject[] viewFinderCameras;
+    public int view;
+
+    public GameObject UICanvases;
 
     public RotateScript tempMoonRotate; // moon rotation script
     public MeshScaler tempMoonScale; // moon mesh script
 
     private bool transistion = false;
 
-    public GameObject canvas7;
-
     public static bool immediateTransition = false;
     
 
     public static TrailRenderer[] trails;
-
-    private static string[] levelNames = { "Lobby", "Room1", "Room1", "Room2", "Room3", "", "" }; // names of each scene, in order (update as we add more)
+    
+    private static string[] levelNames = { "Lobby", "Room1", "Room1", "Room2", "Room3" }; // names of each scene, in order (update as we add more)
 
     private void Start()
     {
@@ -54,6 +56,7 @@ public class ViewTypeObserver : MonoBehaviour
         {
             Debug.Log("Start");
             targetViewType = currentViewType;
+            UICanvases.SetActive(true);
         }
 
         // Switched to this scene and we're not in the right view
@@ -65,10 +68,10 @@ public class ViewTypeObserver : MonoBehaviour
 
         //Debug.Log("Started at " + currentViewType);
         
-        if (otherScene == 2 && transform.localPosition.y <= 2)
+        /*if (transform.localPosition.y <= 2 || transform.localPosition.y == 5)
         {
             trails = new TrailRenderer[FindObjectsOfType<PlanetController>().Length - 2];
-        }
+        }*/
     }
 
     void Update()
@@ -76,7 +79,7 @@ public class ViewTypeObserver : MonoBehaviour
         int y = (int)transform.localPosition.y;
 
         // Switching to different views if the view we try to switch to is not the one we're in already
-        if (y > 0 && y <= 6 && y != currentViewType)
+        if (y != currentViewType)
         {
             // Scene 1 has special cases
             if (y == 1)
@@ -94,6 +97,7 @@ public class ViewTypeObserver : MonoBehaviour
                 {
                     targetViewType = 1;
                     transform.localPosition = new Vector3(1, 0, 0);
+
                 }
             }
 
@@ -107,6 +111,7 @@ public class ViewTypeObserver : MonoBehaviour
                 {
                     immediateTransition = true;
                     targetViewType = 2;
+
                     PhotonNetwork.LoadLevel(levelNames[1]);
                     transform.localPosition = Vector3.zero;
                 }
@@ -115,21 +120,33 @@ public class ViewTypeObserver : MonoBehaviour
                 else
                 {
                     targetViewType = 2;
+                
                     transform.localPosition = new Vector3(2, 0, 0);
                 }
             }
 
             // Scene 6 has special cases
-            else if (y == 6)
+            else if (y == 3)
             {
                 // If not in room 1, go to it, then immediately toggle to view 6
                 // (does not work because new scene reloads everything. May need a separate
                 // scene for going directly into view 6, but don't worry about that right now)
                 //if (currentViewType > 2)
                 //{
-                    targetViewType = 6;
-                    StartCoroutine(LoadingSomeLevel(levelNames[3]));
-                    transform.localPosition = Vector3.zero;
+                    targetViewType = 3;
+                if (PhotonNetwork.IsMasterClient)
+                {
+
+
+                    Debug.Log("we are the master client");
+                    PhotonView view = GetComponent<PhotonView>();
+                    view.RPC("LoadingSomeLevel", RpcTarget.All, levelNames[3]);
+                    //StartCoroutine(LoadingSomeLevel(levelNames[3]));
+                    
+                }
+                transform.localPosition = Vector3.zero;
+
+
                 //}
 
                 // If in room 1, toggle
@@ -139,15 +156,48 @@ public class ViewTypeObserver : MonoBehaviour
                     transform.localPosition = new Vector3(6, 0, 0);
                 }*/
             }
-            else if (y == 3)
+            else if (y == 4)
             {
-                targetViewType = 3;
-                StartCoroutine(LoadingSomeLevel(levelNames[4]));
+                targetViewType = 4;
+                view = 4;
+                Debug.Log("ENTERED");
+                if (PhotonNetwork.IsMasterClient)
+                {
+
+
+                    Debug.Log("we are the master client");
+                    PhotonView view = GetComponent<PhotonView>();
+                    view.RPC("LoadingSomeLevel", RpcTarget.All, levelNames[4]);
+                    //StartCoroutine(LoadingSomeLevel(levelNames[3]));
+
+                }
+                viewFinderCameras = GameObject.FindGameObjectsWithTag("ViewFinderCamera");
+                for (int i = 0; i < viewFinderCameras.Length; i++)
+                {
+
+                        Debug.Log("ENTERED");
+
+
+
+                    viewFinderCameras[i].transform.position = FindObjectOfType<Camera>().transform.position;
+                    viewFinderCameras[i].GetComponent<Camera>().transform.position = FindObjectOfType<Camera>().transform.position;
+                    viewFinderCameras[i].GetComponent<Camera>().transform.rotation = FindObjectOfType<Camera>().transform.rotation;
+                    viewFinderCameras[i].GetComponent<Camera>().fieldOfView = FindObjectOfType<Camera>().fieldOfView;
+                    viewFinderCameras[i].GetComponent<Camera>().orthographic = FindObjectOfType<Camera>().orthographic;
+                    FindObjectOfType<Camera>().enabled = false;
+
+
+
+
+                }
+                 FindObjectOfType<UnityEngine.SpatialTracking.TrackedPoseDriver>().enabled = false;
+            
                 transform.localPosition = Vector3.zero;
+
             }
 
             // Index of all other scenes is (scene number - 1)
-                    else
+            else
             {
                 currentViewType = y;
                 targetViewType = y; // Set this to avoid transition case
@@ -179,13 +229,13 @@ public class ViewTypeObserver : MonoBehaviour
         if (currentViewType != targetViewType)
         {
             // Going to view 6
-            if (targetViewType == 6)
+            if (targetViewType == 3)
             {
 
             }
 
             // Currently in view 6
-            else if (currentViewType == 6)
+            else if (currentViewType == 3)
             {
                 // Going to view 1
                 if (targetViewType == 1)
@@ -198,6 +248,14 @@ public class ViewTypeObserver : MonoBehaviour
                 {
 
                 }
+            }
+            else if (currentViewType == 4)
+            {
+
+            }
+            else if (targetViewType == 4)
+            {
+
             }
 
             // Going between view 1 and 2 or vice versa
@@ -246,7 +304,7 @@ public class ViewTypeObserver : MonoBehaviour
     [PunRPC]
     IEnumerator LoadingSomeLevel(string sceneValue)
     {
-
+        
         loaderCanvas.SetActive(true);
         character = Random.Range(0, 2);
         int factInt = Random.Range(0, 21);
@@ -262,7 +320,7 @@ public class ViewTypeObserver : MonoBehaviour
         while (progress < 1f)
         {
             
-            progress += 0.5f *0.009f;
+            progress += 0.5f * 0.01f;
             
             
             if (character == 0)
@@ -307,6 +365,10 @@ public class ViewTypeObserver : MonoBehaviour
 
                 if (progress >= 0.9f)
                 {
+                    if (PhotonNetwork.IsMasterClient)
+                    {
+                        yield return new WaitForSeconds(2f);
+                    }
                     progressBar.fillAmount = 1;
                     planet.rectTransform.localPosition = new Vector3(-300 + 721, 0, 0);
 
@@ -314,10 +376,10 @@ public class ViewTypeObserver : MonoBehaviour
             }
 
 
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(.1f);
         }
         PhotonNetwork.LoadLevel(sceneValue);
-
+        UICanvases.SetActive(true);
     }
 
 }

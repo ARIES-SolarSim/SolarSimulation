@@ -130,7 +130,7 @@ Material:
     - _Speed: 5
     - _SrcBlend: 1
     - _UVSec: 0
-    - _WaterDepth: 50
+    - _WaterDepth: 0
     - _WaterOpacity: 0.224
     - _WaterOrientation: 2.77
     - _Wavelength: 10

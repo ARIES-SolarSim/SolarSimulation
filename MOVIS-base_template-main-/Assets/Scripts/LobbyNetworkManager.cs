@@ -27,56 +27,67 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.NickName = "1";
         StartCoroutine(EnableJoinedRoomPanelAfterFewSeconds()); //wait for few seconds to connect the server
+        getStarted.gameObject.SetActive(false);
+
     }
     public void ClickedTwo()
     {
         PhotonNetwork.NickName = "2";
         StartCoroutine(EnableJoinedRoomPanelAfterFewSeconds());
+        getStarted.gameObject.SetActive(false);
     }
     public void ClickedThree()
     {
         PhotonNetwork.NickName = "3";
         StartCoroutine(EnableJoinedRoomPanelAfterFewSeconds());
+        getStarted.gameObject.SetActive(false);
     }
     public void ClickedFour()
     {
         PhotonNetwork.NickName = "4";
         StartCoroutine(EnableJoinedRoomPanelAfterFewSeconds());
+        getStarted.gameObject.SetActive(false);
     }
     public void ClickedFive()
     {
         PhotonNetwork.NickName = "5";
         StartCoroutine(EnableJoinedRoomPanelAfterFewSeconds());
+        getStarted.gameObject.SetActive(false);
     }
     public void ClickedSix()
     {
         PhotonNetwork.NickName = "6";
         StartCoroutine(EnableJoinedRoomPanelAfterFewSeconds());
+        getStarted.gameObject.SetActive(false);
     }
     public void ClickedSeven()
     {
         PhotonNetwork.NickName = "7";
         StartCoroutine(EnableJoinedRoomPanelAfterFewSeconds());
+        getStarted.gameObject.SetActive(false);
     }
     public void ClickedEight()
     {
         PhotonNetwork.NickName = "8";
         StartCoroutine(EnableJoinedRoomPanelAfterFewSeconds());
+        getStarted.gameObject.SetActive(false);
     }
 
 
 
     public void ConnectToServer()
     {
-       
+
         PhotonNetwork.ConnectUsingSettings();
 
         if (LobbyManager.userType) //if it is true, ViewFinder User
         {
+            
             //do nothing
         }
         else //if it is headset user
         {
+            
             PhotonNetwork.NickName = "VR Headset Network Player";
         }
 
@@ -154,8 +165,7 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
     }
 
     public void clickedStart()
-    {
-        
+    {     
         StartCoroutine(EnableSplashScreenAfterFewSeconds());
     }
 

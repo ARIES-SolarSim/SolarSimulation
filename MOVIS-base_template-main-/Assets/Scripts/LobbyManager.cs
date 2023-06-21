@@ -6,8 +6,12 @@ using UnityEngine;
 public class LobbyManager : MonoBehaviour
 {
     [Tooltip("true is viewFinder, false is headset")]
-    public static bool userType; 
+    public static bool userType;
 
+    private void Start()
+    {
+        PhotonNetwork.AutomaticallySyncScene = true;
+    }
     public void ClickedHeadset()
     {
         userType = false; //set as Headset user
@@ -15,6 +19,7 @@ public class LobbyManager : MonoBehaviour
     }
     public void ClickedViewFinder()
     {
+        Debug.Log("clicked View finder");
         userType = true; //set as ViewFinder user
     }
 

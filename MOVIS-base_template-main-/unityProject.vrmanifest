@@ -2,13 +2,13 @@
   "source": "Unity",
   "applications": [
     {
-      "app_key": "application.generated.unity.movis.exe",
+      "app_key": "application.generated.unity.solarsimulation.exe",
       "launch_type": "url",
       "url": "steam://launch/",
       "action_manifest_path": "C:\\Users\\leahi\\Documents\\GitHub\\SolarSimulation\\MOVIS-base_template-main-\\Assets\\StreamingAssets\\SteamVR\\actions.json",
       "strings": {
         "en_us": {
-          "name": "MOVIS [Testing]"
+          "name": "Solar Simulation [Testing]"
         }
       }
     }

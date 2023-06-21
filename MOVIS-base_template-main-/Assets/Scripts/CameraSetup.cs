@@ -7,10 +7,12 @@ public class CameraSetup : MonoBehaviour
 {
     public GameObject Tracker1, Tracker2, Tracker3, Tracker4, Tracker5, Tracker6, Tracker7, Tracker8, Tracker9;
     private Canvas canvas;
-
+    private ViewTypeObserver view;
     private PhotonView photonView;
+    private PhotonTransformView photonTransformView;
     [SerializeField]
     private GameObject[] viewFinderCameras;
+    private Camera camera;
 
     public Quaternion cameraOffset;
     void Start()
@@ -18,21 +20,20 @@ public class CameraSetup : MonoBehaviour
         if (photonView == null)
         {
             photonView = GetComponent<PhotonView>();
+            photonTransformView = GetComponent<PhotonTransformView>();
         }
+        view = GetComponent<ViewTypeObserver>();
+
+        StartCoroutine(FindTrackerAfterFewSeconds()); //give few seconds for the systems to settle
+        this.gameObject.name = photonView.Owner.NickName;
+        trackerSetup();
+        setCanvas();
 
         if (photonView.IsMine) //revmoe the tag so that myself is not disabled in the update funciton
         {
             Debug.Log("setting tag myself for " + photonView.Owner.NickName);
             this.gameObject.tag = "Myself";
         }
-
-        
-        StartCoroutine(FindTrackerAfterFewSeconds()); //give few seconds for the systems to settle
-        this.gameObject.name = photonView.Owner.NickName;
-        trackerSetup();
-        setCanvas();
-
-        
     }
 
     // Update is called once per frame
@@ -85,10 +86,9 @@ public class CameraSetup : MonoBehaviour
         viewFinderCameras = GameObject.FindGameObjectsWithTag("ViewFinderCamera");
         for (int i = 0; i < viewFinderCameras.Length; i++)
         {
-            if (i.ToString() != photonView.Owner.NickName)
-            {
-                viewFinderCameras[i].SetActive(false);
-            }
+            
+                //viewFinderCameras[i].SetActive(false);
+              
         }
 
     }
@@ -100,56 +100,57 @@ public class CameraSetup : MonoBehaviour
     {
         if (photonView.Owner.NickName == "1")
         {
-            GameObject.Find("Canvases").transform.GetChild(0).GetComponent<Canvas>().gameObject.SetActive(true);
-            canvas = GameObject.Find("Canvases/Canvas1").GetComponent<Canvas>();
+            GameObject.Find("UI_Canvases").transform.GetChild(0).GetComponent<Canvas>().gameObject.SetActive(true);
+            canvas = GameObject.Find("UI_Canvases/Canvas1").GetComponent<Canvas>();
             canvas.worldCamera = this.GetComponent<Camera>();
         }
         else if (photonView.Owner.NickName == "2")
         {
-            GameObject.Find("Canvases").transform.GetChild(1).GetComponent<Canvas>().gameObject.SetActive(true);
-            canvas = GameObject.Find("Canvases/Canvas2").GetComponent<Canvas>();
+            GameObject.Find("UI_Canvases").transform.GetChild(1).GetComponent<Canvas>().gameObject.SetActive(true);
+            canvas = GameObject.Find("UI_Canvases/Canvas2").GetComponent<Canvas>();
             canvas.worldCamera = this.GetComponent<Camera>();
         }
         else if (photonView.Owner.NickName == "3")
         {
-            GameObject.Find("Canvases").transform.GetChild(2).GetComponent<Canvas>().gameObject.SetActive(true);
-            canvas = GameObject.Find("Canvases/Canvas3").GetComponent<Canvas>();
+            GameObject.Find("UI_Canvases").transform.GetChild(2).GetComponent<Canvas>().gameObject.SetActive(true);
+            canvas = GameObject.Find("UI_Canvases/Canvas3").GetComponent<Canvas>();
             canvas.worldCamera = this.GetComponent<Camera>();
         }
         else if (photonView.Owner.NickName == "4")
         {
-            GameObject.Find("Canvases").transform.GetChild(3).GetComponent<Canvas>().gameObject.SetActive(true);
-            canvas = GameObject.Find("Canvases/Canvas4").GetComponent<Canvas>();
+            Debug.Log("here");
+            GameObject.Find("UI_Canvases").transform.GetChild(3).GetComponent<Canvas>().gameObject.SetActive(true);
+            canvas = GameObject.Find("UI_Canvases/Canvas4").GetComponent<Canvas>();
             canvas.worldCamera = this.GetComponent<Camera>();
         }
         else if (photonView.Owner.NickName == "5")
         {
-            GameObject.Find("Canvases").transform.GetChild(4).GetComponent<Canvas>().gameObject.SetActive(true);
-            canvas = GameObject.Find("Canvases/Canvas5").GetComponent<Canvas>();
+            GameObject.Find("UI_Canvases").transform.GetChild(4).GetComponent<Canvas>().gameObject.SetActive(true);
+            canvas = GameObject.Find("UI_Canvases/Canvas5").GetComponent<Canvas>();
             canvas.worldCamera = this.GetComponent<Camera>();
         }
         else if (photonView.Owner.NickName == "6")
         {
-            GameObject.Find("Canvases").transform.GetChild(5).GetComponent<Canvas>().gameObject.SetActive(true);
-            canvas = GameObject.Find("Canvases/Canvas6").GetComponent<Canvas>();
+            GameObject.Find("UI_Canvases").transform.GetChild(5).GetComponent<Canvas>().gameObject.SetActive(true);
+            canvas = GameObject.Find("UI_Canvases/Canvas6").GetComponent<Canvas>();
             canvas.worldCamera = this.GetComponent<Camera>();
         }
         else if (photonView.Owner.NickName == "7")
         {
-            GameObject.Find("Canvases").transform.GetChild(6).GetComponent<Canvas>().gameObject.SetActive(true);
-            canvas = GameObject.Find("Canvases/Canvas7").GetComponent<Canvas>();
+            GameObject.Find("UI_Canvases").transform.GetChild(6).GetComponent<Canvas>().gameObject.SetActive(true);
+            canvas = GameObject.Find("UI_Canvases/Canvas7").GetComponent<Canvas>();
             //canvas.worldCamera = this.GetComponent<Camera>();
         }
         else if (photonView.Owner.NickName == "8")
         {
-            GameObject.Find("Canvases").transform.GetChild(7).GetComponent<Canvas>().gameObject.SetActive(true);
-            canvas = GameObject.Find("Canvases/Canvas8").GetComponent<Canvas>();
+            GameObject.Find("UI_Canvases").transform.GetChild(7).GetComponent<Canvas>().gameObject.SetActive(true);
+            canvas = GameObject.Find("UI_Canvases/Canvas8").GetComponent<Canvas>();
             canvas.worldCamera = this.GetComponent<Camera>();
         }
         else if (photonView.Owner.NickName == "9")
         {
-            GameObject.Find("Canvases").transform.GetChild(8).GetComponent<Canvas>().gameObject.SetActive(true);
-            canvas = GameObject.Find("Canvases/DocentCanvas").GetComponent<Canvas>();
+            GameObject.Find("UI_Canvases").transform.GetChild(8).GetComponent<Canvas>().gameObject.SetActive(true);
+            canvas = GameObject.Find("UI_Canvases/DocentCanvas").GetComponent<Canvas>();
             canvas.worldCamera = this.GetComponent<Camera>();
         }
     }
@@ -167,17 +168,17 @@ public class CameraSetup : MonoBehaviour
         try
         {
             
-            Vector3 newPosition = tracker.transform.position;
-            Quaternion newRotation = tracker.transform.rotation;
+                Vector3 newPosition = tracker.transform.position;
+                Quaternion newRotation = tracker.transform.rotation;
 
-            newPosition.y += .1f;
-            newRotation *= cameraOffset;
+                newPosition.y += .1f;
+                newRotation *= cameraOffset;
 
-            transform.position = newPosition;
-            transform.rotation = newRotation;
-            Debug.Log(transform.position);
-            //transform.position = tracker.transform.position;
-            //transform.rotation = tracker.transform.rotation;
+                transform.position = newPosition;
+                transform.rotation = newRotation;
+                //transform.position = tracker.transform.position;
+                //transform.rotation = tracker.transform.rotation;
+            
         }
         
         catch

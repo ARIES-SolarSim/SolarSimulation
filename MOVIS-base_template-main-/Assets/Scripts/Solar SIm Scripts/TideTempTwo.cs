@@ -11,6 +11,7 @@ public class TideTempTwo : MonoBehaviour
     public float maxY;
     public float myX;
     public float myZ;
+    public Camera cam;
     private MeshFilter m;
     private Mesh p;
     private Vector3[] VertexList;
@@ -21,6 +22,7 @@ public class TideTempTwo : MonoBehaviour
 
     private void Start()
     {
+        
         //Moon = FindObjectOfType<RotateAround>();
         proxyMoon = GameObject.Find("proxyMoon");
         //proxySun = GameObject.Find("proxySun");
@@ -44,7 +46,7 @@ public class TideTempTwo : MonoBehaviour
         float newY = ((Mathf.Cos(2 * newNum + subtraction_factor) + 1) / 2.0f) * (maxY - minY) + minY;
         //float newY2 = ((Mathf.Cos(12 * newNum2 + subtraction_factor) + 1) / 2.0f) * (sunmaxY - sunminY) + sunminY;
         transform.localPosition = new Vector3(5, newY, 4.67f);
-
+        Debug.Log(cam.transform.position);
         
         }
 

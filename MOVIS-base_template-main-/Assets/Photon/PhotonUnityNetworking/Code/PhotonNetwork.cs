@@ -64,7 +64,7 @@ namespace Photon.Pun
     public static partial class PhotonNetwork
     {
         /// <summary>Version number of PUN. Used in the AppVersion, which separates your playerbase in matchmaking.</summary>
-        public const string PunVersion = "2.41";
+        public const string PunVersion = "2.42";
 
         /// <summary>Version number of your game. Setting this updates the AppVersion, which separates your playerbase in matchmaking.</summary>
         /// <remarks>
@@ -799,7 +799,7 @@ namespace Photon.Pun
         ///
         /// By default, this value is -1f, so there is no fallback to LateUpdate.
         /// </remarks>
-        public static float MinimalTimeScaleToDispatchInFixedUpdate = -1f;
+        public static float MinimalTimeScaleToDispatchInFixedUpdate = 0;
 
 
         /// <summary>
@@ -1372,7 +1372,7 @@ namespace Photon.Pun
 
             if (NetworkingClient == null)
             {
-                return; // Surpress error when quitting playmode in the editor
+                return; // Suppress error when quitting playmode in the editor
             }
 
             NetworkingClient.Disconnect();
@@ -2474,7 +2474,7 @@ namespace Photon.Pun
         {
             if (CurrentRoom == null)
             {
-                //Debug.LogError("Can not Instantiate before the client joined/created a room. State: "+PhotonNetwork.NetworkClientState);
+                Debug.LogError("Can not Instantiate before the client joined/created a room. State: "+PhotonNetwork.NetworkClientState);
                 return null;
             }
 
@@ -3070,8 +3070,6 @@ namespace Photon.Pun
             _AsyncLevelLoadingOperation = SceneManager.LoadSceneAsync(levelNumber,LoadSceneMode.Single);
         }
 
-       
-
         /// <summary>This method wraps loading a level asynchronously and pausing network messages during the process.</summary>
         /// <remarks>
         /// While loading levels in a networked game, it makes sense to not dispatch messages received by other players.
@@ -3203,11 +3201,12 @@ namespace Photon.Pun
             }
 
 
-            // in the editor, store the settings file as it's not loaded
-            #if  UNITY_EDITOR
-            // don't save the settings before OnProjectUpdated got called (this hints at an ongoing import/load)
-            if (!PhotonEditorUtils.ProjectChangedWasCalled)
+            #if UNITY_EDITOR
+            // in the editor, store the settings file as it could not be loaded
+            // unless Unity still imports assets
+            if (UnityEditor.EditorApplication.isUpdating)
             {
+                EditorApplication.delayCall += delegate { LoadOrCreateSettings(true); };
                 return;
             }
 
