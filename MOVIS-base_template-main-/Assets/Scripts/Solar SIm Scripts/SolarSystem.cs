@@ -45,7 +45,8 @@ public class SolarSystem : MonoBehaviour
 
     void Gravity()
     {
-  
+
+        
         //This function provides the gravity using solar system physics
         foreach (GameObject a in proxy)
         {

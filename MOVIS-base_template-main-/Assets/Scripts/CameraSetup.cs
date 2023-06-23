@@ -13,6 +13,7 @@ public class CameraSetup : MonoBehaviour
     [SerializeField]
     private GameObject[] viewFinderCameras;
     private Camera camera;
+    private Camera myCamera;
 
     public Quaternion cameraOffset;
     void Start()
@@ -22,8 +23,8 @@ public class CameraSetup : MonoBehaviour
             photonView = GetComponent<PhotonView>();
             photonTransformView = GetComponent<PhotonTransformView>();
         }
-        view = GetComponent<ViewTypeObserver>();
-
+        view = GameObject.FindGameObjectWithTag("view").GetComponent<ViewTypeObserver>();
+        myCamera = FindObjectOfType<Camera>();
         StartCoroutine(FindTrackerAfterFewSeconds()); //give few seconds for the systems to settle
         this.gameObject.name = photonView.Owner.NickName;
         trackerSetup();
@@ -167,7 +168,9 @@ public class CameraSetup : MonoBehaviour
     {
         try
         {
-            
+            Debug.Log("VIEW: " + view.view);
+            if (view.view != 4)
+            {
                 Vector3 newPosition = tracker.transform.position;
                 Quaternion newRotation = tracker.transform.rotation;
 
@@ -178,6 +181,22 @@ public class CameraSetup : MonoBehaviour
                 transform.rotation = newRotation;
                 //transform.position = tracker.transform.position;
                 //transform.rotation = tracker.transform.rotation;
+            }
+            else
+            {
+                Debug.Log("WE ARE IN OCEAN VIEW");
+                if(null == camera)
+                {
+                    camera = GameObject.FindGameObjectWithTag("SceneCamera").GetComponent<Camera>();
+                }
+                transform.position = camera.transform.position;
+                transform.rotation = camera.transform.rotation;
+                myCamera.orthographic = true;
+                myCamera.orthographicSize = 8;
+
+
+
+            }
             
         }
         
