@@ -280,7 +280,7 @@ public class ViewTypeObserver : MonoBehaviour
     public void PhotonChangeScene(int i)
     {
         PhotonView view = GetComponent<PhotonView>();
-        view.RPC("changeScene", RpcTarget.All, i);
+        view.RPC("changeScene", RpcTarget.MasterClient, i);
     }
 
     /**
@@ -289,10 +289,36 @@ public class ViewTypeObserver : MonoBehaviour
     [PunRPC]
     private void changeScene(int i)
     {
+
+        PhotonView view = GetComponent<PhotonView>();
         // docentManager.GetComponent<DocentUI_Manager>().changeState((int)transform.localPosition.y, i);
         // Currently, DocentUI_Manager is unused, but if that changes, uncomment - Shane
-        if(!LobbyManager.userType)
-        transform.localPosition = new Vector3(0, i, 0);
+        if (!LobbyManager.userType)
+        {
+            if(i == 1)
+            {
+                transform.localPosition = new Vector3(0, i, 0);
+            }
+            else if (i == 2)
+            {
+                transform.localPosition = new Vector3(0, i, 0);
+            }
+            else if(i == 3)
+            {
+               
+                view = GetComponent<PhotonView>();
+                view.RPC("LoadingSomeLevel", RpcTarget.All, levelNames[i]);
+
+            }
+            else if (i == 4){
+              
+                view = GetComponent<PhotonView>();
+                view.RPC("LoadingSomeLevel", RpcTarget.All, levelNames[i]);
+                
+            }
+
+
+        }
     }
 
     [PunRPC]
@@ -302,8 +328,6 @@ public class ViewTypeObserver : MonoBehaviour
         loaderCanvas.SetActive(true);
         character = Random.Range(0, 2);
         int factInt = Random.Range(0, 21);
-        Debug.Log("Fact: " + factInt);
-        //Debug.Log(factList.FactList[0]);
         fact.text = factList.FactList[factInt];
         
 
@@ -314,7 +338,9 @@ public class ViewTypeObserver : MonoBehaviour
         while (progress < 1f)
         {
 
-            progress += 0.5f; //* 0.01f;
+            
+                progress += 0.5f * 0.01f;
+            
             
             
             if (character == 0)
@@ -359,20 +385,28 @@ public class ViewTypeObserver : MonoBehaviour
 
                 if (progress >= 0.9f)
                 {
-                    if (PhotonNetwork.IsMasterClient)
-                    {
-                        yield return new WaitForSeconds(2f);
-                    }
+                    
                     progressBar.fillAmount = 1;
                     planet.rectTransform.localPosition = new Vector3(-300 + 721, 0, 0);
+                    
 
                 }
             }
 
-
-        //yield return new WaitForSeconds(.1f);
+            if (progress < 0.9f)
+            {
+                if (!LobbyManager.userType)
+                {
+                    yield return new WaitForSeconds(.03f);
+                }
+                else
+                {
+                    yield return new WaitForSeconds(.001f);
+                }
+            }
         }
         PhotonNetwork.LoadLevel(sceneValue);
+        yield return new WaitForSeconds(2f);
         loaderCanvas.SetActive(false);
         UICanvases.SetActive(true);
     }
