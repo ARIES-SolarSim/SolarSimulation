@@ -21,7 +21,7 @@ public class PlanetBuilderInterface : MonoBehaviour
     public Material Rocky;
     public Material Gas;
 
-    private float[] Diameter = new float[] { 0.1f, 0.2f, 0.3f };
+    private float[] Diameter = new float[] { 0.0001f, 0.2f, 0.35f };
 
     //Elements
 
@@ -46,7 +46,7 @@ public class PlanetBuilderInterface : MonoBehaviour
 
     private float[] DistFromSun = new float[] { 1.0f, 2.0f, 3.0f };
 
-    private int[] Choices = new int[] { 1, 2, 2, 2, 1, 2, 3, 2 };
+    private int[] Choices = new int[] { 2, 2, 2, 2, 1, 2, 3, 2 };
     //Surface Type (1-2), Size (1-3), Element (1-3), Atmosphere (1-3), Rings (1-3), Day Length (1-3), Distance From Sun (1-4), Mass (1-3)
 
     public readonly int SURFACE_TYPE = 0;
