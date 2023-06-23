@@ -27,13 +27,7 @@ public class SolarSystemNoMoon : MonoBehaviour
         proxyEarth = proxy[0];
 
         //This is the earth for the body values
-        foreach (GameObject b in bodies)
-        {
-            if (b.name == "proxyEarth")
-            {
-                earth = b;
-            }
-        }
+        earth = bodies[1];
 
         //Tis is the little earth inside the big earth
         //lil = GameObject.FindGameObjectsWithTag("lil")[0];
@@ -51,8 +45,7 @@ public class SolarSystemNoMoon : MonoBehaviour
 
     void Gravity()
     {
-        Debug.Log("GRAVITY IS HAPPENING");
-        Debug.Log(earth.transform.position.ToString());
+
         //This function provides the gravity using solar system physics
         foreach (GameObject a in proxy)
         {
