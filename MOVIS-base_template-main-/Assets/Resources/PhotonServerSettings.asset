@@ -44,6 +44,9 @@ MonoBehaviour:
   - OpenHamburger
   - ResetCamera
   - RespawnSpaceship
+  - Gravity
+  - DropdownSample
+  - changeScene
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Ocean_material_01
-  m_Shader: {fileID: 4800000, guid: 51bb15ebb01624844944395f241ad462, type: 3}
+  m_Shader: {fileID: 10720, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -39,7 +39,15 @@ Material:
         m_Texture: {fileID: 2800000, guid: 3e9621926cb7ef440a683d33de90a485, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _AlphaTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DepthRampTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -83,6 +91,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: d12dc5b6df76c6b42844432e6b9f4005, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _NoiseTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -100,15 +112,20 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - PixelSnap: 0
     - _Amplitude: 0.3
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _Depth: 199412
+    - _DepthFactor: 1
     - _DetailNormalMapScale: 1
+    - _DistortStrength: 1
     - _DstBlend: 0
     - _EdgeFoamLevel: 2.43
     - _EdgeFoamLevelDestination: 3.64
     - _EdgeFoamPower: 0
+    - _EnableExternalAlpha: 0
+    - _ExtraHeight: 0
     - _FoamLevel: 1.2
     - _FoamLevelDestination: 2.25
     - _FoamLevel_copy: 4.84
@@ -133,6 +150,8 @@ Material:
     - _WaterDepth: 0
     - _WaterOpacity: 0.224
     - _WaterOrientation: 2.77
+    - _WaveAmp: 0.2
+    - _WaveSpeed: 1
     - _Wavelength: 10
     - _Whites_opacity: 0.898
     - _Whole_opacity: 0.803
@@ -147,9 +166,12 @@ Material:
     - _node_9095: 91
     - _node_9294: 0.752
     m_Colors:
-    - _Color: {r: 0.7880324, g: 0.7205882, b: 1, a: 1}
+    - _Color: {r: 0.5801887, g: 0.90498626, b: 1, a: 1}
     - _Direction: {r: 1, g: 0, b: 0, a: 0}
+    - _EdgeColor: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Flip: {r: 1, g: 1, b: 1, a: 1}
+    - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
     - _WaterColor: {r: 0, g: 0.9019608, b: 1, a: 1}
     - _WaveA: {r: 1, g: 0, b: 0.5, a: 10}
     - _WaveB: {r: 0, g: 1, b: 0.25, a: 20}

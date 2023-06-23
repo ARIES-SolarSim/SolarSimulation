@@ -56,7 +56,6 @@ public class ViewTypeObserver : MonoBehaviour
         {
             Debug.Log("Start");
             targetViewType = currentViewType;
-            UICanvases.SetActive(true);
         }
 
         // Switched to this scene and we're not in the right view
@@ -76,6 +75,11 @@ public class ViewTypeObserver : MonoBehaviour
 
     void Update()
     {
+
+
+        if (!UICanvases.activeInHierarchy)
+            UICanvases.SetActive(true);
+
         int y = (int)transform.localPosition.y;
 
         // Switching to different views if the view we try to switch to is not the one we're in already
@@ -84,6 +88,8 @@ public class ViewTypeObserver : MonoBehaviour
             // Scene 1 has special cases
             if (y == 1)
             {
+
+
                 // If not in room 1, go to it
                 if (currentViewType > 2 && currentViewType != 6)
                 {
@@ -160,37 +166,17 @@ public class ViewTypeObserver : MonoBehaviour
             {
                 targetViewType = 4;
                 view = 4;
-                Debug.Log("ENTERED");
+  
                 if (PhotonNetwork.IsMasterClient)
                 {
-
-
-                    Debug.Log("we are the master client");
                     PhotonView view = GetComponent<PhotonView>();
                     view.RPC("LoadingSomeLevel", RpcTarget.All, levelNames[4]);
                     //StartCoroutine(LoadingSomeLevel(levelNames[3]));
 
                 }
-                viewFinderCameras = GameObject.FindGameObjectsWithTag("ViewFinderCamera");
-                for (int i = 0; i < viewFinderCameras.Length; i++)
-                {
-
-                        Debug.Log("ENTERED");
-
-
-
-                    viewFinderCameras[i].transform.position = FindObjectOfType<Camera>().transform.position;
-                    viewFinderCameras[i].GetComponent<Camera>().transform.position = FindObjectOfType<Camera>().transform.position;
-                    viewFinderCameras[i].GetComponent<Camera>().transform.rotation = FindObjectOfType<Camera>().transform.rotation;
-                    viewFinderCameras[i].GetComponent<Camera>().fieldOfView = FindObjectOfType<Camera>().fieldOfView;
-                    viewFinderCameras[i].GetComponent<Camera>().orthographic = FindObjectOfType<Camera>().orthographic;
-                    FindObjectOfType<Camera>().enabled = false;
-
-
-
-
-                }
-                 FindObjectOfType<UnityEngine.SpatialTracking.TrackedPoseDriver>().enabled = false;
+                
+                
+                 //FindObjectOfType<UnityEngine.SpatialTracking.TrackedPoseDriver>().enabled = false;
             
                 transform.localPosition = Vector3.zero;
 
@@ -291,20 +277,28 @@ public class ViewTypeObserver : MonoBehaviour
         }
     }
 
+    public void PhotonChangeScene(int i)
+    {
+        PhotonView view = GetComponent<PhotonView>();
+        view.RPC("changeScene", RpcTarget.All, i);
+    }
+
     /**
     * Called by pressing the scene buttons on the docent UI tablet
     */
-    public void changeScene(int i)
+    [PunRPC]
+    private void changeScene(int i)
     {
         // docentManager.GetComponent<DocentUI_Manager>().changeState((int)transform.localPosition.y, i);
-        // Currently, DocentUI_Manager is unused, but if that changes, uncomment - Shane 
+        // Currently, DocentUI_Manager is unused, but if that changes, uncomment - Shane
+        if(!LobbyManager.userType)
         transform.localPosition = new Vector3(0, i, 0);
     }
 
     [PunRPC]
     IEnumerator LoadingSomeLevel(string sceneValue)
     {
-        
+        UICanvases.SetActive(false);
         loaderCanvas.SetActive(true);
         character = Random.Range(0, 2);
         int factInt = Random.Range(0, 21);
@@ -319,8 +313,8 @@ public class ViewTypeObserver : MonoBehaviour
 
         while (progress < 1f)
         {
-            
-            progress += 0.5f * 0.01f;
+
+            progress += 0.5f; //* 0.01f;
             
             
             if (character == 0)
@@ -376,9 +370,10 @@ public class ViewTypeObserver : MonoBehaviour
             }
 
 
-        yield return new WaitForSeconds(.1f);
+        //yield return new WaitForSeconds(.1f);
         }
         PhotonNetwork.LoadLevel(sceneValue);
+        loaderCanvas.SetActive(false);
         UICanvases.SetActive(true);
     }
 

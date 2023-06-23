@@ -13,6 +13,7 @@ public class CameraSetup : MonoBehaviour
     [SerializeField]
     private GameObject[] viewFinderCameras;
     private Camera camera;
+    private Camera myCamera;
 
     public Quaternion cameraOffset;
     void Start()
@@ -22,8 +23,8 @@ public class CameraSetup : MonoBehaviour
             photonView = GetComponent<PhotonView>();
             photonTransformView = GetComponent<PhotonTransformView>();
         }
-        view = GetComponent<ViewTypeObserver>();
-
+        view = GameObject.FindGameObjectWithTag("view").GetComponent<ViewTypeObserver>();
+        myCamera = FindObjectOfType<Camera>();
         StartCoroutine(FindTrackerAfterFewSeconds()); //give few seconds for the systems to settle
         this.gameObject.name = photonView.Owner.NickName;
         trackerSetup();
@@ -86,9 +87,9 @@ public class CameraSetup : MonoBehaviour
         viewFinderCameras = GameObject.FindGameObjectsWithTag("ViewFinderCamera");
         for (int i = 0; i < viewFinderCameras.Length; i++)
         {
-            
-                //viewFinderCameras[i].SetActive(false);
-              
+
+            //viewFinderCameras[i].SetActive(false);
+
         }
 
     }
@@ -118,6 +119,7 @@ public class CameraSetup : MonoBehaviour
         }
         else if (photonView.Owner.NickName == "4")
         {
+
             Debug.Log("here");
             GameObject.Find("UI_Canvases").transform.GetChild(3).GetComponent<Canvas>().gameObject.SetActive(true);
             canvas = GameObject.Find("UI_Canvases/Canvas4").GetComponent<Canvas>();
@@ -139,7 +141,7 @@ public class CameraSetup : MonoBehaviour
         {
             GameObject.Find("UI_Canvases").transform.GetChild(6).GetComponent<Canvas>().gameObject.SetActive(true);
             canvas = GameObject.Find("UI_Canvases/Canvas7").GetComponent<Canvas>();
-            //canvas.worldCamera = this.GetComponent<Camera>();
+            canvas.worldCamera = this.GetComponent<Camera>();
         }
         else if (photonView.Owner.NickName == "8")
         {
@@ -167,7 +169,9 @@ public class CameraSetup : MonoBehaviour
     {
         try
         {
-            
+            Debug.Log("VIEW: " + view.view);
+            if (view.view != 4)
+            {
                 Vector3 newPosition = tracker.transform.position;
                 Quaternion newRotation = tracker.transform.rotation;
 
@@ -178,9 +182,25 @@ public class CameraSetup : MonoBehaviour
                 transform.rotation = newRotation;
                 //transform.position = tracker.transform.position;
                 //transform.rotation = tracker.transform.rotation;
-            
+            }
+            else
+            {
+                Debug.Log("WE ARE IN OCEAN VIEW");
+                if (null == camera)
+                {
+                    camera = GameObject.FindGameObjectWithTag("SceneCamera").GetComponent<Camera>();
+                }
+                transform.position = camera.transform.position;
+                transform.rotation = camera.transform.rotation;
+                myCamera.orthographic = true;
+                myCamera.orthographicSize = 8;
+
+
+
+            }
+
         }
-        
+
         catch
         {
             Debug.Log("Failed mapping of tracker: " + photonView.Owner.NickName + " , Attempting to connect again");
@@ -229,52 +249,8 @@ public class CameraSetup : MonoBehaviour
         Tracker9 = GameObject.Find("Tracker9(Clone)");
     }
 
-    // Daniel's code
-    public void CallRPCChangeCamera(int CameraNumber)
-    {
-        photonView.RPC("ChangeCamera", RpcTarget.MasterClient, CameraNumber);
-    }
+    
 
-    // Daniel's code
-    public void CallRPCResetCamera()
-    {
-        photonView.RPC("ResetCamera", RpcTarget.MasterClient);
-    }
-
-    public void CallRPCChangeScene(int scene)
-    {
-        photonView.RPC("ChangeScene", RpcTarget.MasterClient);
-    }
-
-    public void CallRPCOpenHamburger()
-    {
-        photonView.RPC("OpenHamburger", RpcTarget.MasterClient);
-    }
-
-    // Daniel's code
-    [PunRPC]
-    public void ChangeCamera(int CameraNumber)
-    {
-        DocentManager.inst.ChangeCamera(CameraNumber);
-    }
-
-    // Daniel's code
-    [PunRPC]
-    public void ResetCamera()
-    {
-        DocentManager.inst.ResetCamera();
-    }
-
-    [PunRPC]
-    public void ChangeScene(int scene)
-    {
-        DocentManager.inst.ChangeScene(scene);
-    }
-
-    [PunRPC]
-    public void OpenHamburger()
-    {
-        DocentManager.inst.OpenHamburger();
-    }
+    
 }
 

@@ -10,6 +10,8 @@ TagManager:
   - Myself
   - ViewFinderCamera
   - Light me
+  - SceneCamera
+  - view
   layers:
   - Default
   - TransparentFX

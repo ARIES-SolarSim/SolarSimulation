@@ -2,7 +2,7 @@ Shader "Water/Ocean_01_Smooth" {
     Properties {
     [Header]
         _WaterColor ("Water Color", Color) = (0.4926471,0.6011156,1,1)
-        _MainTexture ("Main Texture", 2D) = "white" {}
+        _MainTex ("Main Texture", 2D) = "white" {}
         _FoamTexture ("Foam Texture", 2D) = "white" {}
         _Addittionalfoam ("Addittional foam", 2D) = "white" {}
         _Noise ("Noise", 2D) = "white" {}
@@ -55,7 +55,7 @@ Shader "Water/Ocean_01_Smooth" {
             uniform sampler2D _CameraDepthTexture;
             uniform sampler2D _Addittionalfoam; uniform float4 _Addittionalfoam_ST;
             uniform float4 _WaterColor;
-            uniform sampler2D _MainTexture; uniform float4 _MainTexture_ST;
+            uniform sampler2D _MainTex; uniform float4 _MainTexture_ST;
             uniform sampler2D _FoamTexture; uniform float4 _FoamTexture_ST;
             uniform float _WaterOpacity;
             uniform float _Noiselevel;
@@ -97,7 +97,7 @@ Shader "Water/Ocean_01_Smooth" {
                 float2 node_1855 = (mul(i.uv0-node_1855_piv,float2x2( node_1855_cos, -node_1855_sin, node_1855_sin, node_1855_cos))+node_1855_piv);
                 float2 node_9870 = node_1855;
                 float2 node_7411 = (node_9870+node_8281.g*float2(0,0.05));
-                float4 _MainTexture_var = tex2D(_MainTexture,TRANSFORM_TEX(node_7411, _MainTexture));
+                float4 _MainTexture_var = tex2D(_MainTex,TRANSFORM_TEX(node_7411, _MainTexture));
                 float2 node_5898 = (node_9870+node_8281.g*float2(0,0.01));
                 float4 _Addittionalfoam_var = tex2D(_Addittionalfoam,TRANSFORM_TEX(node_5898, _Addittionalfoam));
                 float4 _Noise_var = tex2D(_Noise,TRANSFORM_TEX(i.uv0, _Noise));
