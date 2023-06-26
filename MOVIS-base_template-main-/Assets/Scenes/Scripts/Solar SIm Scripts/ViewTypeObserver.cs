@@ -77,7 +77,7 @@ public class ViewTypeObserver : MonoBehaviour
     {
 
 
-        if (!UICanvases.activeInHierarchy)
+        if (!UICanvases.activeInHierarchy && PhotonNetwork.NickName == "9")
             UICanvases.SetActive(true);
 
         int y = (int)transform.localPosition.y;
@@ -96,10 +96,12 @@ public class ViewTypeObserver : MonoBehaviour
                     targetViewType = 1;
                     PhotonNetwork.LoadLevel(levelNames[1]);
                     transform.localPosition = Vector3.zero;
+                    
+ 
                 }
 
                 // If in room 1, toggle viewtype
-                else
+                    else
                 {
                     targetViewType = 1;
                     transform.localPosition = new Vector3(1, 0, 0);
@@ -294,30 +296,9 @@ public class ViewTypeObserver : MonoBehaviour
         // docentManager.GetComponent<DocentUI_Manager>().changeState((int)transform.localPosition.y, i);
         // Currently, DocentUI_Manager is unused, but if that changes, uncomment - Shane
         if (!LobbyManager.userType)
-        {
-            if(i == 1)
-            {
+        {   
                 transform.localPosition = new Vector3(0, i, 0);
-            }
-            else if (i == 2)
-            {
-                transform.localPosition = new Vector3(0, i, 0);
-            }
-            else if(i == 3)
-            {
-               
-                view = GetComponent<PhotonView>();
-                view.RPC("LoadingSomeLevel", RpcTarget.All, levelNames[i]);
-
-            }
-            else if (i == 4){
-              
-                view = GetComponent<PhotonView>();
-                view.RPC("LoadingSomeLevel", RpcTarget.All, levelNames[i]);
-                
-            }
-
-
+ 
         }
     }
 
@@ -410,5 +391,6 @@ public class ViewTypeObserver : MonoBehaviour
         loaderCanvas.SetActive(false);
         UICanvases.SetActive(true);
     }
+
 
 }

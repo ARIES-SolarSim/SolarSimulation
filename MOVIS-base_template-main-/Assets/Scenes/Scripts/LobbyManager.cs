@@ -28,8 +28,15 @@ public class LobbyManager : MonoBehaviour
         userType = true;
     }
 
+    [PunRPC]
+    public void LoadLevel()
+    {
+        if (!userType)
+            PhotonNetwork.LoadLevel(1); //load the Scene 1 (Room1)
+    }
     public void ClickedEnterRoom()
     {
-        PhotonNetwork.LoadLevel(1); //load the Scene 1 (Room1)
+        PhotonView view = GetComponent<PhotonView>();
+        view.RPC("LoadLevel", RpcTarget.MasterClient);
     }
 }

@@ -13,15 +13,18 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
     public GameObject image;
     public GameObject splash;
     public Button getStarted;
+
     public void ClickedHeadsetUser()
     {
 
         StartCoroutine(EnableJoinedRoomPanelAfterFewSeconds()); //wait for few seconds to connect the server
+        
     }
     public void ClickedDocent()
     {
         PhotonNetwork.NickName = "9";
         StartCoroutine(EnableJoinedRoomPanelAfterFewSeconds());
+        
     }
     public void ClickedOne()
     {
@@ -135,8 +138,7 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        
-        Debug.Log("Joined a Room");
+        clickedStart();
         base.OnJoinedRoom();
         for(int i = 0; i < PhotonNetwork.PlayerList.Length; i++)
         {
@@ -149,12 +151,14 @@ public class LobbyNetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
+        clickedStart();
         Debug.Log("A new player entered the room");
         if(newPlayer.NickName == "VR Headset Network Player")
         {
             PhotonNetwork.SetMasterClient(newPlayer);
         }
         base.OnPlayerEnteredRoom(newPlayer);
+
     }
 
     IEnumerator EnableJoinedRoomPanelAfterFewSeconds()

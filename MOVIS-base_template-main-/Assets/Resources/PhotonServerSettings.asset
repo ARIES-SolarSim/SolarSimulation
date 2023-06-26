@@ -47,6 +47,11 @@ MonoBehaviour:
   - Gravity
   - DropdownSample
   - changeScene
+  - LoadLevel
+  - showEnter
+  - updateVirtualControllers
+  - StopJitter
+  - move
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

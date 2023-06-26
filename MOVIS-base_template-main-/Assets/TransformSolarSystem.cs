@@ -15,6 +15,6 @@ public class TransformSolarSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.RotateAround(earth.position, Vector3.up, speed * Time.deltaTime);
+        transform.RotateAround(earth.position, Vector3.down, speed * Time.deltaTime);
     }
 }

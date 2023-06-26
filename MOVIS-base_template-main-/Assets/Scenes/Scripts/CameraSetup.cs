@@ -28,7 +28,7 @@ public class CameraSetup : MonoBehaviour
         StartCoroutine(FindTrackerAfterFewSeconds()); //give few seconds for the systems to settle
         this.gameObject.name = photonView.Owner.NickName;
         trackerSetup();
-        setCanvas();
+        //setCanvas();
 
         if (photonView.IsMine) //revmoe the tag so that myself is not disabled in the update funciton
         {
@@ -88,7 +88,7 @@ public class CameraSetup : MonoBehaviour
         for (int i = 0; i < viewFinderCameras.Length; i++)
         {
 
-            //viewFinderCameras[i].SetActive(false);
+            viewFinderCameras[i].SetActive(false);
 
         }
 
@@ -97,7 +97,7 @@ public class CameraSetup : MonoBehaviour
     /**
      * Sets the canvases of each tablet so it has its own UI
      */
-    void setCanvas()
+  /*  void setCanvas()
     {
         if (photonView.Owner.NickName == "1")
         {
@@ -155,7 +155,7 @@ public class CameraSetup : MonoBehaviour
             canvas = GameObject.Find("UI_Canvases/DocentCanvas").GetComponent<Canvas>();
             canvas.worldCamera = this.GetComponent<Camera>();
         }
-    }
+    }*/
 
     public void setCanvasInactive()
     {

@@ -50,7 +50,6 @@ public class TideTempTwo : MonoBehaviour
             transform.localPosition = new Vector3(5, newY, 4.67f);
             
         }
-        Debug.Log(transform.localPosition);
 
     }
 

@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -130,71 +131,79 @@ public class UniverseController : MonoBehaviour
         }
         if (!LobbyManager.userType) //Only orbit in headset, allow photon viewers to do the rest
         {
-            if (orbiting)
-            {
-                move();
-                currentSpeed = orbitSpeedK;
-                moon.changing = false;
+            PhotonView view = GetComponent<PhotonView>();
+            view.RPC("StopJitter", RpcTarget.All);
+        }
+    }
 
-                if (ViewTypeObserver.immediateTransition == true)
-                {
-                    changeDuration = 800;
-                    accDuration = 150;
-                    ViewTypeObserver.immediateTransition = false;
-                }
+    [PunRPC]
+    public void StopJitter()
+    {
+        if (orbiting)
+        {
+            Debug.Log("hello");
+            move();
+            currentSpeed = orbitSpeedK;
+            moon.changing = false;
+
+            if (ViewTypeObserver.immediateTransition == true)
+            {
+                changeDuration = 800;
+                accDuration = 150;
+                ViewTypeObserver.immediateTransition = false;
             }
-            else //Changing viewtypes
+        }
+        else //Changing viewtypes
+        {
+            moon.changing = true;
+            if (changeState == 0) //Slowing down
             {
-                moon.changing = true;
-                if (changeState == 0) //Slowing down
+                //Debug.Log("Decreasing Speed: " + accDuration + " " + changeSteps);
+                decreaseSpeed(accDuration, 0);
+            }
+
+            if (changeState == 1) //Changing
+            {
+                //Debug.Log("Changing: " + changeDuration + " " + changeSteps);
+                moonMesh.changing();
+                //Debug.Log("Set isChanging to true but is: " + FindObjectOfType<MeshScaler>().isChanging);
+                foreach (PlanetController pc in Planets)
                 {
-                    //Debug.Log("Decreasing Speed: " + accDuration + " " + changeSteps);
-                    decreaseSpeed(accDuration, 0);
+                    pc.diameter = pc.ViewTypeChangeMatrix[0][changeSteps];
+                    pc.privateOrbitScale = pc.ViewTypeChangeMatrix[1][changeSteps];
+                    pc.UpdateChangeValues();
                 }
-
-                if (changeState == 1) //Changing
+                if (changeSteps == changeDuration - 1)
                 {
-                    //Debug.Log("Changing: " + changeDuration + " " + changeSteps);
-                    moonMesh.changing();
-                    //Debug.Log("Set isChanging to true but is: " + FindObjectOfType<MeshScaler>().isChanging);
-                    foreach (PlanetController pc in Planets)
-                    {
-                        pc.diameter = pc.ViewTypeChangeMatrix[0][changeSteps];
-                        pc.privateOrbitScale = pc.ViewTypeChangeMatrix[1][changeSteps];
-                        pc.UpdateChangeValues();
-                    }
-                    if (changeSteps == changeDuration - 1)
-                    {
-                        changeState = 2;
-                        changeSteps = 0;
-                        MeshScaler.view = (MeshScaler.view == 1) ? 0 : 1;
-                        FindObjectOfType<ViewTypeObserver>().transform.localPosition = new Vector3(0, 0, 0);
+                    changeState = 2;
+                    changeSteps = 0;
+                    MeshScaler.view = (MeshScaler.view == 1) ? 0 : 1;
+                    FindObjectOfType<ViewTypeObserver>().transform.localPosition = new Vector3(0, 0, 0);
 
-                        if (ViewTypeObserver.targetViewType == 1)
+                    if (ViewTypeObserver.targetViewType == 1)
+                    {
+                        foreach (PlanetIdentifier pi in FindObjectsOfType<PlanetIdentifier>())
                         {
-                            foreach (PlanetIdentifier pi in FindObjectsOfType<PlanetIdentifier>())
-                            {
-                                pi.showArrow();
-                            }
-                        }
-
-                        else
-                        {
-                            foreach (PlanetIdentifier pi in FindObjectsOfType<PlanetIdentifier>())
-                            {
-                                pi.hideArrow();
-                            }
+                            pi.showArrow();
                         }
                     }
-                    changeSteps++;
-                    //Debug.Log(changeSteps);
+
+                    else
+                    {
+                        foreach (PlanetIdentifier pi in FindObjectsOfType<PlanetIdentifier>())
+                        {
+                            pi.hideArrow();
+                        }
+                    }
                 }
-                if (changeState == 2) //Speeding up
-                {
-                    moonMesh.doneChanging();
-                    //Debug.Log("Speeding Back Up: " + accDuration + " " + changeSteps);
-                    increaseSpeed(accDuration, 10);
-                }
+                changeSteps++;
+                //Debug.Log(changeSteps);
+            }
+            if (changeState == 2) //Speeding up
+            {
+                moonMesh.doneChanging();
+                //Debug.Log("Speeding Back Up: " + accDuration + " " + changeSteps);
+                increaseSpeed(accDuration, 10);
             }
         }
     }
@@ -238,8 +247,11 @@ public class UniverseController : MonoBehaviour
     /*
      * This method has each planet move through 1 iteration of points within the list.
      */
+
     public void move()
     {
+
+        Debug.Log("we are in move()");
         foreach (PlanetController pc in Planets)
         {
             pc.updateLocation();
@@ -279,6 +291,7 @@ public class UniverseController : MonoBehaviour
      *
      * Used to find the next orbitSpeedK spaces in points
      */
+
     public void updateVirtualControllers()
     {
         foreach (VirtualController vc in Bodies) //Removes the index that planets should currently be at
