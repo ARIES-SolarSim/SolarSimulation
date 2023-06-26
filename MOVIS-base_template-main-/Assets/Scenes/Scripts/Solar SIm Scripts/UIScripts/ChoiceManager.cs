@@ -5,13 +5,13 @@ using UnityEngine;
 public class ChoiceManager : MonoBehaviour
 {
     public static int amountOfObjects = 8;
-    private GameObject[] objectList = new GameObject[amountOfObjects];
+    private GameObject[] objectList = new GameObject[amountOfObjects+1];
     private int currentObject;
 
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < amountOfObjects; i++)
+        for (int i = 0; i <= amountOfObjects; i++)
         {
             objectList[i] = this.gameObject.transform.GetChild(i).gameObject;
         }

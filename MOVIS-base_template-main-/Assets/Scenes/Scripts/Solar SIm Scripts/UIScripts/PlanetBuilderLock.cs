@@ -5,22 +5,21 @@ using UnityEngine.UI;
 public class PlanetBuilderLock : MonoBehaviour
 {
     public static int amountOfObjects = 8;
-    private GameObject[] objectList = new GameObject[amountOfObjects];
-    private int lockState = 0;
+    private GameObject[] objectList = new GameObject[amountOfObjects+1];
+    private int lockState = 1;
 
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < amountOfObjects; i++)
+        for (int i = 0; i <= amountOfObjects; i++)
         {
             objectList[i] = this.gameObject.transform.GetChild(i).gameObject;
         }
-
-        foreach (GameObject obj in objectList)
+        
+        for (int i = 2; i <= amountOfObjects; i++)
         {
-            obj.gameObject.GetComponent<Button>().interactable = false; //Locked state applied immediately to all of the objects
+            objectList[i].gameObject.GetComponent<Button>().interactable = false; // Start with planet type
         }
-        objectList[0].gameObject.GetComponent<Button>().interactable = false; // Start with planet type
 
     }
 
@@ -45,7 +44,7 @@ public class PlanetBuilderLock : MonoBehaviour
         {
             // Decrease Functionality 
             // Lock what is not already locked 
-            for (int i = lockState; i >= newLockState; i--)
+            for (int i = lockState; i > newLockState; i--)
             {
                 objectList[i].gameObject.GetComponent<Button>().interactable = false; //Locked 
             }
