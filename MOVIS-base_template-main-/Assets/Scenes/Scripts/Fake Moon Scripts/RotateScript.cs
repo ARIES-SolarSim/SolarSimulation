@@ -45,7 +45,7 @@ public class RotateScript : MonoBehaviour
                     gameObject.GetComponent<TrailRenderer>().enabled = false;
                 }
                 */
-                if (view == 1)
+                if (view == 1 && !FindObjectOfType<UniverseController>().isPlanetBuilder)
                 {
                     //gameObject.GetComponent<TrailRenderer>().enabled = true;
                     arrow.SetActive(true);

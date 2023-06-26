@@ -25,6 +25,9 @@ public class UniverseController : MonoBehaviour
     public static int trailDelay = 5;
     public static int trailCount = 0;
 
+    public static bool begin;
+    private static bool hasStarted = false;
+
     //The values below are placeholder for the motion profiling set up to smooth out the orbit scale transitions
     //Would be cool if this was done with cubic splines instead
     //public static float tolerance = 0.001f;
@@ -37,12 +40,21 @@ public class UniverseController : MonoBehaviour
      */
     private void Awake()
     {
-        if(isPlanetBuilder)
+        if(begin)
         {
-            timeStep = 0.00005f;
-            orbitScale = 16; //Scale to have first 4 planets to fill the space
-            planetScale = 5;
+            awakeFunctionality();
+        }
+    }
 
+    public void awakeFunctionality()
+    {
+        if (isPlanetBuilder)
+        {
+            timeStep = 0.0002f;
+            orbitScale = 16; //Scale to have first 4 planets to fill the space
+            planetScale = 10000;
+            //FindObjectOfType<PlanetBuilderInterface>().pc.InitialPosition = FindObjectOfType<PlanetBuilderInterface>().getDistFromSun();
+            Debug.Log(FindObjectOfType<PlanetBuilderInterface>().pc.InitialPosition);
         }
         Planets = FindObjectsOfType<PlanetController>(); //Fills the Planet list with all planets
         Bodies = new VirtualController[Planets.Length]; //Creates a list for all the virtual controllers
@@ -60,6 +72,14 @@ public class UniverseController : MonoBehaviour
     }
 
     public void Start()
+    {
+        if(begin)
+        {
+            startFunctionality();
+        }
+    }
+
+    public void startFunctionality()
     {
         orbiting = true;
         if (ViewTypeObserver.immediateTransition)
@@ -80,9 +100,30 @@ public class UniverseController : MonoBehaviour
      */
     void Update()
     {
-        if(isPlanetBuilder)
+        if(begin)
         {
-            if(trailCount < trailDelay)
+            if(isPlanetBuilder && !hasStarted)
+            {
+                awakeFunctionality();
+                startFunctionality();
+                hasStarted = true;
+            }
+            updateFunctionality();
+        }
+        else
+        {
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+                begin = true;
+            }
+        }
+    }
+
+    public void updateFunctionality()
+    {
+        if (isPlanetBuilder)
+        {
+            if (trailCount < trailDelay)
             {
                 trailCount++;
             }

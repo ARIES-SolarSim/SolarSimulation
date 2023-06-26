@@ -35,15 +35,14 @@ public class PlanetController : MonoBehaviour
      */
     void Awake()
     {
-        Velocity = InitialVelocity;
-        mesh.transform.localScale = Vector3.one * diameter; //Could move to editmode script if needed
+        if (ID == 10)
+        {
+            InitialPosition = GetComponent<PlanetBuilderInterface>().getDistFromSun();
+            InitialVelocity = new Vector3(0f, 0f, GetComponent<PlanetBuilderInterface>().getVelocity());
+            mass = GetComponent<PlanetBuilderInterface>().getMass();
+        }
         transform.localPosition = InitialPosition * UniverseController.orbitScale;
         MathPosition = transform.localPosition * privateOrbitScale;
-        mesh.transform.eulerAngles += new Vector3((ID == 3) ? tiltAngle : 0, 0, (ID != 3) ? tiltAngle : 0);
-        if (ID == 4) //Disables the current moon
-        {
-            this.gameObject.SetActive(false);
-        }
     }
 
     /*
@@ -73,6 +72,7 @@ public class PlanetController : MonoBehaviour
                     tr.time = 0;
                 }
             }
+            updateScale();
         }
         else
         {
@@ -140,7 +140,19 @@ public class PlanetController : MonoBehaviour
     //Placeholder
     public void updateScale()
     {
-        mesh.transform.localScale = Vector3.one * diameter * UniverseController.planetScale;
+        if (ID == 3)
+        {
+            mesh.transform.localScale = Vector3.one * diameter * UniverseController.planetScale * 0.5f;
+        }
+        else if (ID == 0)
+        {
+            mesh.transform.localScale = Vector3.one * diameter * UniverseController.planetScale * 0.04f;
+        }
+        else
+        {
+            mesh.transform.localScale = Vector3.one * diameter * UniverseController.planetScale;
+        }
+
     }
 }
 

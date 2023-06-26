@@ -34,7 +34,14 @@ public class MeshScaler : MonoBehaviour
 
         else
         {
-            tr.time = trailTime;
+            if (UniverseController.trailCount >= UniverseController.trailDelay)
+            {
+                tr.time = trailTime;
+            }
+            else
+            {
+                tr.time = 0;
+            }
         }
         
         //transform.localScale = Vector3.one * scales[view - 1].x * UniverseController.planetScale;

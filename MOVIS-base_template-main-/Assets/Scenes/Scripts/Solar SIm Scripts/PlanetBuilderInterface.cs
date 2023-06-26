@@ -16,37 +16,40 @@ public class PlanetBuilderInterface : MonoBehaviour
      */
 
     public GameObject Mesh;
+    public GameObject MeshAtmosphere;
     public PlanetController pc;
 
     public Material Rocky;
     public Material Gas;
 
-    private float[] Diameter = new float[] { 0.1f, 0.2f, 0.3f };
+    private float[] Diameter = new float[] { 4.880739e-06f, 1.210831e-05f, 1.276055e-05f };
 
     //Elements
+    public Color[] Elements;
 
     //Atmosphere
+    public Color[] Atmospheres;
 
     //Planetary Rings
     public GameObject[] Rings = new GameObject[3];
 
     private float[] DayLength = new float[] { 12f, 24f, 48f };
 
-    //Mass
-    private float[,] MassOptions = new float[4, 3]
-    {
-        { 1.0f, 2.0f, 3.0f },
-        { 4.0f, 5.0f, 6.0f },
-        { 7.0f, 8.0f, 9.0f },
-        { 10.0f, 11.0f, 12.0f }
-    };
+    //Mass                                      Merc        Venus      Earth      10x Mars
+    private float[] MassOptions = new float[] { 1.3301176f, 4.171736f, 6.272128f, 6.6422288f };
 
     //Initial Velocity
-    private float[] Velcoity = new float[] { 1.0f, 2.0f, 3.0f, 4.0f };
+    private float[,] Velocity = new float[4, 3] 
+    {
+        { 0.048f, 0.055f, 0.09f },
+        { 0.035f, 0.04f, 0.05f },
+        { 0.025f, 0.032f, 0.038f },
+        { 0.021f, 0.027f, 0.028f }
+    };
 
-    private float[] DistFromSun = new float[] { 1.0f, 2.0f, 3.0f };
+    private Vector3[] DistFromSun = {new Vector3(0.041176471f, 0f, 0f), new Vector3(0.082352941f, 0f, 0f), new Vector3(0.126470588f, 0f, 0f), new Vector3(0.185294118f, 0f, 0f)};
 
-    private int[] Choices = new int[] { 1, 2, 2, 2, 1, 2, 3, 2 };
+    private int[] Choices = new int[] { 1, 2, 1, 2, 2, 2, 4, 3 };
     //Surface Type (1-2), Size (1-3), Element (1-3), Atmosphere (1-3), Rings (1-3), Day Length (1-3), Distance From Sun (1-4), Mass (1-3)
 
     public readonly int SURFACE_TYPE = 0;
@@ -56,7 +59,7 @@ public class PlanetBuilderInterface : MonoBehaviour
     public readonly int RINGS = 4;
     public readonly int DAY_LENGTH = 5;
     public readonly int DIST_FROM_SUN = 6;
-    public readonly int MASS = 7;
+    public readonly int VELOCITY = 7;
 
     void Start()
     {
@@ -69,44 +72,39 @@ public class PlanetBuilderInterface : MonoBehaviour
         
     }
 
+    public Vector3 getDistFromSun()
+    {
+        Debug.Log(DistFromSun[Choices[DIST_FROM_SUN] - 1]);
+        return DistFromSun[Choices[DIST_FROM_SUN] - 1];
+    }
+
+    public float getVelocity()
+    {
+        //Debug.Log(DistFromSun[Choices[DIST_FROM_SUN] - 1]);
+        return Velocity[Choices[DIST_FROM_SUN] - 1, Choices[VELOCITY] - 1];
+    }
+
+    public float getMass()
+    {
+        return MassOptions[Choices[DIST_FROM_SUN] - 1];
+    }
+
     public void updateVisuals()
     {
         if (Choices[SURFACE_TYPE] == 1)
         {
-            //Set material to rocky
+            Mesh.GetComponent<MeshRenderer>().material = Rocky;
         }
         else
         {
-            //Set material to Gas
+            Mesh.GetComponent<MeshRenderer>().material = Gas;
         }
 
         pc.diameter = Diameter[Choices[SIZE] - 1];
 
-        if (Choices[ELEMENT] == 1)
-        {
-            //Set element material to 1
-        }
-        else if (Choices[ELEMENT] == 2)
-        {
-            //Set element material to 2
-        }
-        else
-        {
-            //Set element material to 3
-        }
+        Mesh.GetComponent<MeshRenderer>().material.color = Elements[Choices[ELEMENT] - 1];
 
-        if (Choices[ATMOSPHERE] == 1)
-        {
-            //Set atmosphere material to 1
-        }
-        else if(Choices[ATMOSPHERE] == 2)
-        {
-            //Set atmosphere material to 2
-        }
-        else
-        {
-            //Set atmosphere material to 3
-        }
+        MeshAtmosphere.GetComponent<MeshRenderer>().material.color = Atmospheres[Choices[ELEMENT] - 1];
 
         //Set Rings
 
@@ -114,7 +112,6 @@ public class PlanetBuilderInterface : MonoBehaviour
 
         //Set Dist from Sun
 
-        pc.mass = MassOptions[Choices[DIST_FROM_SUN] - 1, Choices[MASS] - 1];
         pc.updateScale();
 
     }
