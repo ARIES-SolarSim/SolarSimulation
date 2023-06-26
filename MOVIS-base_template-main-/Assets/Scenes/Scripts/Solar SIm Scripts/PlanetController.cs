@@ -59,6 +59,7 @@ public class PlanetController : MonoBehaviour
 
     public void Update()
     {
+        transform.Rotate(0f, rotationSpeed, 0f, Space.Self);
         if (FindObjectOfType<UniverseController>().isPlanetBuilder)
         {
             if (ID != 0 && ID != 4)
