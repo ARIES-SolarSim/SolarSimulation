@@ -388,8 +388,6 @@ public class ViewTypeObserver : MonoBehaviour
         }
         PhotonNetwork.LoadLevel(sceneValue);
         yield return new WaitForSeconds(2f);
-        loaderCanvas.SetActive(false);
-        UICanvases.SetActive(true);
     }
 
 

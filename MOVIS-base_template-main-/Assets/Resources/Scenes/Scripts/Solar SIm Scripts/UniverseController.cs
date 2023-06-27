@@ -8,8 +8,8 @@ public class UniverseController : MonoBehaviour
     public static float planetScale = 1; //The scale planets are displayed
     public static float orbitScale = 1; //The scale of all orbits - can be used to scale the entire system at once rather than each individually
     public static int steps = 100; //How many steps the orbit of planets is calculated ahead of time. Affects the maximum speed.
-    public static float timeStep = 0.0005f; //The frequency which the planets position is calculated
-    public static int orbitSpeedK = 10; //The rate at which planets step through the points list
+    public static float timeStep = 0.001f; //The frequency which the planets position is calculated
+    public static int orbitSpeedK = 30; //The rate at which planets step through the points list
 
     public static bool orbiting = true; //Used to determine if planets are orbiting or changing view type
     public static int changeSteps = 0; //Used while changing view types
@@ -26,7 +26,7 @@ public class UniverseController : MonoBehaviour
     public static int trailDelay = 5;
     public static int trailCount = 0;
 
-    public static bool begin;
+    public bool begin;
     private static bool hasStarted = false;
 
     //The values below are placeholder for the motion profiling set up to smooth out the orbit scale transitions
@@ -131,12 +131,13 @@ public class UniverseController : MonoBehaviour
         }
         if (!LobbyManager.userType) //Only orbit in headset, allow photon viewers to do the rest
         {
-            PhotonView view = GetComponent<PhotonView>();
-            view.RPC("StopJitter", RpcTarget.All);
+            StopJitter();
+            
         }
+  
     }
 
-    [PunRPC]
+    
     public void StopJitter()
     {
         if (orbiting)
