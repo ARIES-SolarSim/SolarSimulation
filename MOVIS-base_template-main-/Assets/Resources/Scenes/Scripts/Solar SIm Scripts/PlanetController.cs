@@ -7,7 +7,7 @@ public class PlanetController : MonoBehaviour
     public float mass; //The simulate mass of the planet. This value should NOT change.
     public Vector3 InitialPosition; //The starting position for the planet
     public Vector3 InitialVelocity; //The starting velocity for the planet
-    public float tiltAngle; //The angle at which the planet is tilted
+    //public float tiltAngle; , using the z rotation for this
     public float rotationSpeed; //The speed at which the planet rotates around its axis
     public float privateOrbitScale; //The individual scale of this planets orbit. Used for view 2 only, set to 1 for view 1
     public GameObject mesh; //The reference to the mesh of the planet. Set in the prefab
