@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,10 +8,12 @@ public class PlanetBuilderLock : MonoBehaviour
     public static int amountOfObjects = 8;
     private GameObject[] objectList = new GameObject[amountOfObjects+1];
     private int lockState = 1;
-
+    public Slider slider;
+    private PhotonView view;
     // Start is called before the first frame update
     void Start()
     {
+        view = GetComponent<PhotonView>();
         for (int i = 0; i <= amountOfObjects; i++)
         {
             objectList[i] = this.gameObject.transform.GetChild(i).gameObject;
@@ -21,6 +24,18 @@ public class PlanetBuilderLock : MonoBehaviour
             objectList[i].gameObject.GetComponent<Button>().interactable = false; // Start with planet type
         }
 
+    }
+
+    public void Update()
+    {
+
+    }
+
+    public void SliderChangeValue()
+    {
+        int value = (int)slider.value;
+        if(!LobbyManager.userType)
+            view.RPC("ChangeLock", RpcTarget.All, value);
     }
 
     public void ChangeLock(int newLockState)
