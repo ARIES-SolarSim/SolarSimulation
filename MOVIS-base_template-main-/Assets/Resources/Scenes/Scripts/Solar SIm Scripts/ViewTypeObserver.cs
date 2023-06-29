@@ -12,6 +12,7 @@ public class ViewTypeObserver : MonoBehaviour
 {
 
     public Text fact;
+    public Text check;
     public Image astronaut;
     public Image rocket;
     public Image planet;
@@ -19,6 +20,8 @@ public class ViewTypeObserver : MonoBehaviour
     public Image progressBar;
     public FactData factList;
     private int character;
+    private bool pressedTwice = false;
+    private int buttonNum;
 
     // public GameObject docentManager; 
     // Used for Changing the instance of DocentUI_Manager when ViewTypeObserver changes scenes
@@ -281,8 +284,28 @@ public class ViewTypeObserver : MonoBehaviour
 
     public void PhotonChangeScene(int i)
     {
-        PhotonView view = GetComponent<PhotonView>();
-        view.RPC("changeScene", RpcTarget.MasterClient, i);
+        if (pressedTwice & buttonNum == i)
+        {
+            PhotonView view = GetComponent<PhotonView>();
+            view.RPC("changeScene", RpcTarget.MasterClient, i);
+        }
+        else
+        {
+            buttonNum = i;
+            StartCoroutine(Check());
+        }
+        
+    }
+
+
+
+    IEnumerator Check()
+    {
+        check.gameObject.SetActive(true);
+        pressedTwice = true;
+        yield return new WaitForSeconds(5f);
+        check.gameObject.SetActive(false);
+        pressedTwice = false;
     }
 
     /**

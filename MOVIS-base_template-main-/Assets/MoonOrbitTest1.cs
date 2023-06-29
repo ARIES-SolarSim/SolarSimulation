@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MoonOrbitTest1 : MonoBehaviour
-{public Transform center;
+{
+    public Transform center;
     public float semiMajorAxis;
     public float semiMinorAxis;
     public float orbitSpeed;
@@ -33,6 +34,11 @@ public class MoonOrbitTest1 : MonoBehaviour
 
             // Rotate around the center and update the position
             transform.RotateAround(center.position, Vector3.up, orbitSpeed * Time.deltaTime);
+           // transform.LookAt(sun);
+
+            transform.rotation = Quaternion.LookRotation(Vector3.RotateTowards(transform.position, center.position, Time.deltaTime, 0f));
+
+
             transform.position = newPosition;
 
             // Tilt the orbit by rotating around the x-axis
@@ -50,7 +56,7 @@ public class MoonOrbitTest1 : MonoBehaviour
             }
 
             // Apply rotation to the moon's own axis
-            transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
+            //transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
         }
     }
 }

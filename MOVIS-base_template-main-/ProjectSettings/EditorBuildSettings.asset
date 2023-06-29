@@ -6,16 +6,16 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Resources/Scenes/Lobby.unity
+    path: Assets/Resources/Scenes/MainScenes/Lobby.unity
     guid: 22b662a96168bba4e93fbc66c565a3ef
   - enabled: 1
-    path: Assets/Resources/Scenes/Room1.unity
+    path: Assets/Resources/Scenes/MainScenes/Room1.unity
     guid: 8bdbf3ac8b29d3a4aab47ae68888f147
   - enabled: 1
-    path: Assets/Resources/Scenes/Room2.unity
+    path: Assets/Resources/Scenes/MainScenes/Room2.unity
     guid: 106f948350594444793b3e45632c3d4c
   - enabled: 1
-    path: Assets/Resources/Scenes/Room3.unity
+    path: Assets/Resources/Scenes/MainScenes/Room3.unity
     guid: 57a8b65e70e8bac42a5bc7e1faa355ea
   - enabled: 1
     path: Assets/Mobile Console/Assets/LogConsole.unity

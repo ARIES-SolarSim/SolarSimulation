@@ -59,33 +59,36 @@ public class PlanetController : MonoBehaviour
 
     public void Update()
     {
-        transform.Rotate(0f, rotationSpeed, 0f, Space.Self);
-        if (FindObjectOfType<UniverseController>().isPlanetBuilder)
+        if (!LobbyManager.userType)
         {
-            if (ID != 0 && ID != 4)
+            transform.Rotate(0f, rotationSpeed, 0f, Space.Self);
+            if (FindObjectOfType<UniverseController>().isPlanetBuilder)
             {
-                if (UniverseController.trailCount >= UniverseController.trailDelay)
+                if (ID != 0 && ID != 4)
                 {
-                    tr.time = trailTime;
+                    if (UniverseController.trailCount >= UniverseController.trailDelay)
+                    {
+                        tr.time = trailTime;
+                    }
+                    else
+                    {
+                        tr.time = 0;
+                    }
                 }
-                else
-                {
-                    tr.time = 0;
-                }
+                updateScale();
             }
-            updateScale();
-        }
-        else
-        {
-            if (ID != 0 && ID != 4)
+            else
             {
-                if (trailObserver.transform.localPosition.z == 1)
+                if (ID != 0 && ID != 4)
                 {
-                    tr.time = 0;
-                }
-                else
-                {
-                    tr.time = trailTime;
+                    if (trailObserver.transform.localPosition.z == 1)
+                    {
+                        tr.time = 0;
+                    }
+                    else
+                    {
+                        tr.time = trailTime;
+                    }
                 }
             }
         }
