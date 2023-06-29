@@ -19,6 +19,7 @@ public class ViewTypeObserver : MonoBehaviour
     public GameObject loaderCanvas;
     public Image progressBar;
     public FactData factList;
+    public GameObject endScreen;
     private int character;
     private bool pressedTwice = false;
     private int buttonNum;
@@ -411,6 +412,19 @@ public class ViewTypeObserver : MonoBehaviour
         }
         PhotonNetwork.LoadLevel(sceneValue);
         yield return new WaitForSeconds(2f);
+    }
+
+    public void endScene()
+    {
+        PhotonView view = GetComponent<PhotonView>();
+        view.RPC("photonEndScene", RpcTarget.MasterClient);
+        
+    }
+
+    [PunRPC]
+    public void photonEndScene()
+    {
+        endScreen.SetActive(true);
     }
 
 
