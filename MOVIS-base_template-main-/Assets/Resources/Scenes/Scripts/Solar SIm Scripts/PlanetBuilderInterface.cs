@@ -61,6 +61,7 @@ public class PlanetBuilderInterface : MonoBehaviour
     public readonly int DIST_FROM_SUN = 6;
     public readonly int VELOCITY = 7;
 
+
     void Start()
     {
         updateVisuals();
@@ -114,5 +115,10 @@ public class PlanetBuilderInterface : MonoBehaviour
 
         pc.updateScale();
 
+    }
+
+    public void UpdateChoices(int choice)
+    {
+        Choices[choice/10] = choice%10;
     }
 }
