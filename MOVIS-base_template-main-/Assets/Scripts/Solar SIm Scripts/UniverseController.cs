@@ -9,7 +9,7 @@ public class UniverseController : MonoBehaviour
     public static float orbitScale = 1; //The scale of all orbits - can be used to scale the entire system at once rather than each individually
     public static int steps = 100; //How many steps the orbit of planets is calculated ahead of time. Affects the maximum speed.
     public static float timeStep = 0.001f; //The frequency which the planets position is calculated
-    public static int orbitSpeedK = 30; //The rate at which planets step through the points list
+    public static int orbitSpeedK = 10; //The rate at which planets step through the points list
 
     public static bool orbiting = true; //Used to determine if planets are orbiting or changing view type
     public static int changeSteps = 0; //Used while changing view types
@@ -118,6 +118,10 @@ public class UniverseController : MonoBehaviour
                 begin = true;
             }
         }
+        if(Input.GetKeyDown(KeyCode.Backspace))
+        {
+            resetPlanets();
+        }
     }
 
     public void updateFunctionality()
@@ -137,6 +141,16 @@ public class UniverseController : MonoBehaviour
   
     }
 
+    public void resetPlanets()
+    {
+        begin = false;
+        hasStarted = false;
+        trailCount = 0;
+        foreach (PlanetController pc in Planets)
+        {
+            pc.resetLocation();
+        }
+    }
     
     public void StopJitter()
     {

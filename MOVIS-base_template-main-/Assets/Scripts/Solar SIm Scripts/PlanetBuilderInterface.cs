@@ -19,13 +19,11 @@ public class PlanetBuilderInterface : MonoBehaviour
     public GameObject MeshAtmosphere;
     public PlanetController pc;
 
-    public Material Rocky;
-    public Material Gas;
-
     private float[] Diameter = new float[] { 4.880739e-06f, 1.210831e-05f, 1.276055e-05f };
 
     //Elements
-    public Color[] Elements;
+    public Material[] ElementsRocky;
+    public Material[] ElementsGas;
 
     //Atmosphere
     public Color[] Atmospheres;
@@ -37,7 +35,7 @@ public class PlanetBuilderInterface : MonoBehaviour
 
     //Mass                                      Merc        Venus      Earth      10x Mars
     private float[] MassOptions = new float[] { 1.3301176f, 4.171736f, 6.272128f, 6.6422288f };
-
+    //                                                                 6.272128f
     //Initial Velocity
     private float[,] Velocity = new float[4, 3] 
     {
@@ -49,8 +47,8 @@ public class PlanetBuilderInterface : MonoBehaviour
 
     private Vector3[] DistFromSun = {new Vector3(0.041176471f, 0f, 0f), new Vector3(0.082352941f, 0f, 0f), new Vector3(0.126470588f, 0f, 0f), new Vector3(0.185294118f, 0f, 0f)};
 
-    private int[] Choices = new int[] { 1, 2, 1, 2, 2, 2, 4, 3 };
-    //Surface Type (1-2), Size (1-3), Element (1-3), Atmosphere (1-3), Rings (1-3), Day Length (1-3), Distance From Sun (1-4), Mass (1-3)
+    private int[] Choices = new int[] { 1, 2, 1, 2, 2, 2, 3, 2 };
+    //Surface Type (1-2), Size (1-3), Element (1-3), Atmosphere (1-3), Rings (1-3), Day Length (1-3), Distance From Sun (1-4), Velocity (1-3)
 
     public readonly int SURFACE_TYPE = 0;
     public readonly int SIZE = 1;
@@ -75,7 +73,6 @@ public class PlanetBuilderInterface : MonoBehaviour
 
     public Vector3 getDistFromSun()
     {
-        Debug.Log(DistFromSun[Choices[DIST_FROM_SUN] - 1]);
         return DistFromSun[Choices[DIST_FROM_SUN] - 1];
     }
 
@@ -94,16 +91,14 @@ public class PlanetBuilderInterface : MonoBehaviour
     {
         if (Choices[SURFACE_TYPE] == 1)
         {
-            Mesh.GetComponent<MeshRenderer>().material = Rocky;
+            Mesh.GetComponent<MeshRenderer>().material = ElementsRocky[Choices[ELEMENT] - 1];
         }
         else
         {
-            Mesh.GetComponent<MeshRenderer>().material = Gas;
+            Mesh.GetComponent<MeshRenderer>().material = ElementsGas[Choices[ELEMENT] - 1];
         }
 
         pc.diameter = Diameter[Choices[SIZE] - 1];
-
-        Mesh.GetComponent<MeshRenderer>().material.color = Elements[Choices[ELEMENT] - 1];
 
         MeshAtmosphere.GetComponent<MeshRenderer>().material.color = Atmospheres[Choices[ELEMENT] - 1];
 
@@ -111,11 +106,10 @@ public class PlanetBuilderInterface : MonoBehaviour
 
         pc.rotationSpeed = DayLength[Choices[DAY_LENGTH] - 1];
 
-        //Set Dist from Sun
-
         pc.updateScale();
 
     }
+
 
     public void UpdateChoices(int choice)
     {

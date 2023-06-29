@@ -61,7 +61,7 @@ public class PlanetController : MonoBehaviour
     {
         if (!LobbyManager.userType)
         {
-            transform.Rotate(0f, rotationSpeed, 0f, Space.Self);
+            transform.Rotate(0f, rotationSpeed/100f, 0f, Space.Self);
             if (FindObjectOfType<UniverseController>().isPlanetBuilder)
             {
                 if (ID != 0 && ID != 4)
@@ -94,6 +94,24 @@ public class PlanetController : MonoBehaviour
         }
     }
 
+    public void resetLocation()
+    {
+        if (ID == 10)
+        {
+            InitialPosition = GetComponent<PlanetBuilderInterface>().getDistFromSun();
+            InitialVelocity = new Vector3(0f, 0f, GetComponent<PlanetBuilderInterface>().getVelocity());
+            mass = GetComponent<PlanetBuilderInterface>().getMass();
+            transform.localPosition = new Vector3(1, 0, 0); //Offset so Camera can focus on it
+        }
+        else
+        {
+            transform.localPosition = InitialPosition;
+        }
+        MathPosition = transform.localPosition * privateOrbitScale;
+        if (ID != 0)
+            tr.Clear();
+    }
+
     /*
      * Fills in the change matrix with the current sloping values
      */
@@ -115,10 +133,6 @@ public class PlanetController : MonoBehaviour
             float index = ((float)i) / UniverseController.changeDuration;
             changeMatrix[0][i] = uc.curveInterp(index) * (pd.PlanetList[ID].Diameter[ViewType - 1] - diameter) + diameter;
             changeMatrix[1][i] = uc.curveInterp(index) * (pd.PlanetList[ID].OrbitScale[ViewType - 1] - privateOrbitScale) + privateOrbitScale;
-            if (ID == 5)
-            {
-                //Debug.Log("I: " + i + " Curve: " + uc.curveInterp(index) + " Matrix: " + changeMatrix[0][i]);
-            }
         }
         changeMatrix[0][UniverseController.changeDuration - 1] = pd.PlanetList[ID].Diameter[ViewType - 1];
         changeMatrix[1][UniverseController.changeDuration - 1] = pd.PlanetList[ID].OrbitScale[ViewType - 1];

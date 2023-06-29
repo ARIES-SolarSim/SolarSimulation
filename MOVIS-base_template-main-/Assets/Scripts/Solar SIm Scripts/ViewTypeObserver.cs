@@ -46,7 +46,7 @@ public class ViewTypeObserver : MonoBehaviour
 
     public static TrailRenderer[] trails;
     
-    private static string[] levelNames = { "Lobby", "Room1", "Room1", "Room2", "Room3" }; // names of each scene, in order (update as we add more)
+    private static string[] levelNames = { "Lobby", "Room1", "Room1", "Room2", "Room3", "Planet Creation" }; // names of each scene, in order (update as we add more)
 
     private void Start()
     {
@@ -88,6 +88,7 @@ public class ViewTypeObserver : MonoBehaviour
         // Switching to different views if the view we try to switch to is not the one we're in already
         if (y != currentViewType)
         {
+            Debug.Log(y);
             // Scene 1 has special cases
             if (y == 1)
             {
@@ -185,6 +186,28 @@ public class ViewTypeObserver : MonoBehaviour
             
                 transform.localPosition = Vector3.zero;
 
+            }
+            else if(y == 5) //Trivia -- NEW AND MIGHT BREAK 
+            {
+                targetViewType = 5;
+                view = 5;
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PhotonView view = GetComponent<PhotonView>();
+                    view.RPC("LoadingSomeLevel", RpcTarget.All, levelNames[1]);
+                    //StartCoroutine(LoadingSomeLevel(levelNames[3]));
+                }
+            }
+            else if (y == 6) //Planet Builder -- NEW AND MIGHT BREAK 
+            {
+                targetViewType = 5;
+                view = 5;
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PhotonView view = GetComponent<PhotonView>();
+                    view.RPC("LoadingSomeLevel", RpcTarget.All, levelNames[5]);
+                    //StartCoroutine(LoadingSomeLevel(levelNames[3]));
+                }
             }
 
             // Index of all other scenes is (scene number - 1)
