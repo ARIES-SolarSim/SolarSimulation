@@ -10,6 +10,7 @@ public class PlanetController : MonoBehaviour
     //public float tiltAngle; , using the z rotation for this
     public float rotationSpeed; //The speed at which the planet rotates around its axis
     public float privateOrbitScale; //The individual scale of this planets orbit. Used for view 2 only, set to 1 for view 1
+    public float tiltAngle;
     public GameObject mesh; //The reference to the mesh of the planet. Set in the prefab
     public int ID; //The unique ID of the planet. (Sun = 0, Mercury = 1, Venus = 2...)
     public Vector3 MathPosition { get; set; } //The true position of the planet, not altered by scaling or shifting
@@ -35,6 +36,7 @@ public class PlanetController : MonoBehaviour
      */
     void Awake()
     {
+        mesh.transform.rotation = Quaternion.Euler(new Vector3(tiltAngle, 0, 0));
         if (ID == 10)
         {
             InitialPosition = GetComponent<PlanetBuilderInterface>().getDistFromSun();
@@ -52,6 +54,7 @@ public class PlanetController : MonoBehaviour
     {
         if (!LobbyManager.userType)
         {
+            mesh.transform.Rotate(0f, rotationSpeed / 100f * UniverseController.orbitSpeedK, 0f, Space.Self);
             MathPosition = controller.points.First.Value;
             transform.localPosition = (MathPosition - GetComponentInParent<UniverseController>().cameraLockedPlanet.controller.points.First.Value) * UniverseController.orbitScale * privateOrbitScale;
         }
@@ -87,7 +90,14 @@ public class PlanetController : MonoBehaviour
                     }
                     else
                     {
-                        tr.time = trailTime;
+                        if (UniverseController.trailCount >= UniverseController.trailDelay)
+                        {
+                            tr.time = trailTime;
+                        }
+                        else
+                        {
+                            tr.time = 0;
+                        }
                     }
                 }
             }
