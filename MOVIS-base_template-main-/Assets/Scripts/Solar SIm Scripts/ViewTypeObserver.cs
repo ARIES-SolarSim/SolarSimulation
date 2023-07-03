@@ -189,13 +189,21 @@ public class ViewTypeObserver : MonoBehaviour
             }
             else if(y == 5) //Trivia -- NEW AND MIGHT BREAK 
             {
-                targetViewType = 5;
-                view = 5;
-                if (PhotonNetwork.IsMasterClient)
+
+                if (currentViewType > 2 && currentViewType != 6)
                 {
-                    PhotonView view = GetComponent<PhotonView>();
-                    view.RPC("LoadingSomeLevel", RpcTarget.All, levelNames[1]);
-                    //StartCoroutine(LoadingSomeLevel(levelNames[3]));
+                    immediateTransition = true;
+                    targetViewType = 2;
+
+                    PhotonNetwork.LoadLevel(levelNames[1]);
+                    transform.localPosition = Vector3.zero;
+                }
+
+                else
+                {
+                    targetViewType = 5;
+                    transform.localPosition = new Vector3(3, 0, 0);
+
                 }
             }
             else if (y == 6) //Planet Builder -- NEW AND MIGHT BREAK 
