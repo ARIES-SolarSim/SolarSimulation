@@ -9,7 +9,7 @@ public class UniverseController : MonoBehaviour
     public static float orbitScale = 1; //The scale of all orbits - can be used to scale the entire system at once rather than each individually
     public static int steps = 100; //How many steps the orbit of planets is calculated ahead of time. Affects the maximum speed.
     public static float timeStep = 0.001f; //The frequency which the planets position is calculated
-    public static int orbitSpeedK = 30; //The rate at which planets step through the points list
+    public static int orbitSpeedK = 10; //The rate at which planets step through the points list
 
     public static bool orbiting = true; //Used to determine if planets are orbiting or changing view type
     public static int changeSteps = 0; //Used while changing view types
@@ -26,6 +26,8 @@ public class UniverseController : MonoBehaviour
     public static int trailDelay = 5;
     public static int trailCount = 0;
 
+    public GameObject floor;
+
     public bool begin;
     private static bool hasStarted = false;
 
@@ -41,6 +43,7 @@ public class UniverseController : MonoBehaviour
      */
     private void Awake()
     {
+        resizeFloor(30);
         if(begin)
         {
             awakeFunctionality();
@@ -52,7 +55,7 @@ public class UniverseController : MonoBehaviour
         if (isPlanetBuilder)
         {
             timeStep = 0.0002f;
-            orbitScale = 16; //Scale to have first 4 planets to fill the space
+            orbitScale *= 16; //Scale to have first 4 planets to fill the space
             planetScale = 10000;
             //FindObjectOfType<PlanetBuilderInterface>().pc.InitialPosition = FindObjectOfType<PlanetBuilderInterface>().getDistFromSun();
             Debug.Log(FindObjectOfType<PlanetBuilderInterface>().pc.InitialPosition);
@@ -96,6 +99,12 @@ public class UniverseController : MonoBehaviour
         return interpCurve.Evaluate(x);
     }
 
+    public void resizeFloor(float floorSize) //Default is 30
+    {
+        orbitScale = floorSize / 30f;
+        floor.transform.localScale = new Vector3(10 * orbitScale, 0.2f, 10 * orbitScale);
+    }
+
     /*
      * The Update method that handles moving the planets or changing viewtypes
      */
@@ -118,16 +127,17 @@ public class UniverseController : MonoBehaviour
                 begin = true;
             }
         }
+        if(Input.GetKeyDown(KeyCode.Backspace))
+        {
+            resetPlanets();
+        }
     }
 
     public void updateFunctionality()
     {
-        if (isPlanetBuilder)
+        if (trailCount < trailDelay)
         {
-            if (trailCount < trailDelay)
-            {
-                trailCount++;
-            }
+            trailCount++;
         }
         if (!LobbyManager.userType) //Only orbit in headset, allow photon viewers to do the rest
         {
@@ -137,6 +147,21 @@ public class UniverseController : MonoBehaviour
   
     }
 
+    public void startPlanets()
+    {
+        begin = true;
+    }
+
+    public void resetPlanets()
+    {
+        begin = false;
+        hasStarted = false;
+        trailCount = 0;
+        foreach (PlanetController pc in Planets)
+        {
+            pc.resetLocation();
+        }
+    }
     
     public void StopJitter()
     {
