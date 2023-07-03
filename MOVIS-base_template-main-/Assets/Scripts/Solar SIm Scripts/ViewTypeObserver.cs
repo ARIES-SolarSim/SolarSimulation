@@ -130,7 +130,7 @@ public class ViewTypeObserver : MonoBehaviour
             // Scene 2 has special cases
             else if (y == 2)
             {
-                LobbyManager.room = 2;
+                
                 // If not in room 1, go to it, then immediately toggle to view 2
                 // (does not work because new scene reloads everything. May need a separate
                 // scene for going directly into view 2, but don't worry about that right now)
@@ -153,17 +153,22 @@ public class ViewTypeObserver : MonoBehaviour
 
                     transform.localPosition = new Vector3(2, 0, 0);
                 }
+                LobbyManager.room = 2;
+                targetViewType = 2;
+                view = 2;
+                currentViewType = 2;
             }
 
             // Scene 6 has special cases
             else if (y == 3)
             {
+                
                 // If not in room 1, go to it, then immediately toggle to view 6
                 // (does not work because new scene reloads everything. May need a separate
                 // scene for going directly into view 6, but don't worry about that right now)
                 //if (currentViewType > 2)
                 //{
-                targetViewType = 3;
+            
                 if (PhotonNetwork.IsMasterClient)
                 {
 
@@ -176,7 +181,10 @@ public class ViewTypeObserver : MonoBehaviour
                 }
                 transform.localPosition = Vector3.zero;
 
-
+                LobbyManager.room = 3;
+                targetViewType = 3;
+                view = 3;
+                currentViewType = 3;
                 //}
 
                 // If in room 1, toggle
@@ -188,8 +196,7 @@ public class ViewTypeObserver : MonoBehaviour
             }
             else if (y == 4)
             {
-                targetViewType = 4;
-                view = 4;
+                
 
                 if (PhotonNetwork.IsMasterClient)
                 {
@@ -203,14 +210,15 @@ public class ViewTypeObserver : MonoBehaviour
                 //FindObjectOfType<UnityEngine.SpatialTracking.TrackedPoseDriver>().enabled = false;
 
                 transform.localPosition = Vector3.zero;
+                LobbyManager.room = 4;
+                targetViewType = 4;
+                view = 4;
+                currentViewType = 4;
 
             }
             else if (y == 5) //Trivia -- NEW AND MIGHT BREAK 
             {
-                LobbyManager.room = 5;
-                targetViewType = 5;
-                view = 5;
-                currentViewType = 5;
+                
 
                 Debug.Log(currentViewType);
                 if (currentViewType > 2 && currentViewType != 6)
@@ -232,6 +240,10 @@ public class ViewTypeObserver : MonoBehaviour
                     transform.localPosition = new Vector3(3, 0, 0);
 
                 }
+                LobbyManager.room = 5;
+                targetViewType = 5;
+                view = 5;
+                currentViewType = 5;
             }
             else if (y == 6) //Planet Builder -- NEW AND MIGHT BREAK 
             {
