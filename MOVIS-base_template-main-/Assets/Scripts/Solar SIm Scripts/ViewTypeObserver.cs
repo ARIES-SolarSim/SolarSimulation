@@ -458,5 +458,18 @@ public class ViewTypeObserver : MonoBehaviour
         endScreen.SetActive(true);
     }
 
+    public void returnScene()
+    {
+        PhotonView view = GetComponent<PhotonView>();
+        view.RPC("photonReturnScene", RpcTarget.MasterClient);
+
+    }
+
+    [PunRPC]
+    public void photonReturnScene()
+    {
+        endScreen.SetActive(false);
+    }
+
 
 }
