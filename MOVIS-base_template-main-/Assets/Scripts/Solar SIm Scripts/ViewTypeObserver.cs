@@ -20,9 +20,11 @@ public class ViewTypeObserver : MonoBehaviour
     public Image progressBar;
     public FactData factList;
     public GameObject endScreen;
+    public Button goBack;
     private int character;
     private bool pressedTwice = false;
     private int buttonNum;
+    private PhotonView photonView;
 
     // public GameObject docentManager; 
     // Used for Changing the instance of DocentUI_Manager when ViewTypeObserver changes scenes
@@ -456,6 +458,19 @@ public class ViewTypeObserver : MonoBehaviour
     public void photonEndScene()
     {
         endScreen.SetActive(true);
+        PhotonView view = GetComponent<PhotonView>();
+        view.RPC("photonShowButton", RpcTarget.All);
+
+    }
+
+    public void photonShowButton()
+    {
+        
+        photonView = GetComponent<PhotonView>();
+        if (photonView.Owner.NickName == "9" | photonView.Owner.NickName == "VR Headset Network Player")
+        {
+            goBack.gameObject.SetActive(true);
+        }
     }
 
     public void returnScene()
