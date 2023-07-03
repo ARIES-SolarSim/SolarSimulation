@@ -71,23 +71,18 @@ public class ViewTypeObserver : MonoBehaviour
             transform.localPosition = new Vector3(targetViewType, 0, 0);
         }
 
-        //Debug.Log("Started at " + currentViewType);
-        
-        /*if (transform.localPosition.y <= 2 || transform.localPosition.y == 5)
-        {
-            trails = new TrailRenderer[FindObjectsOfType<PlanetController>().Length - 2];
-        }*/
+        if (!UICanvases.activeInHierarchy && PhotonNetwork.NickName == "9")
+            UICanvases.SetActive(true);
+
     }
 
     void Update()
     {
 
 
-        if (!UICanvases.activeInHierarchy && PhotonNetwork.NickName == "9")
-            UICanvases.SetActive(true);
-
+        
         int y = (int)transform.localPosition.y;
-
+        Debug.Log("Y:" + y + " | type: " + currentViewType);
         // Switching to different views if the view we try to switch to is not the one we're in already
         if (y != currentViewType)
         {
@@ -112,19 +107,19 @@ public class ViewTypeObserver : MonoBehaviour
                 }
 
                 // If in room 1, toggle viewtype
-                    else
+                else
                 {
                     targetViewType = 1;
                     transform.localPosition = new Vector3(1, 0, 0);
 
                 }
-                if(LobbyManager.room == 2)
+                if (LobbyManager.room == 2)
                 {
                     targetViewType = 2;
                     currentViewType = 2;
                     transform.localPosition = new Vector3(2, 0, 0);
                 }
-                else if(LobbyManager.room == 5)
+                else if (LobbyManager.room == 5)
                 {
                     targetViewType = 5;
                     currentViewType = 5;
@@ -148,14 +143,14 @@ public class ViewTypeObserver : MonoBehaviour
                         //StartCoroutine(LoadingSomeLevel(levelNames[3]));
 
                     }
-                 
+
                 }
 
                 // If in room 1, toggle
                 else
                 {
                     targetViewType = 2;
-                
+
                     transform.localPosition = new Vector3(2, 0, 0);
                 }
             }
@@ -168,7 +163,7 @@ public class ViewTypeObserver : MonoBehaviour
                 // scene for going directly into view 6, but don't worry about that right now)
                 //if (currentViewType > 2)
                 //{
-                    targetViewType = 3;
+                targetViewType = 3;
                 if (PhotonNetwork.IsMasterClient)
                 {
 
@@ -177,7 +172,7 @@ public class ViewTypeObserver : MonoBehaviour
                     PhotonView view = GetComponent<PhotonView>();
                     view.RPC("LoadingSomeLevel", RpcTarget.All, levelNames[3]);
                     //StartCoroutine(LoadingSomeLevel(levelNames[3]));
-                    
+
                 }
                 transform.localPosition = Vector3.zero;
 
@@ -195,7 +190,7 @@ public class ViewTypeObserver : MonoBehaviour
             {
                 targetViewType = 4;
                 view = 4;
-  
+
                 if (PhotonNetwork.IsMasterClient)
                 {
                     PhotonView view = GetComponent<PhotonView>();
@@ -203,18 +198,19 @@ public class ViewTypeObserver : MonoBehaviour
                     //StartCoroutine(LoadingSomeLevel(levelNames[3]));
 
                 }
-                
-                
-                 //FindObjectOfType<UnityEngine.SpatialTracking.TrackedPoseDriver>().enabled = false;
-            
+
+
+                //FindObjectOfType<UnityEngine.SpatialTracking.TrackedPoseDriver>().enabled = false;
+
                 transform.localPosition = Vector3.zero;
 
             }
-            else if(y == 5) //Trivia -- NEW AND MIGHT BREAK 
+            else if (y == 5) //Trivia -- NEW AND MIGHT BREAK 
             {
                 LobbyManager.room = 5;
                 targetViewType = 5;
                 view = 5;
+                currentViewType = 5;
 
                 Debug.Log(currentViewType);
                 if (currentViewType > 2 && currentViewType != 6)
@@ -241,15 +237,22 @@ public class ViewTypeObserver : MonoBehaviour
             {
                 targetViewType = 6;
                 view = 6;
+                currentViewType = 6;
                 if (PhotonNetwork.IsMasterClient)
                 {
                     PhotonView view = GetComponent<PhotonView>();
-                    view.RPC("LoadingSomeLevel", RpcTarget.All, levelNames[5]);
+                    view.RPC("LoadingSomeLevel", RpcTarget.All, levelNames[6]);
                     //StartCoroutine(LoadingSomeLevel(levelNames[3]));
                 }
             }
+            else
+            {
+                currentViewType = y;
+                targetViewType = y; // Set this to avoid transition case
+                transform.localPosition = Vector3.zero;
 
-           
+
+            }
         }
 
         // If trying to switch to the scene we're already in
@@ -271,8 +274,9 @@ public class ViewTypeObserver : MonoBehaviour
         }
 
         // Transitions between view 1, view 2, and view 6
-        if (currentViewType != targetViewType && LobbyManager.room == 1)
+        if (currentViewType != targetViewType && (LobbyManager.room == 1 || LobbyManager.room == 2))
         {
+            Debug.Log("target: " + targetViewType);
             // Going to view 6
             if (targetViewType == 3)
             {
@@ -314,16 +318,19 @@ public class ViewTypeObserver : MonoBehaviour
                 UniverseController.orbiting = false;
                 FindObjectOfType<UniverseController>().gameObject.transform.localEulerAngles = Vector3.zero; //May need to become smooth
 
-                foreach (PlanetController pc in FindObjectsOfType<PlanetController>())
-                {
-                    pc.changeViewType(targetViewType);
-                }
+                
 
                 if (UniverseController.changeState == 1)
                 {
                     transition = true;
                 }
-
+                if (steps == 0)
+                {
+                    foreach (PlanetController pc in FindObjectsOfType<PlanetController>())
+                    {
+                        pc.changeViewType(targetViewType);
+                    }
+                }
                 if (steps == UniverseController.changeDuration /*&& transistion*/)
                 {
                     steps = 0; //Finished view type transistion

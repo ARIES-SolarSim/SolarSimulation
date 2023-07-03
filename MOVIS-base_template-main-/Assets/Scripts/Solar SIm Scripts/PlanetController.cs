@@ -64,7 +64,7 @@ public class PlanetController : MonoBehaviour
     {
         if (!LobbyManager.userType)
         {
-            transform.Rotate(0f, rotationSpeed/100f, 0f, Space.Self);
+            
             if (FindObjectOfType<UniverseController>().isPlanetBuilder)
             {
                 if (ID != 0 && ID != 4)
