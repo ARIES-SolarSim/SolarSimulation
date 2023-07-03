@@ -10,7 +10,7 @@ EditorBuildSettings:
     guid: 22b662a96168bba4e93fbc66c565a3ef
   - enabled: 1
     path: Assets/Scenes/MainScenes/Room1.unity
-    guid: 8bdbf3ac8b29d3a4aab47ae68888f147
+    guid: cef94879cdca9f34892f09a966df9c1c
   - enabled: 1
     path: Assets/Scenes/MainScenes/Room2.unity
     guid: 106f948350594444793b3e45632c3d4c
@@ -18,11 +18,11 @@ EditorBuildSettings:
     path: Assets/Scenes/MainScenes/Room3.unity
     guid: 57a8b65e70e8bac42a5bc7e1faa355ea
   - enabled: 1
+    path: Assets/Scenes/MainScenes/Room4.unity
+    guid: 920e79155bdf9c64aba2c990af4fc33c
+  - enabled: 1
     path: Assets/Mobile Console/Assets/LogConsole.unity
     guid: 6d2ee6336ff704f55b20f3b62801afd5
-  - enabled: 1
-    path: Assets/Scenes/Planet Creation.unity
-    guid: 920e79155bdf9c64aba2c990af4fc33c
   m_configObjects:
     Unity.XR.OpenVR.Settings: {fileID: 11400000, guid: f0611482585fa9c40ab627302fd56c37, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 67f9bccd9026dbd409c561e0d03e6f64, type: 2}
