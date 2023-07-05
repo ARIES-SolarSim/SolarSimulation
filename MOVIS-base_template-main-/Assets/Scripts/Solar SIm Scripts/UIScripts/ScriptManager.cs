@@ -9,7 +9,7 @@ public class ScriptManager : MonoBehaviour
     private int scriptIter = 0;
 
     public TextAsset[] csvFiles;
-    private string[][] agedScripts;
+    private string[][] agedScripts = new string[1][];
 
     //Font Uses 
     private int fontIter = 0;
@@ -24,6 +24,7 @@ public class ScriptManager : MonoBehaviour
     {
         tc = this.GetComponent<Text>();
         ReadCSV();
+        currentScript = agedScripts[0];
         tc.text = currentScript[0];
         //Handle reading here     
     }
@@ -89,7 +90,7 @@ public class ScriptManager : MonoBehaviour
     {
         for (int i = 0; i < csvFiles.Length; i++)
         {
-            agedScripts[i] = csvFiles[i].text.Split(new string[] { ",", "\n" }, System.StringSplitOptions.None);
+            agedScripts[i] = csvFiles[i].text.Split(new string[] { ";", "\n" }, System.StringSplitOptions.None);
         }
     }
 }
