@@ -54,6 +54,11 @@ MonoBehaviour:
   - move
   - photonEndScene
   - photonReturnScene
+  - resetPhotonTrails
+  - photonShowButton
+  - PhotonUpdate
+  - ClearTrail
+  - StartTrail
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

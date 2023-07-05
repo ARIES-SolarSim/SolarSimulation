@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public class MeshScaler : MonoBehaviour
@@ -23,9 +24,11 @@ public class MeshScaler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isChanging)
+        PhotonView view2 = GetComponent<PhotonView>();
+        if (isChanging)
         {
-            tr.time = 0;
+            if (!LobbyManager.userType)
+                view2.RPC("ClearTrail", RpcTarget.All);
             int targetView = (view == 1) ? 0 : 1;
             transform.localScale = Vector3.Lerp(scales[view], scales[targetView], (steps * 1f) / (UniverseController.changeDuration * 1f)) * UniverseController.planetScale;
             steps++;
@@ -36,15 +39,29 @@ public class MeshScaler : MonoBehaviour
         {
             if (UniverseController.trailCount >= UniverseController.trailDelay)
             {
-                tr.time = trailTime;
+                if (!LobbyManager.userType)
+                    view2.RPC("StartTrail", RpcTarget.All);
             }
             else
             {
-                tr.time = 0;
+                if (!LobbyManager.userType)
+                    view2.RPC("ClearTrail", RpcTarget.All);
             }
         }
         
         //transform.localScale = Vector3.one * scales[view - 1].x * UniverseController.planetScale;
+    }
+
+    [PunRPC]
+    public void ClearTrail()
+    {
+        tr.time = 0;
+    }
+
+    [PunRPC]
+    public void StartTrail()
+    {
+        tr.time = trailTime;
     }
 
     public void changing()

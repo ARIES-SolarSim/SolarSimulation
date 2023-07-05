@@ -42,7 +42,7 @@ public class ViewTypeObserver : MonoBehaviour
     public RotateScript tempMoonRotate; // moon rotation script
     public MeshScaler tempMoonScale; // moon mesh script
 
-    private bool transition = false;
+
 
     public static bool immediateTransition = false;
     
@@ -154,9 +154,7 @@ public class ViewTypeObserver : MonoBehaviour
                     transform.localPosition = new Vector3(2, 0, 0);
                 }
                 LobbyManager.room = 2;
-                targetViewType = 2;
-                view = 2;
-                currentViewType = 2;
+             
             }
 
             // Scene 6 has special cases
@@ -330,12 +328,7 @@ public class ViewTypeObserver : MonoBehaviour
                 UniverseController.orbiting = false;
                 FindObjectOfType<UniverseController>().gameObject.transform.localEulerAngles = Vector3.zero; //May need to become smooth
 
-                
 
-                if (UniverseController.changeState == 1)
-                {
-                    transition = true;
-                }
                 if (steps == 0)
                 {
                     foreach (PlanetController pc in FindObjectsOfType<PlanetController>())
@@ -343,7 +336,7 @@ public class ViewTypeObserver : MonoBehaviour
                         pc.changeViewType(targetViewType);
                     }
                 }
-                if (steps == UniverseController.changeDuration /*&& transistion*/)
+                if (steps == UniverseController.changeDuration + 150 /*&& transistion*/)
                 {
                     steps = 0; //Finished view type transistion
                     currentViewType = targetViewType;
@@ -489,8 +482,8 @@ public class ViewTypeObserver : MonoBehaviour
     public void endScene()
     {
         PhotonView view = GetComponent<PhotonView>();
-        view.RPC("photonEndScene", RpcTarget.MasterClient);
-        
+        view.RPC("photonEndScene", RpcTarget.All);
+
     }
 
     [PunRPC]
@@ -498,24 +491,20 @@ public class ViewTypeObserver : MonoBehaviour
     {
         endScreen.SetActive(true);
         PhotonView view = GetComponent<PhotonView>();
-        view.RPC("photonShowButton", RpcTarget.All);
-
-    }
-
-    public void photonShowButton()
-    {
-        
         photonView = GetComponent<PhotonView>();
         if (photonView.Owner.NickName == "9" | photonView.Owner.NickName == "VR Headset Network Player")
         {
             goBack.gameObject.SetActive(true);
         }
+
     }
+
+   
 
     public void returnScene()
     {
         PhotonView view = GetComponent<PhotonView>();
-        view.RPC("photonReturnScene", RpcTarget.MasterClient);
+        view.RPC("photonReturnScene", RpcTarget.All);
 
     }
 
