@@ -84,7 +84,7 @@ public class PlanetController : MonoBehaviour
             {
                 if (ID != 0 && ID != 4)
                 {
-                    if (trailObserver.transform.localPosition.z == 1)
+                    if (!UniverseController.orbiting)
                     {
                         tr.time = 0;
                     }
@@ -127,6 +127,9 @@ public class PlanetController : MonoBehaviour
      */
     public void changeViewType(int ViewType)
     {
+        if (ViewType == 5) //For Trivia Mode
+            ViewType = 3;
+
         UniverseController uc = FindObjectOfType<UniverseController>();
         PlanetData pd = GetComponentInParent<PlanetData>();
         float[][] changeMatrix = new float[2][];

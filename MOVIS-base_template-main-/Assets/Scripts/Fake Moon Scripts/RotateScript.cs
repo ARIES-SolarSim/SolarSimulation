@@ -22,10 +22,7 @@ public class RotateScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //gameObject.GetComponent<TrailRenderer>().enabled = false;
         transform.position = new Vector3(0.001f, -0.006858f, 0f) + target.position;
-        //gameObject.GetComponent<TrailRenderer>().Clear();
-        //gameObject.GetComponent<TrailRenderer>().enabled = true;
     }
 
     // Update is called once per frame
@@ -36,23 +33,13 @@ public class RotateScript : MonoBehaviour
             if (!correct)
             {
                 correct = true;
-                //TrailRenderer trail = gameObject.GetComponent<TrailRenderer>();
-                //trail.Clear();
-                //trail.enabled = false;
                 transform.position = positions[view - 1] + target.transform.position; //target.transform.position + 
-                /* if (!UniverseController.orbiting)
-                {
-                    gameObject.GetComponent<TrailRenderer>().enabled = false;
-                }
-                */
                 if (view == 1 && !FindObjectOfType<UniverseController>().isPlanetBuilder)
                 {
-                    //gameObject.GetComponent<TrailRenderer>().enabled = true;
                     arrow.SetActive(true);
                 }
                 else //view 2
                 {
-                    //gameObject.GetComponent<TrailRenderer>().enabled = true;
                     arrow.SetActive(false);
                 }
 
@@ -66,13 +53,11 @@ public class RotateScript : MonoBehaviour
             else
             {
                 transform.RotateAround(target.position, Vector3.up, 15 * 6 * UniverseController.orbitSpeedK * UniverseController.timeStep);
-                //transform.RotateAround(target.position, Vector3.up, 6 * UniverseController.orbitSpeedK * Time.deltaTime);
             }
         }
 
         else
         {
-            //gameObject.GetComponent<TrailRenderer>().enabled = false;
             correct = false;
         }
     }

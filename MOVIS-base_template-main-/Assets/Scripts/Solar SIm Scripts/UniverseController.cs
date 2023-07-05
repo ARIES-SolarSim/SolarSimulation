@@ -31,6 +31,8 @@ public class UniverseController : MonoBehaviour
     public bool begin;
     private static bool hasStarted = false;
 
+    public static bool UIArrow;
+
     //The values below are placeholder for the motion profiling set up to smooth out the orbit scale transitions
     //Would be cool if this was done with cubic splines instead
     //public static float tolerance = 0.001f;
@@ -203,23 +205,6 @@ public class UniverseController : MonoBehaviour
                     changeState = 2;
                     changeSteps = 0;
                     MeshScaler.view = (MeshScaler.view == 1) ? 0 : 1;
-                    FindObjectOfType<ViewTypeObserver>().transform.localPosition = new Vector3(0, 0, 0);
-
-                    if (ViewTypeObserver.targetViewType == 1)
-                    {
-                        foreach (PlanetIdentifier pi in FindObjectsOfType<PlanetIdentifier>())
-                        {
-                            pi.showArrow();
-                        }
-                    }
-
-                    else
-                    {
-                        foreach (PlanetIdentifier pi in FindObjectsOfType<PlanetIdentifier>())
-                        {
-                            pi.hideArrow();
-                        }
-                    }
                 }
                 changeSteps++;
                 //Debug.Log(changeSteps);
@@ -245,10 +230,7 @@ public class UniverseController : MonoBehaviour
             changeSteps = 0;
             changeState = 1;
             FindObjectOfType<ViewTypeObserver>().transform.localPosition = new Vector3(0, 0, 1);
-            foreach (PlanetIdentifier pi in FindObjectsOfType<PlanetIdentifier>())
-            {
-                pi.hideArrow();
-            }
+            ArrowToggle(false);
         }
         changeSteps++;
     }
@@ -347,5 +329,49 @@ public class UniverseController : MonoBehaviour
     public void OrbitSpeedKChange(int i)
     {
         orbitSpeedK = i; 
+    }
+
+
+    //Send true to show arrows, false to hide
+    public void ArrowToggle(bool isShown)
+    {
+        foreach (PlanetIdentifier pi in FindObjectsOfType<PlanetIdentifier>())
+        {
+            if(isShown)
+            {
+                pi.showArrow();
+            }
+            else
+            {
+                pi.hideArrow();
+            }
+        }
+        UIArrow = isShown;
+    }
+
+    //Send true to show only earth/sun/moon, false to show all planets
+    public void EarthSunMoonToggle(bool isEnabled)
+    {
+        foreach(PlanetController pc in Planets)
+        {
+            if (isEnabled)
+            {
+                if (!(pc.ID == 0 || pc.ID == 3))
+                {
+                    pc.mesh.SetActive(false);
+                }
+            }
+            else
+            {
+                if (!(pc.ID == 0 || pc.ID == 3))
+                {
+                    pc.mesh.SetActive(true);
+                }
+            }
+            if(pc.ID == 4) //Moon
+            {
+                pc.mesh.SetActive(false);
+            }
+        }
     }
 }
