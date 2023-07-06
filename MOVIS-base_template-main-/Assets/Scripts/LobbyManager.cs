@@ -8,7 +8,7 @@ public class LobbyManager : MonoBehaviour
     [Tooltip("true is viewFinder, false is headset")]
     public static bool userType;
     [System.NonSerialized]
-    public static int room;
+    public static int room = 1;
 
     private void Start()
     {

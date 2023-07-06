@@ -55,12 +55,12 @@ public class ViewTypeObserver : MonoBehaviour
     {
         PhotonNetwork.AutomaticallySyncScene = true;
         currentViewType = System.Array.IndexOf(levelNames, SceneManager.GetActiveScene().name);
-        Debug.Log("Current view: " + currentViewType);
+        //Debug.Log("Current view: " + currentViewType);
 
         // Start of application
         if (targetViewType < 1 || targetViewType > 6)
         {
-            Debug.Log("Start");
+            //Debug.Log("Start");
             targetViewType = currentViewType;
         }
 
@@ -86,7 +86,7 @@ public class ViewTypeObserver : MonoBehaviour
         // Switching to different views if the view we try to switch to is not the one we're in already
         if (y != currentViewType)
         {
-            Debug.Log("Y:" + y + " | type: " + currentViewType);
+            //Debug.Log("Y:" + y + " | type: " + currentViewType);
             // Scene 1 has special cases
             if (y == 1)
             {
@@ -257,7 +257,7 @@ public class ViewTypeObserver : MonoBehaviour
             }
             else
             {
-                Debug.Log("entered else");
+                //Debug.Log("entered else");
                 currentViewType = y;
                 targetViewType = y; // Set this to avoid transition case
                 transform.localPosition = Vector3.zero;
@@ -288,37 +288,43 @@ public class ViewTypeObserver : MonoBehaviour
         if (currentViewType != targetViewType && (LobbyManager.room == 1 || LobbyManager.room == 2))
         {
             
-                transform.localPosition = new Vector3(targetViewType, 0, 1);
-                tempMoonScale.changing();
+            transform.localPosition = new Vector3(targetViewType, 0, 1);
+            tempMoonScale.changing();
 
-                //Debug.Log("Mismatch");
-                UniverseController.orbiting = false;
-                FindObjectOfType<UniverseController>().gameObject.transform.localEulerAngles = Vector3.zero; //May need to become smooth
+            //Debug.Log("Mismatch");
+            UniverseController.orbiting = false;
+            FindObjectOfType<UniverseController>().gameObject.transform.localEulerAngles = Vector3.zero; //May need to become smooth
 
             
-                if (steps == 0)
+            if (steps == 0)
+            {
+                FindObjectOfType<RotateScript>().changing = true;
+                foreach (PlanetController pc in FindObjectsOfType<PlanetController>())
                 {
-                    foreach (PlanetController pc in FindObjectsOfType<PlanetController>())
-                    {
-                    Debug.Log("The targetviewtype is: " + targetViewType);
                     pc.changeViewType(targetViewType);
-                    }
                 }
-                steps++;
-                if (steps == UniverseController.changeDuration + 150)
-                {
+            }
 
-                    steps = 0; //Finished view type transistion
-                    currentViewType = targetViewType;
-                    transform.localPosition = new Vector3(0, 0, 0);
-                    tempMoonScale.doneChanging();
-                    Debug.Log("Finished transition");
-                    if(LobbyManager.room == 1)
-                    {
+            steps++;
+
+            if (steps == UniverseController.changeDuration + UniverseController.accDuration)
+            {
+                FindObjectOfType<RotateScript>().changing = false;
+                MeshScaler.view = (MeshScaler.view == 1) ? 0 : 1;
+                FindObjectOfType<RotateScript>().view = LobbyManager.room;
+                steps = 0; //Finished view type transistion
+                currentViewType = targetViewType;
+                transform.localPosition = new Vector3(0, 0, 0);
+                tempMoonScale.doneChanging();
+
+                //Debug.Log("Finished transition");
+
+                if(LobbyManager.room == 1)
+                {
                     FindObjectOfType<UniverseController>().ArrowToggle(true);
-                    }
-                
                 }
+                
+            }
             
         }
     }

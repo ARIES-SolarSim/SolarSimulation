@@ -8,7 +8,7 @@ public class UniverseController : MonoBehaviour
     public static float planetScale = 1; //The scale planets are displayed
     public static float orbitScale = 1; //The scale of all orbits - can be used to scale the entire system at once rather than each individually
     public static int steps = 100; //How many steps the orbit of planets is calculated ahead of time. Affects the maximum speed.
-    public static float timeStep = 0.001f; //The frequency which the planets position is calculated
+    public static float timeStep = 0.0008f; //The frequency which the planets position is calculated
     public static int orbitSpeedK = 10; //The rate at which planets step through the points list
 
     public static bool orbiting = true; //Used to determine if planets are orbiting or changing view type
@@ -20,8 +20,6 @@ public class UniverseController : MonoBehaviour
     public static int count; //Created because of the way the for loops are done for now
     private PlanetController[] Planets; //List of planets to reference
     private VirtualController[] Bodies; //List of the virtual controlles in the planets to reference on build
-    public RotateScript moon;
-    public MeshScaler moonMesh;
     public bool isPlanetBuilder;
     public static int trailDelay = 5;
     public static int trailCount = 0;
@@ -147,8 +145,6 @@ public class UniverseController : MonoBehaviour
 
             move();
             currentSpeed = orbitSpeedK;
-            moon.changing = false;
-
             if (ViewTypeObserver.immediateTransition == true)
             {
                 changeDuration = 800;
@@ -158,7 +154,7 @@ public class UniverseController : MonoBehaviour
         }
         else //Changing viewtypes
         {
-            moon.changing = true;
+            //Debug.Log((changeState == 0 ? "Slowing" : (changeState == 1) ? "Changing" : "Speeding"));
             if (changeState == 0) //Slowing down
             {
                 //Debug.Log("Decreasing Speed: " + accDuration + " " + changeSteps);
@@ -168,8 +164,6 @@ public class UniverseController : MonoBehaviour
             if (changeState == 1) //Changing
             {
                 //Debug.Log("Changing: " + changeDuration + " " + changeSteps);
-                moonMesh.changing();
-                //Debug.Log("Set isChanging to true but is: " + FindObjectOfType<MeshScaler>().isChanging);
                 foreach (PlanetController pc in Planets)
                 {
                     pc.diameter = pc.ViewTypeChangeMatrix[0][changeSteps];
@@ -180,14 +174,11 @@ public class UniverseController : MonoBehaviour
                 {
                     changeState = 2;
                     changeSteps = 0;
-                    MeshScaler.view = (MeshScaler.view == 1) ? 0 : 1;
                 }
                 changeSteps++;
-                //Debug.Log(changeSteps);
             }
             if (changeState == 2) //Speeding up
             {
-                moonMesh.doneChanging();
                 //Debug.Log("Speeding Back Up: " + accDuration + " " + changeSteps);
                 increaseSpeed(accDuration, 10);
             }

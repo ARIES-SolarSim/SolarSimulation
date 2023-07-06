@@ -28,6 +28,7 @@ public class RotateScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log("Changing - " + changing + " View: " + view);
         if (!changing)
         {
             if (!correct)
@@ -45,15 +46,13 @@ public class RotateScript : MonoBehaviour
 
                 //trail.enabled = true;
             }
-
-            if (view == 1)
-            {
-                transform.RotateAround(target.position, Vector3.up, 900f * UniverseController.orbitSpeedK * UniverseController.timeStep);
-            }
-            else
-            {
-                transform.RotateAround(target.position, Vector3.up, 15 * 6 * UniverseController.orbitSpeedK * UniverseController.timeStep);
-            }
+            /*
+            float earthStartDist = Mathf.Sqrt(0.1495284f * 0.1495284f + -0.006071031f * -0.006071031f);
+            float maxDist = 1.4f * earthStartDist;
+            float minDist = 0.6f * earthStartDist;
+            float currentDist =  
+            */
+            transform.RotateAround(target.position, Vector3.up, 125f * UniverseController.orbitSpeedK * UniverseController.timeStep);
         }
 
         else
