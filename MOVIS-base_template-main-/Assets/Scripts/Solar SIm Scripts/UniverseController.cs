@@ -55,7 +55,6 @@ public class UniverseController : MonoBehaviour
             orbitScale = 16; //Scale to have first 4 planets to fill the space
             planetScale = 10000;
             //FindObjectOfType<PlanetBuilderInterface>().pc.InitialPosition = FindObjectOfType<PlanetBuilderInterface>().getDistFromSun();
-            Debug.Log(FindObjectOfType<PlanetBuilderInterface>().pc.InitialPosition);
         }
         Planets = FindObjectsOfType<PlanetController>(); //Fills the Planet list with all planets
         Bodies = new VirtualController[Planets.Length]; //Creates a list for all the virtual controllers
@@ -113,10 +112,7 @@ public class UniverseController : MonoBehaviour
         }
         else
         {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                begin = true;
-            }
+            begin = true;
         }
     }
 

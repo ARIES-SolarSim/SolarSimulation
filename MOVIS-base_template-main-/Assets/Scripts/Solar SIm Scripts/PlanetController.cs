@@ -77,11 +77,11 @@ public class PlanetController : MonoBehaviour
                 if (!UniverseController.orbiting)
 
                 {
-                    tr.time = trailTime;
+                    view.RPC("StartTrail", RpcTarget.All);
                 }
                 else
                 {
-                    tr.time = 0;
+                    view.RPC("ClearTrail", RpcTarget.All);
                 }
             }
             updateScale();

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlanetBuilderInterface : MonoBehaviour
 {
@@ -15,11 +16,14 @@ public class PlanetBuilderInterface : MonoBehaviour
      * Mass (3 Choices)
      */
 
+    public Slider sizeSliderUI;
+
     public GameObject Mesh;
     public GameObject MeshAtmosphere;
+    public GameObject RingObject;
     public PlanetController pc;
 
-    private float[] Diameter = new float[] { 4.880739e-06f, 1.210831e-05f, 1.276055e-05f };
+    private float[] Diameter = new float[] { 4.880739e-06f, 1.210831e-05f, 2.276055e-05f };
 
     //Elements
     public Material[] ElementsRocky;
@@ -28,7 +32,7 @@ public class PlanetBuilderInterface : MonoBehaviour
     //Atmosphere
     public Color[] Atmospheres;
 
-    //Planetary Rings
+    //Planetary Rings - Currently all just Saturn Rings
     public GameObject[] Rings = new GameObject[3];
 
     private float[] DayLength = new float[] { 12f, 24f, 48f };
@@ -100,9 +104,18 @@ public class PlanetBuilderInterface : MonoBehaviour
 
         pc.diameter = Diameter[Choices[SIZE] - 1];
 
-        MeshAtmosphere.GetComponent<MeshRenderer>().material.color = Atmospheres[Choices[ELEMENT] - 1];
+        MeshAtmosphere.GetComponent<MeshRenderer>().material.color = Atmospheres[Choices[ATMOSPHERE] - 1];
+        Debug.Log(Atmospheres[Choices[ATMOSPHERE] - 1]);
 
         //Set Rings
+        if(Choices[RINGS] - 1 != 0) //0 is empty
+        {
+            RingObject.GetComponent<SpriteRenderer>().sprite = Rings[Choices[RINGS] - 1].GetComponent<SpriteRenderer>().sprite;
+        }
+        else
+        {
+            RingObject.GetComponent<SpriteRenderer>().sprite = null;
+        }
 
         pc.rotationSpeed = DayLength[Choices[DAY_LENGTH] - 1];
 
@@ -114,5 +127,11 @@ public class PlanetBuilderInterface : MonoBehaviour
     public void UpdateChoices(int choice)
     {
         Choices[choice/10] = choice%10;
+    }
+
+    public void UpdateSize()
+    {
+        Choices[SIZE] = (int)(Mathf.Round(sizeSliderUI.value));
+        //Debug.Log(sizeSliderUI.value + " -> " + (int)(Mathf.Round(sizeSliderUI.value)));
     }
 }
