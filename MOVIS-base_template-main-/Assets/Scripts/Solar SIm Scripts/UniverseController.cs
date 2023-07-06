@@ -23,10 +23,8 @@ public class UniverseController : MonoBehaviour
     public RotateScript moon;
     public MeshScaler moonMesh;
     public bool isPlanetBuilder;
-    public static int trailDelay = 6;
+    public static int trailDelay = 5;
     public static int trailCount = 0;
-
-    public GameObject floor;
 
     public bool begin;
     private static bool hasStarted = false;
@@ -45,8 +43,7 @@ public class UniverseController : MonoBehaviour
      */
     private void Awake()
     {
-        resizeFloor(30);
-        if(begin)
+        if (begin)
         {
             awakeFunctionality();
         }
@@ -57,7 +54,7 @@ public class UniverseController : MonoBehaviour
         if (isPlanetBuilder)
         {
             timeStep = 0.0002f;
-            orbitScale *= 16; //Scale to have first 4 planets to fill the space
+            orbitScale = 16; //Scale to have first 4 planets to fill the space
             planetScale = 10000;
             //FindObjectOfType<PlanetBuilderInterface>().pc.InitialPosition = FindObjectOfType<PlanetBuilderInterface>().getDistFromSun();
             Debug.Log(FindObjectOfType<PlanetBuilderInterface>().pc.InitialPosition);
@@ -68,7 +65,7 @@ public class UniverseController : MonoBehaviour
         {
             Bodies[i] = new VirtualController(Planets[i]); //Sets the virtual controller's planet to one of the planets from the list
         }
-        InitiateVirtualControllers(); 
+        InitiateVirtualControllers(); //
         for (int i = 0; i < Planets.Length; i++)
         {
             Planets[i].controller = Bodies[i];
@@ -79,7 +76,7 @@ public class UniverseController : MonoBehaviour
 
     public void Start()
     {
-        if(begin)
+        if (begin)
         {
             startFunctionality();
         }
@@ -101,20 +98,14 @@ public class UniverseController : MonoBehaviour
         return interpCurve.Evaluate(x);
     }
 
-    public void resizeFloor(float floorSize) //Default is 30
-    {
-        orbitScale = floorSize / 30f;
-        floor.transform.localScale = new Vector3(10 * orbitScale, 0.2f, 10 * orbitScale);
-    }
-
     /*
      * The Update method that handles moving the planets or changing viewtypes
      */
     void Update()
     {
-        if(begin)
+        if (begin)
         {
-            if(isPlanetBuilder && !hasStarted)
+            if (isPlanetBuilder && !hasStarted)
             {
                 awakeFunctionality();
                 startFunctionality();
@@ -124,55 +115,36 @@ public class UniverseController : MonoBehaviour
         }
         else
         {
-            if(Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 begin = true;
             }
-        }
-        if(Input.GetKeyDown(KeyCode.Backspace))
-        {
-            resetPlanets();
         }
     }
 
     public void updateFunctionality()
     {
-        
+        if (isPlanetBuilder)
+        {
+            if (trailCount < trailDelay)
+            {
+                trailCount++;
+            }
+        }
         if (!LobbyManager.userType) //Only orbit in headset, allow photon viewers to do the rest
         {
-            PhotonView view = GetComponent<PhotonView>();
-            view.RPC("StopJitter", RpcTarget.All);
-            
+            StopJitter();
+
         }
-  
+
     }
 
-    public void startPlanets()
-    {
-        begin = true;
-    }
 
-    public void resetPlanets()
-    {
-        begin = false;
-        hasStarted = false;
-        trailCount = 0;
-        foreach (PlanetController pc in Planets)
-        {
-            pc.resetLocation();
-        }
-    }
-    
-    [PunRPC]
     public void StopJitter()
     {
-        if (trailCount < trailDelay)
-        {
-            trailCount++;
-        }
-        
         if (orbiting)
         {
+            Debug.Log("hello");
             move();
             currentSpeed = orbitSpeedK;
             moon.changing = false;
@@ -204,7 +176,7 @@ public class UniverseController : MonoBehaviour
                     pc.privateOrbitScale = pc.ViewTypeChangeMatrix[1][changeSteps];
                     pc.UpdateChangeValues();
                 }
-                if (changeSteps == changeDuration-1)
+                if (changeSteps == changeDuration - 1)
                 {
                     changeState = 2;
                     changeSteps = 0;
@@ -261,6 +233,8 @@ public class UniverseController : MonoBehaviour
 
     public void move()
     {
+
+        Debug.Log("we are in move()");
         foreach (PlanetController pc in Planets)
         {
             pc.updateLocation();
@@ -329,10 +303,12 @@ public class UniverseController : MonoBehaviour
     /**
      * Added by Shane to help slider functionality 
      * This might be entirely the wrong thing to do, in which case, execute me
+     * 
+     * Note from Leah: Timestep is what changes speed
      */
     public void OrbitSpeedKChange(int i)
     {
-        orbitSpeedK = i; 
+        orbitSpeedK = i;
     }
 
 

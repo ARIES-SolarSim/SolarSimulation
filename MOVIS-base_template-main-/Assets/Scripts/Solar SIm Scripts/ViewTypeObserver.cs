@@ -336,7 +336,7 @@ public class ViewTypeObserver : MonoBehaviour
                         pc.changeViewType(targetViewType);
                     }
                 }
-                if (steps == UniverseController.changeDuration + 150 /*&& transistion*/)
+                if (steps == UniverseController.changeDuration + 150)
                 {
                     steps = 0; //Finished view type transistion
                     currentViewType = targetViewType;
