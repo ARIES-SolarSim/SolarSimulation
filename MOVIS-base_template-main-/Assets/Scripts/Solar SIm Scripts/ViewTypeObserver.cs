@@ -32,7 +32,7 @@ public class ViewTypeObserver : MonoBehaviour
 
     private int currentViewType; //The current viewtype that the scene is displaying
     public static int targetViewType; //The view type that should be traveled to
-    private int steps = -1; //Used for scene transitons
+    private int steps = 0; //Used for scene transitons
 
     private GameObject[] viewFinderCameras;
     public int view;
@@ -82,11 +82,11 @@ public class ViewTypeObserver : MonoBehaviour
 
         
         int y = (int)transform.localPosition.y;
-        Debug.Log("Y:" + y + " | type: " + currentViewType);
+
         // Switching to different views if the view we try to switch to is not the one we're in already
         if (y != currentViewType)
         {
-            Debug.Log(y);
+            Debug.Log("Y:" + y + " | type: " + currentViewType);
             // Scene 1 has special cases
             if (y == 1)
             {
@@ -116,13 +116,13 @@ public class ViewTypeObserver : MonoBehaviour
                 if (LobbyManager.room == 2)
                 {
                     targetViewType = 2;
-                    currentViewType = 2;
+                    //currentViewType = 2;
                     transform.localPosition = new Vector3(2, 0, 0);
                 }
                 else if (LobbyManager.room == 5)
                 {
                     targetViewType = 5;
-                    currentViewType = 5;
+                    //currentViewType = 5;
                     transform.localPosition = new Vector3(3, 0, 0);
                 }
             }
@@ -154,7 +154,7 @@ public class ViewTypeObserver : MonoBehaviour
                     transform.localPosition = new Vector3(2, 0, 0);
                 }
                 LobbyManager.room = 2;
-             
+
             }
 
             // Scene 6 has special cases
@@ -171,7 +171,7 @@ public class ViewTypeObserver : MonoBehaviour
                 {
 
 
-                    Debug.Log("we are the master client");
+                    //Debug.Log("we are the master client");
                     PhotonView view = GetComponent<PhotonView>();
                     view.RPC("LoadingSomeLevel", RpcTarget.All, levelNames[3]);
                     //StartCoroutine(LoadingSomeLevel(levelNames[3]));
@@ -218,7 +218,7 @@ public class ViewTypeObserver : MonoBehaviour
             {
                 
 
-                Debug.Log(currentViewType);
+               // Debug.Log(currentViewType);
                 if (currentViewType > 2 && currentViewType != 6)
                 {
                     if (PhotonNetwork.IsMasterClient)
@@ -257,6 +257,7 @@ public class ViewTypeObserver : MonoBehaviour
             }
             else
             {
+                Debug.Log("entered else");
                 currentViewType = y;
                 targetViewType = y; // Set this to avoid transition case
                 transform.localPosition = Vector3.zero;
@@ -286,65 +287,39 @@ public class ViewTypeObserver : MonoBehaviour
         // Transitions between view 1, view 2, and view 6
         if (currentViewType != targetViewType && (LobbyManager.room == 1 || LobbyManager.room == 2))
         {
-            Debug.Log("target: " + targetViewType);
-            // Going to view 6
-            if (targetViewType == 3)
-            {
-
-            }
-
-            // Currently in view 6
-            else if (currentViewType == 3)
-            {
-                // Going to view 1
-                if (targetViewType == 1)
-                {
-
-                }
-
-                // Going to view 2
-                else
-                {
-
-                }
-            }
-            else if (currentViewType == 4)
-            {
-
-            }
-            else if (targetViewType == 4)
-            {
-
-            }
-
-            // Going between view 1 and 2 or vice versa
-            else
-            {
+            
                 transform.localPosition = new Vector3(targetViewType, 0, 1);
                 tempMoonScale.changing();
 
                 //Debug.Log("Mismatch");
-                steps++;
                 UniverseController.orbiting = false;
                 FindObjectOfType<UniverseController>().gameObject.transform.localEulerAngles = Vector3.zero; //May need to become smooth
 
-
+            
                 if (steps == 0)
                 {
                     foreach (PlanetController pc in FindObjectsOfType<PlanetController>())
                     {
-                        pc.changeViewType(targetViewType);
+                    Debug.Log("The targetviewtype is: " + targetViewType);
+                    pc.changeViewType(targetViewType);
                     }
                 }
+                steps++;
                 if (steps == UniverseController.changeDuration + 150)
                 {
+
                     steps = 0; //Finished view type transistion
                     currentViewType = targetViewType;
                     transform.localPosition = new Vector3(0, 0, 0);
                     tempMoonScale.doneChanging();
                     Debug.Log("Finished transition");
+                    if(LobbyManager.room == 1)
+                    {
+                    FindObjectOfType<UniverseController>().ArrowToggle(true);
+                    }
+                
                 }
-            }
+            
         }
     }
 

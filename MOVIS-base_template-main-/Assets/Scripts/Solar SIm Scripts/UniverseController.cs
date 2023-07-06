@@ -144,7 +144,7 @@ public class UniverseController : MonoBehaviour
     {
         if (orbiting)
         {
-            Debug.Log("hello");
+
             move();
             currentSpeed = orbitSpeedK;
             moon.changing = false;
@@ -234,7 +234,6 @@ public class UniverseController : MonoBehaviour
     public void move()
     {
 
-        Debug.Log("we are in move()");
         foreach (PlanetController pc in Planets)
         {
             pc.updateLocation();
