@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -62,47 +63,71 @@ public class PlanetController : MonoBehaviour
 
     public void Update()
     {
-        if (!LobbyManager.userType)
+        PhotonView view = GetComponent<PhotonView>();
+        if (FindObjectOfType<UniverseController>().isPlanetBuilder)
         {
-            
-            if (FindObjectOfType<UniverseController>().isPlanetBuilder)
+            if (ID != 0 && ID != 4)
             {
-                if (ID != 0 && ID != 4)
+                if (UniverseController.trailCount >= UniverseController.trailDelay)
                 {
-                    if (UniverseController.trailCount >= UniverseController.trailDelay)
-                    {
-                        tr.time = trailTime;
-                    }
-                    else
-                    {
-                        tr.time = 0;
-                    }
+                    tr.time = trailTime;
                 }
-                updateScale();
+                else
+                {
+                    tr.time = 0;
+                }
             }
-            else
+            updateScale();
+        }
+        else
+        {
+            if (ID != 0 && ID != 4)
             {
-                if (ID != 0 && ID != 4)
+                if (!LobbyManager.userType)
                 {
                     if (!UniverseController.orbiting)
                     {
-                        tr.time = 0;
+                        
+                            view.RPC("ClearTrail", RpcTarget.All);
                     }
                     else
                     {
                         if (UniverseController.trailCount >= UniverseController.trailDelay)
                         {
-                            tr.time = trailTime;
+                            
+                                view.RPC("StartTrail", RpcTarget.All);
                         }
                         else
                         {
-                            tr.time = 0;
+                            
+                                view.RPC("ClearTrail", RpcTarget.All);
                         }
+
                     }
                 }
+                
             }
         }
     }
+
+        
+    
+
+   
+
+    [PunRPC]
+    public void ClearTrail()
+    {
+        tr.time = 0;
+    }
+
+    [PunRPC]
+    public void StartTrail()
+    {
+        tr.time = trailTime;
+    }
+
+
 
     public void resetLocation()
     {
@@ -119,7 +144,21 @@ public class PlanetController : MonoBehaviour
         }
         MathPosition = transform.localPosition * privateOrbitScale;
         if (ID != 0)
-            tr.Clear();
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                PhotonView view = GetComponent<PhotonView>();
+                view.RPC("resetPhotonTrails", RpcTarget.All);
+
+            }
+        }
+    }
+
+
+    [PunRPC]
+    public void resetPhotonTrails()
+    {
+        tr.Clear();
     }
 
     /*

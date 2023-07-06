@@ -23,7 +23,7 @@ public class UniverseController : MonoBehaviour
     public RotateScript moon;
     public MeshScaler moonMesh;
     public bool isPlanetBuilder;
-    public static int trailDelay = 5;
+    public static int trailDelay = 6;
     public static int trailCount = 0;
 
     public GameObject floor;
@@ -68,7 +68,7 @@ public class UniverseController : MonoBehaviour
         {
             Bodies[i] = new VirtualController(Planets[i]); //Sets the virtual controller's planet to one of the planets from the list
         }
-        InitiateVirtualControllers(); //
+        InitiateVirtualControllers(); 
         for (int i = 0; i < Planets.Length; i++)
         {
             Planets[i].controller = Bodies[i];
@@ -137,13 +137,11 @@ public class UniverseController : MonoBehaviour
 
     public void updateFunctionality()
     {
-        if (trailCount < trailDelay)
-        {
-            trailCount++;
-        }
+        
         if (!LobbyManager.userType) //Only orbit in headset, allow photon viewers to do the rest
         {
-            StopJitter();
+            PhotonView view = GetComponent<PhotonView>();
+            view.RPC("StopJitter", RpcTarget.All);
             
         }
   
@@ -165,8 +163,14 @@ public class UniverseController : MonoBehaviour
         }
     }
     
+    [PunRPC]
     public void StopJitter()
     {
+        if (trailCount < trailDelay)
+        {
+            trailCount++;
+        }
+        
         if (orbiting)
         {
             move();
@@ -200,7 +204,7 @@ public class UniverseController : MonoBehaviour
                     pc.privateOrbitScale = pc.ViewTypeChangeMatrix[1][changeSteps];
                     pc.UpdateChangeValues();
                 }
-                if (changeSteps == changeDuration - 1)
+                if (changeSteps == changeDuration-1)
                 {
                     changeState = 2;
                     changeSteps = 0;

@@ -42,7 +42,7 @@ public class ViewTypeObserver : MonoBehaviour
     public RotateScript tempMoonRotate; // moon rotation script
     public MeshScaler tempMoonScale; // moon mesh script
 
-    private bool transition = false;
+
 
     public static bool immediateTransition = false;
     
@@ -130,7 +130,7 @@ public class ViewTypeObserver : MonoBehaviour
             // Scene 2 has special cases
             else if (y == 2)
             {
-                LobbyManager.room = 2;
+                
                 // If not in room 1, go to it, then immediately toggle to view 2
                 // (does not work because new scene reloads everything. May need a separate
                 // scene for going directly into view 2, but don't worry about that right now)
@@ -153,17 +153,20 @@ public class ViewTypeObserver : MonoBehaviour
 
                     transform.localPosition = new Vector3(2, 0, 0);
                 }
+                LobbyManager.room = 2;
+             
             }
 
             // Scene 6 has special cases
             else if (y == 3)
             {
+                
                 // If not in room 1, go to it, then immediately toggle to view 6
                 // (does not work because new scene reloads everything. May need a separate
                 // scene for going directly into view 6, but don't worry about that right now)
                 //if (currentViewType > 2)
                 //{
-                targetViewType = 3;
+            
                 if (PhotonNetwork.IsMasterClient)
                 {
 
@@ -176,7 +179,10 @@ public class ViewTypeObserver : MonoBehaviour
                 }
                 transform.localPosition = Vector3.zero;
 
-
+                LobbyManager.room = 3;
+                targetViewType = 3;
+                view = 3;
+                currentViewType = 3;
                 //}
 
                 // If in room 1, toggle
@@ -188,8 +194,7 @@ public class ViewTypeObserver : MonoBehaviour
             }
             else if (y == 4)
             {
-                targetViewType = 4;
-                view = 4;
+                
 
                 if (PhotonNetwork.IsMasterClient)
                 {
@@ -203,14 +208,15 @@ public class ViewTypeObserver : MonoBehaviour
                 //FindObjectOfType<UnityEngine.SpatialTracking.TrackedPoseDriver>().enabled = false;
 
                 transform.localPosition = Vector3.zero;
+                LobbyManager.room = 4;
+                targetViewType = 4;
+                view = 4;
+                currentViewType = 4;
 
             }
             else if (y == 5) //Trivia -- NEW AND MIGHT BREAK 
             {
-                LobbyManager.room = 5;
-                targetViewType = 5;
-                view = 5;
-                currentViewType = 5;
+                
 
                 Debug.Log(currentViewType);
                 if (currentViewType > 2 && currentViewType != 6)
@@ -232,6 +238,10 @@ public class ViewTypeObserver : MonoBehaviour
                     transform.localPosition = new Vector3(3, 0, 0);
 
                 }
+                LobbyManager.room = 5;
+                targetViewType = 5;
+                view = 5;
+                currentViewType = 5;
             }
             else if (y == 6) //Planet Builder -- NEW AND MIGHT BREAK 
             {
@@ -318,12 +328,7 @@ public class ViewTypeObserver : MonoBehaviour
                 UniverseController.orbiting = false;
                 FindObjectOfType<UniverseController>().gameObject.transform.localEulerAngles = Vector3.zero; //May need to become smooth
 
-                
 
-                if (UniverseController.changeState == 1)
-                {
-                    transition = true;
-                }
                 if (steps == 0)
                 {
                     foreach (PlanetController pc in FindObjectsOfType<PlanetController>())
@@ -331,7 +336,7 @@ public class ViewTypeObserver : MonoBehaviour
                         pc.changeViewType(targetViewType);
                     }
                 }
-                if (steps == UniverseController.changeDuration /*&& transistion*/)
+                if (steps == UniverseController.changeDuration + 150 /*&& transistion*/)
                 {
                     steps = 0; //Finished view type transistion
                     currentViewType = targetViewType;
@@ -477,8 +482,8 @@ public class ViewTypeObserver : MonoBehaviour
     public void endScene()
     {
         PhotonView view = GetComponent<PhotonView>();
-        view.RPC("photonEndScene", RpcTarget.MasterClient);
-        
+        view.RPC("photonEndScene", RpcTarget.All);
+
     }
 
     [PunRPC]
@@ -486,24 +491,20 @@ public class ViewTypeObserver : MonoBehaviour
     {
         endScreen.SetActive(true);
         PhotonView view = GetComponent<PhotonView>();
-        view.RPC("photonShowButton", RpcTarget.All);
-
-    }
-
-    public void photonShowButton()
-    {
-        
         photonView = GetComponent<PhotonView>();
         if (photonView.Owner.NickName == "9" | photonView.Owner.NickName == "VR Headset Network Player")
         {
             goBack.gameObject.SetActive(true);
         }
+
     }
+
+   
 
     public void returnScene()
     {
         PhotonView view = GetComponent<PhotonView>();
-        view.RPC("photonReturnScene", RpcTarget.MasterClient);
+        view.RPC("photonReturnScene", RpcTarget.All);
 
     }
 
