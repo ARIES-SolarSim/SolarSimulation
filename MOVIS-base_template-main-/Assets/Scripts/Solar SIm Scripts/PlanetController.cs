@@ -27,6 +27,7 @@ public class PlanetController : MonoBehaviour
     public ViewTypeObserver trailObserver;
     public float trailTime;
     public TrailRenderer tr;
+    public float tiltAngle;
 
     /*
      * The awake initiates several values referencing from the virtualController.
@@ -36,6 +37,7 @@ public class PlanetController : MonoBehaviour
      */
     void Awake()
     {
+        mesh.transform.localEulerAngles = new Vector3(tiltAngle, 0f, 0f);
         if (ID == 10)
         {
             InitialPosition = GetComponent<PlanetBuilderInterface>().getDistFromSun();
@@ -61,7 +63,7 @@ public class PlanetController : MonoBehaviour
     public void Update()
     {
         PhotonView view = GetComponent<PhotonView>();
-        transform.Rotate(0f, rotationSpeed, 0f, Space.Self);
+        mesh.transform.Rotate(0f, rotationSpeed, 0f);
         if (FindObjectOfType<UniverseController>().isPlanetBuilder)
         {
             if (ID != 0 && ID != 4)

@@ -8,7 +8,7 @@ public class UniverseController : MonoBehaviour
     public static float planetScale = 1; //The scale planets are displayed
     public static float orbitScale = 1; //The scale of all orbits - can be used to scale the entire system at once rather than each individually
     public static int steps = 100; //How many steps the orbit of planets is calculated ahead of time. Affects the maximum speed.
-    public static float timeStep = 0.0008f; //The frequency which the planets position is calculated
+    public static float timeStep = 0.00018f; //The frequency which the planets position is calculated
     public static int orbitSpeedK = 10; //The rate at which planets step through the points list
 
     public static bool orbiting = true; //Used to determine if planets are orbiting or changing view type
