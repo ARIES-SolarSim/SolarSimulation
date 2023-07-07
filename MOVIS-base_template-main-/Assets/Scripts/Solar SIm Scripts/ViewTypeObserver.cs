@@ -281,8 +281,6 @@ public class ViewTypeObserver : MonoBehaviour
 
                 }
                 LobbyManager.room1 = true;
-
-
                
             }
             else if (y == 6) //Planet Builder -- NEW AND MIGHT BREAK 
@@ -305,13 +303,8 @@ public class ViewTypeObserver : MonoBehaviour
             }
             else
             {
-               
-                   
-                    currentViewType = y;
-                    targetViewType = y; // Set this to avoid transition case
-               
-                   
-
+                currentViewType = y;
+                targetViewType = y; // Set this to avoid transition case
             }
         }
 
@@ -335,7 +328,7 @@ public class ViewTypeObserver : MonoBehaviour
         }
       
         // Transitions between view 1, view 2, and view 6
-        if (LobbyManager.room == 1 || LobbyManager.room == 2)
+        if (LobbyManager.room == 1 || LobbyManager.room == 2 || LobbyManager.room == 5)
         {
 
             if (steps > -1)
@@ -350,12 +343,12 @@ public class ViewTypeObserver : MonoBehaviour
 
             
 
-            if (steps == 0)
-            {
-                FindObjectOfType<RotateScript>().changing = true;
-                foreach (PlanetController pc in FindObjectsOfType<PlanetController>())
+                if (steps == 0)
                 {
-                    if(targetViewType == 5)
+                    FindObjectOfType<RotateScript>().changing = true;
+                    foreach (PlanetController pc in FindObjectsOfType<PlanetController>())
+                    {
+                        if(targetViewType == 5)
                         {
                             pc.changeViewType(3);
                         }
@@ -364,16 +357,12 @@ public class ViewTypeObserver : MonoBehaviour
                             pc.changeViewType(targetViewType);
                         }
                    
-                }
+                    }
 
-            }
+                }
                 steps++;
 
-        }
-
-            
-          
-
+            }
             if (steps == (UniverseController.changeDuration + UniverseController.accDuration))
             {
                 FindObjectOfType<RotateScript>().changing = false;

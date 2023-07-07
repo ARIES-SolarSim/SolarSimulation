@@ -43,7 +43,7 @@ public class MeshScaler : MonoBehaviour
                 
                 if (!LobbyManager.userType)
                 {
-                    Debug.Log("HEHEHEHEHEHEEHEHE");
+                    //Debug.Log("HEHEHEHEHEHEEHEHE");
                     view2.RPC("ClearTrail", RpcTarget.All);
                 }
 

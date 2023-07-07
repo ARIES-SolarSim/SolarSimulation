@@ -151,7 +151,7 @@ public class PlanetController : MonoBehaviour
         {
             mesh.transform.localScale = Vector3.one * diameter * UniverseController.planetScale;
         }
-        transform.localPosition = (MathPosition * UniverseController.orbitScale * privateOrbitScale);
+        transform.localPosition = (MathPosition - FindObjectOfType<UniverseController>().cameraLockedPlanet.MathPosition) * UniverseController.orbitScale * privateOrbitScale;
     }
 
     //Placeholder
