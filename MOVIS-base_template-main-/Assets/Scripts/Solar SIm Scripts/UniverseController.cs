@@ -112,7 +112,14 @@ public class UniverseController : MonoBehaviour
         }
         else
         {
-            begin = true;
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+                begin = true;
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.Backspace))
+        {
+            resetPlanets();
         }
     }
 
@@ -178,6 +185,22 @@ public class UniverseController : MonoBehaviour
                 //Debug.Log("Speeding Back Up: " + accDuration + " " + changeSteps);
                 increaseSpeed(accDuration, 10);
             }
+        }
+    }
+
+    public void startPlanets()
+    {
+        begin = true;
+    }
+
+    public void resetPlanets()
+    {
+        begin = false;
+        hasStarted = false;
+        trailCount = 0;
+        foreach (PlanetController pc in Planets)
+        {
+            pc.resetLocation();
         }
     }
 

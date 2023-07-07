@@ -33,7 +33,7 @@ public class PlanetBuilderInterface : MonoBehaviour
     public Color[] Atmospheres;
 
     //Planetary Rings - Currently all just Saturn Rings
-    public GameObject[] Rings = new GameObject[3];
+    public Material[] Rings; //4
 
     private float[] DayLength = new float[] { 12f, 24f, 48f };
 
@@ -52,7 +52,7 @@ public class PlanetBuilderInterface : MonoBehaviour
     private Vector3[] DistFromSun = {new Vector3(0.041176471f, 0f, 0f), new Vector3(0.082352941f, 0f, 0f), new Vector3(0.126470588f, 0f, 0f), new Vector3(0.185294118f, 0f, 0f)};
 
     private int[] Choices = new int[] { 1, 2, 1, 2, 2, 2, 3, 2 };
-    //Surface Type (1-2), Size (1-3), Element (1-3), Atmosphere (1-3), Rings (1-3), Day Length (1-3), Distance From Sun (1-4), Velocity (1-3)
+    //Surface Type (1-2), Size (1-3), Element (1-3), Atmosphere (1-3), Rings (1-4), Day Length (1-3), Distance From Sun (1-4), Velocity (1-3)
 
     public readonly int SURFACE_TYPE = 0;
     public readonly int SIZE = 1;
@@ -105,17 +105,8 @@ public class PlanetBuilderInterface : MonoBehaviour
         pc.diameter = Diameter[Choices[SIZE] - 1];
 
         MeshAtmosphere.GetComponent<MeshRenderer>().material.color = Atmospheres[Choices[ATMOSPHERE] - 1];
-        Debug.Log(Atmospheres[Choices[ATMOSPHERE] - 1]);
 
-        //Set Rings
-        if(Choices[RINGS] - 1 != 0) //0 is empty
-        {
-            RingObject.GetComponent<SpriteRenderer>().sprite = Rings[Choices[RINGS] - 1].GetComponent<SpriteRenderer>().sprite;
-        }
-        else
-        {
-            RingObject.GetComponent<SpriteRenderer>().sprite = null;
-        }
+        RingObject.GetComponent<MeshRenderer>().material = Rings[Choices[RINGS] - 1];
 
         pc.rotationSpeed = DayLength[Choices[DAY_LENGTH] - 1];
 

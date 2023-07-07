@@ -49,6 +49,14 @@ public class PlanetController : MonoBehaviour
         MathPosition = transform.localPosition * privateOrbitScale;
     }
 
+    private void Start()
+    {
+        if(ID == 10)
+        {
+            resetLocation();
+        }
+    }
+
     /*
         * Updates the current location of the planet controller to the next value in the list.
         */
@@ -177,6 +185,24 @@ public class PlanetController : MonoBehaviour
             mesh.transform.localScale = Vector3.one * diameter * UniverseController.planetScale;
         }
 
+    }
+
+    public void resetLocation()
+    {
+        if (ID == 10)
+        {
+            InitialPosition = GetComponent<PlanetBuilderInterface>().getDistFromSun();
+            InitialVelocity = new Vector3(0f, 0f, GetComponent<PlanetBuilderInterface>().getVelocity());
+            mass = GetComponent<PlanetBuilderInterface>().getMass();
+            transform.localPosition = new Vector3(1, 0, 0); //Offset so Camera can focus on it
+        }
+        else
+        {
+            transform.localPosition = InitialPosition;
+        }
+        MathPosition = transform.localPosition * privateOrbitScale;
+        if (ID != 0)
+            tr.Clear();
     }
 }
 
