@@ -40,6 +40,7 @@ public class PlanetBuilderLock : MonoBehaviour
 
     public void ChangeLock(int newLockState)
     {
+        Debug.Log(newLockState);
         if (newLockState == lockState)
         {
             // Nothing happens :)
