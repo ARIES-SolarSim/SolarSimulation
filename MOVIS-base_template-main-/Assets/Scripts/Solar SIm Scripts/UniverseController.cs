@@ -112,7 +112,7 @@ public class UniverseController : MonoBehaviour
         }
         else
         {
-            begin = true;
+            //begin = true;
         }
     }
 
