@@ -8,7 +8,11 @@ public class LobbyManager : MonoBehaviour
     [Tooltip("true is viewFinder, false is headset")]
     public static bool userType;
     [System.NonSerialized]
+
     public static int room = 1;
+
+    public static bool room1 = true;
+
 
     private void Start()
     {
@@ -38,7 +42,6 @@ public class LobbyManager : MonoBehaviour
     }
     public void ClickedEnterRoom()
     {
-        room = 1;
         PhotonView view = GetComponent<PhotonView>();
         view.RPC("LoadLevel", RpcTarget.MasterClient);
     }
