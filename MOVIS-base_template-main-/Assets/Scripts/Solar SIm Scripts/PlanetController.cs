@@ -63,7 +63,7 @@ public class PlanetController : MonoBehaviour
     public void Update()
     {
         PhotonView view = GetComponent<PhotonView>();
-        mesh.transform.Rotate(0f, rotationSpeed, 0f);
+        mesh.transform.Rotate(0f, rotationSpeed * UniverseController.orbitSpeedK / 10f, 0f);
         if (FindObjectOfType<UniverseController>().isPlanetBuilder)
         {
             if (ID != 0 && ID != 4)
@@ -172,5 +172,23 @@ public class PlanetController : MonoBehaviour
             mesh.transform.localScale = Vector3.one * diameter * UniverseController.planetScale;
         }
 
+    }
+
+    public void resetLocation()
+    {
+        if (ID == 10)
+        {
+            InitialPosition = GetComponent<PlanetBuilderInterface>().getDistFromSun();
+            InitialVelocity = new Vector3(0f, 0f, GetComponent<PlanetBuilderInterface>().getVelocity());
+            mass = GetComponent<PlanetBuilderInterface>().getMass();
+            transform.localPosition = new Vector3(1, 0, 0); //Offset so Camera can focus on it
+        }
+        else
+        {
+            transform.localPosition = InitialPosition;
+        }
+        MathPosition = transform.localPosition * privateOrbitScale;
+        if (ID != 0)
+            tr.Clear();
     }
 }
