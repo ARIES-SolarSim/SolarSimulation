@@ -170,7 +170,7 @@ public class CameraSetup : MonoBehaviour
         try
         {
             Debug.Log("VIEW: " + view.view);
-            if (view.view != 4)
+            if (view.view != 4 || view.view != 6)
             {
                 Vector3 newPosition = tracker.transform.position;
                 Quaternion newRotation = tracker.transform.rotation;

@@ -355,7 +355,15 @@ public class ViewTypeObserver : MonoBehaviour
                 FindObjectOfType<RotateScript>().changing = true;
                 foreach (PlanetController pc in FindObjectsOfType<PlanetController>())
                 {
-                    pc.changeViewType(targetViewType);
+                    if(targetViewType == 5)
+                        {
+                            pc.changeViewType(3);
+                        }
+                        else
+                        {
+                            pc.changeViewType(targetViewType);
+                        }
+                   
                 }
 
             }
