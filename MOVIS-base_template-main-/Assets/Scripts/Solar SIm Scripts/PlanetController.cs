@@ -1,8 +1,7 @@
-
 using Photon.Pun;
 using System.Collections;
-    using System.Collections.Generic;
-    using UnityEngine;
+using System.Collections.Generic;
+using UnityEngine;
 public class PlanetController : MonoBehaviour
 {
     public float diameter; //The demonstrated diameter of the planet. This value does not alter the forces of the planet.
@@ -18,27 +17,25 @@ public class PlanetController : MonoBehaviour
     public Vector3 Velocity { get; set; } //The current velocity of the planet, used for calculations of future points
     public VirtualController controller { get; set; } //The virtual controller assigned to this planet
     /*
-        * A matrix used to smooth out the transistion between view 1 and view 2.
-        * The first row is the diameter and the second is the orbit scale. Each row
-        * is UniverseController.changeDuration and contains a smooth transition
-        * between the current and the target values
-        */
+     * A matrix used to smooth out the transistion between view 1 and view 2.
+     * The first row is the diameter and the second is the orbit scale. Each row
+     * is UniverseController.changeDuration and contains a smooth transition
+     * between the current and the target values
+     */
     public float[][] ViewTypeChangeMatrix { get; set; }
 
     public ViewTypeObserver trailObserver;
     public float trailTime;
     public TrailRenderer tr;
-    public float tiltAngle;
 
     /*
-        * The awake initiates several values referencing from the virtualController.
-        *
-        * MathPos should be used for any velocity, position, or acceleration calculations and is not affected by scale
-        * Rigidbody's position values should change due to scale and are not used in any calulations.
-        */
+     * The awake initiates several values referencing from the virtualController.
+     *
+     * MathPos should be used for any velocity, position, or acceleration calculations and is not affected by scale
+     * Rigidbody's position values should change due to scale and are not used in any calulations.
+     */
     void Awake()
     {
-        mesh.transform.localEulerAngles = new Vector3(tiltAngle, 0, 0);
         if (ID == 10)
         {
             InitialPosition = GetComponent<PlanetBuilderInterface>().getDistFromSun();
@@ -49,17 +46,9 @@ public class PlanetController : MonoBehaviour
         MathPosition = transform.localPosition * privateOrbitScale;
     }
 
-    private void Start()
-    {
-        if(ID == 10)
-        {
-            resetLocation();
-        }
-    }
-
     /*
-        * Updates the current location of the planet controller to the next value in the list.
-        */
+     * Updates the current location of the planet controller to the next value in the list.
+     */
     public void updateLocation()
     {
         if (!LobbyManager.userType)
@@ -71,12 +60,8 @@ public class PlanetController : MonoBehaviour
 
     public void Update()
     {
-        //Debug.Log(LobbyManager.room);
         PhotonView view = GetComponent<PhotonView>();
-        if(LobbyManager.room != 1)
-        {
-            mesh.transform.Rotate(0f, rotationSpeed * UniverseController.orbitSpeedK / 15f, 0f, Space.Self);
-        }
+        transform.Rotate(0f, rotationSpeed, 0f, Space.Self);
         if (FindObjectOfType<UniverseController>().isPlanetBuilder)
         {
             if (ID != 0 && ID != 4)
@@ -85,11 +70,11 @@ public class PlanetController : MonoBehaviour
                 if (!UniverseController.orbiting)
 
                 {
-                    view.RPC("StartTrail", RpcTarget.All);
+                    tr.time = trailTime;
                 }
                 else
                 {
-                    view.RPC("ClearTrail", RpcTarget.All);
+                    tr.time = 0;
                 }
             }
             updateScale();
@@ -100,15 +85,11 @@ public class PlanetController : MonoBehaviour
             {
                 if (trailObserver.transform.localPosition.z == 1)
                 {
-                    
                     view.RPC("ClearTrail", RpcTarget.All);
-                  
                 }
                 else
                 {
-                    
                     view.RPC("StartTrail", RpcTarget.All);
-       
 
                 }
             }
@@ -127,8 +108,8 @@ public class PlanetController : MonoBehaviour
     }
 
     /*
-        * Fills in the change matrix with the current sloping values
-        */
+     * Fills in the change matrix with the current sloping values
+     */
     public void changeViewType(int ViewType)
     {
         UniverseController uc = FindObjectOfType<UniverseController>();
@@ -158,8 +139,8 @@ public class PlanetController : MonoBehaviour
     }
 
     /*
-        * Updates the scale of the planets, accounts for earths mesh being a little odd. Should look into what is causing this problem
-        */
+     * Updates the scale of the planets, accounts for earths mesh being a little odd. Should look into what is causing this problem
+     */
     public void UpdateChangeValues()
     {
         if (ID == 3)
@@ -190,24 +171,4 @@ public class PlanetController : MonoBehaviour
         }
 
     }
-
-    public void resetLocation()
-    {
-        if (ID == 10)
-        {
-            InitialPosition = GetComponent<PlanetBuilderInterface>().getDistFromSun();
-            InitialVelocity = new Vector3(0f, 0f, GetComponent<PlanetBuilderInterface>().getVelocity());
-            mass = GetComponent<PlanetBuilderInterface>().getMass();
-            transform.localPosition = new Vector3(1, 0, 0); //Offset so Camera can focus on it
-        }
-        else
-        {
-            transform.localPosition = InitialPosition;
-        }
-        MathPosition = transform.localPosition * privateOrbitScale;
-        if (ID != 0)
-            tr.Clear();
-    }
 }
-
-        
