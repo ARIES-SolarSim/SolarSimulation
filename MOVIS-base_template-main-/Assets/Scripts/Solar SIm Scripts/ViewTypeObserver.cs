@@ -56,7 +56,7 @@ public class ViewTypeObserver : MonoBehaviour
     {
         PhotonNetwork.AutomaticallySyncScene = true;
         currentViewType = System.Array.IndexOf(levelNames, SceneManager.GetActiveScene().name);
-        //Debug.Log("Current view: " + currentViewType);
+     
         
        if(targetViewType > 0)
         {
@@ -74,14 +74,14 @@ public class ViewTypeObserver : MonoBehaviour
         // Switched to this scene and we're not in the right view
         else if (targetViewType != currentViewType)
         {
-            Debug.Log("Setting target view type to " + targetViewType);
+           
             
             transform.localPosition = new Vector3(0, targetViewType, 1);
         }
 
         if (PhotonNetwork.NickName == "9" || !LobbyManager.userType)
         {
-            Debug.Log("Am I in start()?");
+            
             UICanvases.SetActive(true);
         }
 
@@ -93,7 +93,7 @@ public class ViewTypeObserver : MonoBehaviour
         
         int y = (int)transform.localPosition.y;
 
-        Debug.Log("y: " + y + " | Current: " + currentViewType + " | target: " + targetViewType);
+       
         // Switching to different views if the view we try to switch to is not the one we're in already
         if (y != currentViewType)
         {
@@ -134,7 +134,7 @@ public class ViewTypeObserver : MonoBehaviour
                    
 
                 }
-                Debug.Log("Y= 1 & y: " + y + " | Current: " + currentViewType + " | target: " + targetViewType);
+               
 
                
             }
@@ -168,7 +168,7 @@ public class ViewTypeObserver : MonoBehaviour
                     }
                     
                     
-                    Debug.Log("entered else");
+                   
                     steps = 0;
                     targetViewType = 2;
 
@@ -178,7 +178,7 @@ public class ViewTypeObserver : MonoBehaviour
                 LobbyManager.room1 = true;
 
 
-                Debug.Log("Y= 2 & y: " + y + " | Current: " + currentViewType + " | target: " + targetViewType);
+               
 
 
             }
@@ -218,7 +218,7 @@ public class ViewTypeObserver : MonoBehaviour
                     targetViewType = 6;
                     transform.localPosition = new Vector3(6, 0, 0);
                 }*/
-                Debug.Log("Y= 3 & y: " + y + " | Current: " + currentViewType + " | target: " + targetViewType);
+               
             }
             else if (y == 4)
             {
@@ -232,16 +232,16 @@ public class ViewTypeObserver : MonoBehaviour
                 if (PhotonNetwork.IsMasterClient)
                 {
                     PhotonView view = GetComponent<PhotonView>();
-                    Debug.Log("WE ARE ABOUT TO ENTER LOADING SOME LEVEL");
+                    
                     view.RPC("LoadingSomeLevel", RpcTarget.All, levelNames[4]);
-                    //StartCoroutine(LoadingSomeLevel(levelNames[3]));
+                   
 
                 }
 
 
-                //FindObjectOfType<UnityEngine.SpatialTracking.TrackedPoseDriver>().enabled = false;
+                
 
-                Debug.Log("Y= 4 & y: " + y + " | Current: " + currentViewType + " | target: " + targetViewType);
+                
 
 
             }
@@ -274,7 +274,6 @@ public class ViewTypeObserver : MonoBehaviour
                     }
 
 
-                    Debug.Log("entered else");
                     steps = 0;
                     targetViewType = 5;
 
@@ -284,7 +283,7 @@ public class ViewTypeObserver : MonoBehaviour
                 LobbyManager.room1 = true;
 
 
-                Debug.Log("Y= 2 & y: " + y + " | Current: " + currentViewType + " | target: " + targetViewType);
+               
             }
             else if (y == 6) //Planet Builder -- NEW AND MIGHT BREAK 
             {
@@ -298,7 +297,7 @@ public class ViewTypeObserver : MonoBehaviour
                 if (PhotonNetwork.IsMasterClient)
                 {
                     PhotonView view = GetComponent<PhotonView>();
-                    Debug.Log("WE ARE ABOUT TO ENTER LOADING SOME LEVEL");
+                   
                     view.RPC("LoadingSomeLevel", RpcTarget.All, levelNames[6]);
                     
 
@@ -307,12 +306,11 @@ public class ViewTypeObserver : MonoBehaviour
             else
             {
                
-                    Debug.Log("Uh Oh");
+                   
                     currentViewType = y;
                     targetViewType = y; // Set this to avoid transition case
                
-                    Debug.Log("Y= else & y: " + y + " | Current: " + currentViewType + " | target: " + targetViewType);
-            
+                   
 
             }
         }
@@ -335,14 +333,14 @@ public class ViewTypeObserver : MonoBehaviour
                 FindObjectOfType<RotateScript>().changing = true;
             }*/
         }
-        Debug.Log("TARGETETETETETE: " + LobbyManager.room);
+      
         // Transitions between view 1, view 2, and view 6
         if (LobbyManager.room == 1 || LobbyManager.room == 2)
         {
 
             if (steps > -1)
             {
-                Debug.Log("what is happeninngggg");
+               
                 transform.localPosition = new Vector3(targetViewType, 0, 1);
                 tempMoonScale.changing();
 
@@ -366,7 +364,7 @@ public class ViewTypeObserver : MonoBehaviour
         }
 
             
-            Debug.Log("steps: " + steps + ", needed for finished: " + (UniverseController.changeDuration + UniverseController.accDuration));
+          
 
             if (steps == (UniverseController.changeDuration + UniverseController.accDuration))
             {
@@ -378,8 +376,7 @@ public class ViewTypeObserver : MonoBehaviour
                 transform.localPosition = new Vector3(0, 0, 0);
                 tempMoonScale.doneChanging();
 
-                Debug.Log("Finished transition");
-                Debug.Log("Lobby room = " + LobbyManager.room);
+               
                 if(LobbyManager.room == 1)
                 {
                     FindObjectOfType<UniverseController>().ArrowToggle(true);
@@ -394,7 +391,7 @@ public class ViewTypeObserver : MonoBehaviour
 
 
             }
-            Debug.Log("Y= where we think bad & y: " + (int)transform.localPosition.y + " | Current: " + currentViewType + " | target: " + targetViewType);
+            
 
         }
     }
@@ -439,7 +436,7 @@ public class ViewTypeObserver : MonoBehaviour
         {
             if (LobbyManager.room != i)
             {
-                Debug.Log("I HAVE ENTERED TEH SCENE CHANGE");
+               
                 transform.localPosition = new Vector3(0, i, 0);
             }
  
@@ -456,7 +453,7 @@ public class ViewTypeObserver : MonoBehaviour
         fact.text = factList.FactList[factInt];
         
 
-        Debug.Log("We are in loadingsomelevel");
+
 
         float progress = 0f;
 
@@ -530,7 +527,7 @@ public class ViewTypeObserver : MonoBehaviour
                 }
             }
         }
-        Debug.Log("Please rrelease me");
+
         PhotonNetwork.LoadLevel(sceneValue);
         yield return new WaitForSeconds(2f);
     }

@@ -37,15 +37,22 @@ public class MeshScaler : MonoBehaviour
 
         else
         {
-            if (UniverseController.trailCount >= UniverseController.trailDelay)
+            
+            if (FindObjectOfType<ViewTypeObserver>().transform.localPosition.z == 1)
             {
+                
                 if (!LobbyManager.userType)
-                    view2.RPC("StartTrail", RpcTarget.All);
+                {
+                    Debug.Log("HEHEHEHEHEHEEHEHE");
+                    view2.RPC("ClearTrail", RpcTarget.All);
+                }
+
             }
             else
             {
                 if (!LobbyManager.userType)
-                    view2.RPC("ClearTrail", RpcTarget.All);
+                    view2.RPC("StartTrail", RpcTarget.All);
+                
             }
         }
         
