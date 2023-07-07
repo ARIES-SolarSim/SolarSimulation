@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
+using Photon.Pun;
 
 public class TideTempTwo : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class TideTempTwo : MonoBehaviour
     private MeshFilter m;
     private Mesh p;
     private Vector3[] VertexList;
+    public GameObject drop;
     //public float sunminY;
     //public float sunmaxY;
     public GameObject proxyMoon;
@@ -28,7 +30,13 @@ public class TideTempTwo : MonoBehaviour
         //proxySun = GameObject.Find("proxySun");
         //x: -5.25763, z: 3.989652
 
-       
+        if (PhotonNetwork.NickName == "9" || !LobbyManager.userType)
+        {
+            Debug.Log("DROPDOWN HERE");
+            drop.SetActive(true);
+        }
+
+
     }
 
     // Update is called once per frame

@@ -100,11 +100,15 @@ public class PlanetController : MonoBehaviour
             {
                 if (trailObserver.transform.localPosition.z == 1)
                 {
+                    
                     view.RPC("ClearTrail", RpcTarget.All);
+                  
                 }
                 else
                 {
+                    
                     view.RPC("StartTrail", RpcTarget.All);
+       
 
                 }
             }
