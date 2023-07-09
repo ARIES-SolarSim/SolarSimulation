@@ -20,8 +20,9 @@ public class VirtualController
     public VirtualController(PlanetController parent)
     {
         velocity = parent.InitialVelocity;
-        position = parent.transform.localPosition;
+        position = parent.InitialPosition;
         mass = parent.mass;
+        //Debug.Log(parent.ID + " (" + parent.gameObject.name + ") - " + position.x + ", " + position.y + ", " + position.z);
     }
 
     /*

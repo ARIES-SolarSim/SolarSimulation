@@ -44,8 +44,11 @@ public class PlanetController : MonoBehaviour
             InitialVelocity = new Vector3(0f, 0f, GetComponent<PlanetBuilderInterface>().getVelocity());
             mass = GetComponent<PlanetBuilderInterface>().getMass();
         }
-        transform.localPosition = InitialPosition * UniverseController.orbitScale;
-        MathPosition = transform.localPosition * privateOrbitScale;
+        else
+        {
+            transform.localPosition = InitialPosition * UniverseController.orbitScale;
+        }
+        MathPosition = InitialPosition * privateOrbitScale;
     }
 
     /*
@@ -79,7 +82,10 @@ public class PlanetController : MonoBehaviour
                     tr.time = 0;
                 }
             }
-            updateScale();
+            if (FindObjectOfType<UniverseController>().begin)
+            {
+                updateScale();
+            }
         }
         else
         {

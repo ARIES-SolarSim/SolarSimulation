@@ -45,10 +45,10 @@ public class PlanetBuilderInterface : MonoBehaviour
     {
         { 0.048f, 0.055f, 0.09f },
         { 0.035f, 0.04f, 0.05f },
-        { 0.025f, 0.032f, 0.038f },
+        { 0.025f, 0.032f, 0.038f }, //0.032
         { 0.021f, 0.027f, 0.028f }
     };
-
+    //0.126470588
     private Vector3[] DistFromSun = {new Vector3(0.041176471f, 0f, 0f), new Vector3(0.082352941f, 0f, 0f), new Vector3(0.126470588f, 0f, 0f), new Vector3(0.185294118f, 0f, 0f)};
 
     private int[] Choices = new int[] { 1, 2, 1, 2, 2, 2, 3, 2 };
@@ -110,7 +110,8 @@ public class PlanetBuilderInterface : MonoBehaviour
 
         pc.rotationSpeed = DayLength[Choices[DAY_LENGTH] - 1];
 
-        pc.updateScale();
+        if(FindObjectOfType<UniverseController>().begin)
+            pc.updateScale();
 
     }
 

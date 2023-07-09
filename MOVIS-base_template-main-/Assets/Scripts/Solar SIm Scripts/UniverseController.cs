@@ -62,7 +62,7 @@ public class UniverseController : MonoBehaviour
         {
             Bodies[i] = new VirtualController(Planets[i]); //Sets the virtual controller's planet to one of the planets from the list
         }
-        InitiateVirtualControllers(); //
+        InitiateVirtualControllers();
         for (int i = 0; i < Planets.Length; i++)
         {
             Planets[i].controller = Bodies[i];
@@ -109,17 +109,6 @@ public class UniverseController : MonoBehaviour
                 hasStarted = true;
             }
             updateFunctionality();
-        }
-        else
-        {
-            if (Input.GetKeyDown(KeyCode.Space)) //Debug Only
-            {
-                begin = true;
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.Backspace)) //Debug Only
-        {
-            resetPlanets();
         }
     }
 
@@ -243,7 +232,6 @@ public class UniverseController : MonoBehaviour
 
     public void move()
     {
-
         foreach (PlanetController pc in Planets)
         {
             pc.updateLocation();

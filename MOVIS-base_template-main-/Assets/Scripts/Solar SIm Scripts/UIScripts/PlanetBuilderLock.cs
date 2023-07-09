@@ -28,7 +28,7 @@ public class PlanetBuilderLock : MonoBehaviour
 
     public void Update()
     {
-
+        Debug.Log(this.name);
     }
 
     public void SliderChangeValue()
