@@ -8,20 +8,27 @@ public class PlanetBuilderLock : MonoBehaviour
     public static int amountOfObjects = 8;
     private GameObject[] objectList = new GameObject[amountOfObjects+1];
     private int lockState = 1;
-    //public GameObject sliderObject;
     public Slider slider;
     private PhotonView view;
     // Start is called before the first frame update
     void Start()
     {
-        //slider = sliderObject.GetComponent<Slider>();
         view = GetComponent<PhotonView>();
         for (int i = 0; i <= amountOfObjects; i++)
         {
             objectList[i] = this.gameObject.transform.GetChild(i).gameObject;
-            objectList[i].gameObject.GetComponent<Button>().interactable = false;
+        }
+        
+        for (int i = 2; i <= amountOfObjects; i++)
+        {
+            objectList[i].gameObject.GetComponent<Button>().interactable = false; // Start with planet type
         }
 
+    }
+
+    public void Update()
+    {
+        Debug.Log(this.name);
     }
 
     public void SliderChangeValue()
@@ -31,14 +38,9 @@ public class PlanetBuilderLock : MonoBehaviour
             view.RPC("ChangeLock", RpcTarget.All, value);
     }
 
-    public void LocalSliderChangeValue()
-    {
-        //ChangeLock((int)sliderObject.GetComponent<Slider>().value);
-        ChangeLock((int)slider.value);
-    }
-
     public void ChangeLock(int newLockState)
     {
+        Debug.Log(newLockState);
         if (newLockState == lockState)
         {
             // Nothing happens :)
