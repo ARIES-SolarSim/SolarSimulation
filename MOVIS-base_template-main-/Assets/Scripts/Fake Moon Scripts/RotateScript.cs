@@ -34,7 +34,7 @@ public class RotateScript : MonoBehaviour
             if (!correct)
             {
                 correct = true;
-                transform.position = positions[view - 1] + target.transform.position; //target.transform.position + 
+                transform.position = positions[(view == 5 ? 3 : view) - 1] + target.transform.position; //target.transform.position + 
                 if (view == 1 && !FindObjectOfType<UniverseController>().isPlanetBuilder)
                 {
                     arrow.SetActive(true);
