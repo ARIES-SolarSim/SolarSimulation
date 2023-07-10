@@ -192,16 +192,8 @@ public class CameraSetup : MonoBehaviour
                 }
                 transform.position = camera.transform.position;
                 transform.rotation = camera.transform.rotation;
-
-                if (view.view == 4)
-                {
-                    myCamera.orthographic = true;
-                    myCamera.orthographicSize = 8;
-                }
-                else
-                {
-                    myCamera.orthographic = false;
-                }
+                myCamera.orthographic = true;
+                myCamera.orthographicSize = 8;
 
 
 
