@@ -39,6 +39,7 @@ public class ViewTypeObserver : MonoBehaviour
     public int view;
 
     public GameObject UICanvases;
+    public GameObject playerCanvas;
 
     public RotateScript tempMoonRotate; // moon rotation script
     public MeshScaler tempMoonScale; // moon mesh script
@@ -83,6 +84,14 @@ public class ViewTypeObserver : MonoBehaviour
         {
             
             UICanvases.SetActive(true);
+        }
+
+        
+        view = targetViewType;
+
+        if (PhotonNetwork.NickName != "9" && view == 6)
+        {
+            playerCanvas.SetActive(true);
         }
 
     }

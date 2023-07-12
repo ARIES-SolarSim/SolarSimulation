@@ -25,7 +25,7 @@ public class UniverseController : MonoBehaviour
     public static int trailCount = 0;
 
     public bool begin;
-    private static bool hasStarted = false;
+    public static bool hasStarted = false;
 
     public static bool UIArrow;
 
@@ -129,12 +129,30 @@ public class UniverseController : MonoBehaviour
 
     }
 
+    
     public void startPlanets()
     {
+        PhotonView view = GetComponent<PhotonView>();
+        view.RPC("PhotonStartPlanets", RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void PhotonStartPlanets()
+    {
+        
         begin = true;
+
+        
     }
 
     public void resetPlanets()
+    {
+        PhotonView view = GetComponent<PhotonView>();
+        view.RPC("PhotonResetPlanets", RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void PhotonResetPlanets()
     {
         begin = false;
         hasStarted = false;
