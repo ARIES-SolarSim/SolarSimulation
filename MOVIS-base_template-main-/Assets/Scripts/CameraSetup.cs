@@ -157,7 +157,7 @@ public class CameraSetup : MonoBehaviour
         try
         {
             Debug.Log("VIEW: " + view.view);
-            Debug.Log(FindObjectOfType<UniverseController>().begin);
+            //Debug.Log(FindObjectOfType<UniverseController>().begin);
             if ((view.view != 4 && view.view != 6) || (view.view == 6 && UniverseController.hasStarted))
             {
                 Vector3 newPosition = tracker.transform.position;

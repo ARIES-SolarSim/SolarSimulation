@@ -23,12 +23,10 @@ public class PlanetController : MonoBehaviour
      * between the current and the target values
      */
     public float[][] ViewTypeChangeMatrix { get; set; }
-
     public ViewTypeObserver trailObserver;
     public float trailTime;
     public TrailRenderer tr;
     public float tiltAngle;
-
     /*
      * The awake initiates several values referencing from the virtualController.
      *
@@ -37,20 +35,20 @@ public class PlanetController : MonoBehaviour
      */
     void Awake()
     {
-        mesh.transform.localEulerAngles = new Vector3(tiltAngle, 0f, 0f);
+        if (!LobbyManager.userType)
+        {
+            mesh.transform.localEulerAngles = new Vector3(tiltAngle, 0f, 0f);
+        }
+       
         if (ID == 10)
         {
             InitialPosition = GetComponent<PlanetBuilderInterface>().getDistFromSun();
             InitialVelocity = new Vector3(0f, 0f, GetComponent<PlanetBuilderInterface>().getVelocity());
             mass = GetComponent<PlanetBuilderInterface>().getMass();
         }
-        else
-        {
-            transform.localPosition = InitialPosition * UniverseController.orbitScale;
-        }
-        MathPosition = InitialPosition * privateOrbitScale;
+        transform.localPosition = InitialPosition * UniverseController.orbitScale;
+        MathPosition = transform.localPosition * privateOrbitScale;
     }
-
     /*
      * Updates the current location of the planet controller to the next value in the list.
      */
@@ -62,18 +60,20 @@ public class PlanetController : MonoBehaviour
             transform.localPosition = (MathPosition - GetComponentInParent<UniverseController>().cameraLockedPlanet.controller.points.First.Value) * UniverseController.orbitScale * privateOrbitScale;
         }
     }
-
     public void Update()
     {
         PhotonView view = GetComponent<PhotonView>();
-        mesh.transform.Rotate(0f, rotationSpeed * UniverseController.orbitSpeedK / 10f, 0f);
+
+        if (!LobbyManager.userType)
+        {
+            view.RPC("PhotonRotate", RpcTarget.All);
+        }
+        
         if (FindObjectOfType<UniverseController>().isPlanetBuilder)
         {
             if (ID != 0 && ID != 4)
             {
-
                 if (!UniverseController.orbiting)
-
                 {
                     tr.time = trailTime;
                 }
@@ -82,10 +82,7 @@ public class PlanetController : MonoBehaviour
                     tr.time = 0;
                 }
             }
-            if (FindObjectOfType<UniverseController>().begin)
-            {
-                updateScale();
-            }
+            updateScale();
         }
         else
         {
@@ -98,12 +95,16 @@ public class PlanetController : MonoBehaviour
                 else
                 {
                     view.RPC("StartTrail", RpcTarget.All);
-
                 }
             }
         }
     }
 
+    [PunRPC]
+    public void PhotonRotate()
+    {
+        transform.Rotate(0f, rotationSpeed, 0f, Space.Self);
+    }
     [PunRPC]
     public void ClearTrail()
     {
@@ -114,7 +115,6 @@ public class PlanetController : MonoBehaviour
     {
         tr.time = trailTime;
     }
-
     /*
      * Fills in the change matrix with the current sloping values
      */
@@ -145,7 +145,6 @@ public class PlanetController : MonoBehaviour
         changeMatrix[1][UniverseController.changeDuration - 1] = pd.PlanetList[ID].OrbitScale[ViewType - 1];
         ViewTypeChangeMatrix = changeMatrix;
     }
-
     /*
      * Updates the scale of the planets, accounts for earths mesh being a little odd. Should look into what is causing this problem
      */
@@ -159,7 +158,7 @@ public class PlanetController : MonoBehaviour
         {
             mesh.transform.localScale = Vector3.one * diameter * UniverseController.planetScale;
         }
-        transform.localPosition = (MathPosition - FindObjectOfType<UniverseController>().cameraLockedPlanet.MathPosition) * UniverseController.orbitScale * privateOrbitScale;
+       transform.localPosition = (MathPosition - FindObjectOfType<UniverseController>().cameraLockedPlanet.MathPosition) * UniverseController.orbitScale * privateOrbitScale;
     }
 
     //Placeholder
@@ -177,7 +176,6 @@ public class PlanetController : MonoBehaviour
         {
             mesh.transform.localScale = Vector3.one * diameter * UniverseController.planetScale;
         }
-
     }
 
     public void resetLocation()
@@ -198,3 +196,4 @@ public class PlanetController : MonoBehaviour
             tr.Clear();
     }
 }
+
