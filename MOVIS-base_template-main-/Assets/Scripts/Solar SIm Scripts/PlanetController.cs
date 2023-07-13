@@ -103,7 +103,10 @@ public class PlanetController : MonoBehaviour
     [PunRPC]
     public void PhotonRotate()
     {
-        transform.Rotate(0f, rotationSpeed, 0f, Space.Self);
+        
+            transform.Rotate(0f, rotationSpeed, 0f, Space.Self);
+
+        
     }
     [PunRPC]
     public void ClearTrail()

@@ -40,7 +40,7 @@ public class PlanetIdentifier : MonoBehaviour
     public void initArrow()
     {
         transform.localScale = Vector3.one * ArrowScale;
-        float yOffset = (marker.transform.localPosition.y * -ArrowScale) + GetComponentInParent<PlanetController>().diameter / 2 + ArrowOffset;// + GetComponentInParent<PlanetController>().InitialPosition.y;
+        float yOffset = 0;
         transform.localPosition = new Vector3(0, yOffset, 0);
         initY = yOffset;
     }
