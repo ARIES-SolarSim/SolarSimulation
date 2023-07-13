@@ -37,7 +37,7 @@ public class PlanetController : MonoBehaviour
     {
         if (!LobbyManager.userType)
         {
-            mesh.transform.localEulerAngles = new Vector3(tiltAngle, 0f, 0f);
+            transform.Rotate(tiltAngle, 0f, 0f);
         }
        
         if (ID == 10)
@@ -107,7 +107,7 @@ public class PlanetController : MonoBehaviour
     public void PhotonRotate()
     {
         
-            transform.Rotate(0f, rotationSpeed, 0f, Space.Self);
+        transform.Rotate(0f, rotationSpeed, 0f);
 
         
     }
