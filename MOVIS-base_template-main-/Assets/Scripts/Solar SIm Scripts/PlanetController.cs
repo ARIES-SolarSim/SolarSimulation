@@ -47,7 +47,7 @@ public class PlanetController : MonoBehaviour
             mass = GetComponent<PlanetBuilderInterface>().getMass();
         }
         transform.localPosition = InitialPosition * UniverseController.orbitScale;
-        MathPosition = transform.localPosition * privateOrbitScale;
+        MathPosition = InitialPosition * privateOrbitScale;
     }
     /*
      * Updates the current location of the planet controller to the next value in the list.
@@ -82,7 +82,10 @@ public class PlanetController : MonoBehaviour
                     tr.time = 0;
                 }
             }
-            updateScale();
+            if (FindObjectOfType<UniverseController>().begin)
+            {
+                updateScale();
+            }
         }
         else
         {

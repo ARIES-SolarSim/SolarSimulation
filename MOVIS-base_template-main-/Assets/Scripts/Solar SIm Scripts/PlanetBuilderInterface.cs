@@ -93,18 +93,25 @@ public class PlanetBuilderInterface : MonoBehaviour
 
     public void updateVisuals()
     {
-        if (Choices[SURFACE_TYPE] == 1)
+        if (Choices[SURFACE_TYPE] == 1) //Rocky
         {
             Mesh.GetComponent<MeshRenderer>().material = ElementsRocky[Choices[ELEMENT] - 1];
         }
         else
         {
-            Mesh.GetComponent<MeshRenderer>().material = ElementsGas[Choices[ELEMENT] - 1];
+            Mesh.GetComponent<MeshRenderer>().material = ElementsGas[Choices[ATMOSPHERE] - 1];
         }
 
         pc.diameter = Diameter[Choices[SIZE] - 1];
 
-        MeshAtmosphere.GetComponent<MeshRenderer>().material.color = Atmospheres[Choices[ATMOSPHERE] - 1];
+        if (Choices[SURFACE_TYPE] == 1) //Rocky
+        {
+            MeshAtmosphere.GetComponent<MeshRenderer>().material.color = Atmospheres[Choices[ATMOSPHERE] - 1];
+        }
+        else
+        {
+            MeshAtmosphere.GetComponent<MeshRenderer>().material.color = Atmospheres[0]; //Empty
+        }
 
         RingObject.GetComponent<MeshRenderer>().material = Rings[Choices[RINGS] - 1];
 
