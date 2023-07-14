@@ -17,28 +17,21 @@ public class PlanetIdentifier : MonoBehaviour
     public bool showArrows = true; //If arrows are currently showing
     public GameObject marker; //The position of the tip of the arrow
 
-    public GameObject planetParent;
-    private float uCHeight;
-
     // Start method
     void Start()
     {
-        uCHeight = FindObjectOfType<UniverseController>().transform.localPosition.y;
-        transform.parent = null;
-        transform.localEulerAngles = Vector3.zero;
         initArrow();
     }
 
     // Update method
     void Update()
     {
-        transform.position = planetParent.transform.position + new Vector3(0, 0.03f, 0);
-        /*if (showArrows)
+        if (showArrows)
         {
             index += Time.deltaTime;
             float y = ArrowBobMagnitude / 2 * Mathf.Sin(index);
             transform.localPosition = new Vector3(transform.localPosition.x, initY + y, transform.localPosition.z);
-        }*/
+        }
     }
 
     /*
@@ -48,7 +41,7 @@ public class PlanetIdentifier : MonoBehaviour
     {
         transform.localScale = Vector3.one * ArrowScale;
         float yOffset = 0;
-        //transform.localPosition = new Vector3(0, yOffset, 0);
+        transform.localPosition = new Vector3(0, yOffset, 0);
         initY = yOffset;
     }
 

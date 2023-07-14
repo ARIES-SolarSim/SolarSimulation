@@ -49,19 +49,15 @@ public class UniverseController : MonoBehaviour
 
     public void awakeFunctionality()
     {
-        Planets = FindObjectsOfType<PlanetController>(); //Fills the Planet list with all planets
-        Bodies = new VirtualController[Planets.Length]; //Creates a list for all the virtual controllers
         if (isPlanetBuilder)
         {
             timeStep = 0.0002f;
             orbitScale = 16; //Scale to have first 4 planets to fill the space
             planetScale = 10000;
-            foreach(PlanetController pc in Planets)
-            {
-                pc.updatePlanetBuilder();
-            }
             //FindObjectOfType<PlanetBuilderInterface>().pc.InitialPosition = FindObjectOfType<PlanetBuilderInterface>().getDistFromSun();
         }
+        Planets = FindObjectsOfType<PlanetController>(); //Fills the Planet list with all planets
+        Bodies = new VirtualController[Planets.Length]; //Creates a list for all the virtual controllers
         for (int i = 0; i < Planets.Length; i++)
         {
             Bodies[i] = new VirtualController(Planets[i]); //Sets the virtual controller's planet to one of the planets from the list
