@@ -25,7 +25,7 @@ public class PlanetBuilderInterface : MonoBehaviour
     public GameObject RingObject;
     public PlanetController pc;
 
-    private float[] Diameter = new float[] { 4.880739e-06f, 1.210831e-05f, 2.276055e-05f };
+    private float[] Diameter = new float[] { 6.880739e-06f, 1.210831e-05f, 1.876055e-05f };
 
     //Elements
     public Material[] ElementsRocky;
@@ -106,7 +106,11 @@ public class PlanetBuilderInterface : MonoBehaviour
         }
 
         pc.diameter = Diameter[Choices[SIZE] - 1];
-        MeshAtmosphere.GetComponent<MeshRenderer>().material.color = Atmospheres[Choices[ATMOSPHERE] - 1];
+        pc.updateScale();
+
+        Color temp = Atmospheres[Choices[ATMOSPHERE] - 1];
+        temp.a = (float)(Mathf.Round(atmosphereUI.value)) / 255;
+        MeshAtmosphere.GetComponent<MeshRenderer>().material.color = temp;
 
         RingObject.GetComponent<MeshRenderer>().material = Rings[Choices[RINGS] - 1];
 
@@ -130,13 +134,6 @@ public class PlanetBuilderInterface : MonoBehaviour
     public void UpdateSize()
     {
         Choices[SIZE] = (int)(Mathf.Round(sizeSliderUI.value));
-        Debug.Log(sizeSliderUI.value + " -> " + (int)(Mathf.Round(sizeSliderUI.value)));
-    }
-
-    public void UpdateAtmosphereOpacity()
-    {
-        Color temp = new Color(MeshAtmosphere.GetComponent<MeshRenderer>().material.color.r, MeshAtmosphere.GetComponent<MeshRenderer>().material.color.b, MeshAtmosphere.GetComponent<MeshRenderer>().material.color.g, (int)(Mathf.Round(atmosphereUI.value)));
-        MeshAtmosphere.GetComponent<MeshRenderer>().material.color = temp;
-        Debug.Log(sizeSliderUI.value + " -> " + (int)(Mathf.Round(sizeSliderUI.value)));
+        Debug.Log(sizeSliderUI.value);
     }
 }

@@ -181,6 +181,10 @@ public class PlanetController : MonoBehaviour
         {
             mesh.transform.localScale = Vector3.one * diameter * UniverseController.planetScale * 0.04f;
         }
+        else if(ID == 10)
+        {
+            mesh.transform.localScale = Vector3.one * diameter * 10000;
+        }
         else
         {
             mesh.transform.localScale = Vector3.one * diameter * UniverseController.planetScale;
