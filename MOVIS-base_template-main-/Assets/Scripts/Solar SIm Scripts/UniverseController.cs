@@ -125,7 +125,7 @@ public class UniverseController : MonoBehaviour
                 trailCount++;
             }
         }
-        if (!LobbyManager.userType) //Only orbit in headset, allow photon viewers to do the rest
+        if (!LobbyManager.userType || (isPlanetBuilder && LobbyManager.userType)) //Only orbit in headset, allow photon viewers to do the rest
         {
             StopJitter();
 

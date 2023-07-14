@@ -27,6 +27,7 @@ public class PlanetController : MonoBehaviour
     public float trailTime;
     public TrailRenderer tr;
     public float tiltAngle;
+    private UniverseController uc;
     /*
      * The awake initiates several values referencing from the virtualController.
      *
@@ -35,7 +36,8 @@ public class PlanetController : MonoBehaviour
      */
     void Awake()
     {
-        if (!LobbyManager.userType)
+        uc = FindObjectOfType<UniverseController>();
+        if (!LobbyManager.userType || (uc.isPlanetBuilder && LobbyManager.userType))
         {
             transform.Rotate(tiltAngle, 0f, 0f);
         }
@@ -57,7 +59,7 @@ public class PlanetController : MonoBehaviour
      */
     public void updateLocation()
     {
-        if (!LobbyManager.userType)
+        if (!LobbyManager.userType || (uc.isPlanetBuilder && LobbyManager.userType))
         {
             MathPosition = controller.points.First.Value;
             transform.localPosition = (MathPosition - GetComponentInParent<UniverseController>().cameraLockedPlanet.controller.points.First.Value) * UniverseController.orbitScale * privateOrbitScale;
@@ -67,7 +69,7 @@ public class PlanetController : MonoBehaviour
     {
         PhotonView view = GetComponent<PhotonView>();
 
-        if (!LobbyManager.userType)
+        if (!LobbyManager.userType || (uc.isPlanetBuilder && LobbyManager.userType))
         {
             view.RPC("PhotonRotate", RpcTarget.All);
         }
@@ -92,7 +94,7 @@ public class PlanetController : MonoBehaviour
         }
         else
         {
-            if (ID != 0 && ID != 4 && !LobbyManager.userType)
+            if (ID != 0 && ID != 4 && (!LobbyManager.userType || (uc.isPlanetBuilder && LobbyManager.userType)))
             {
                 if (trailObserver.transform.localPosition.z == 1)
                 {
