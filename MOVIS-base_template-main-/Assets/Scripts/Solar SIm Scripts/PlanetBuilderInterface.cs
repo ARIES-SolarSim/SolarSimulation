@@ -99,19 +99,11 @@ public class PlanetBuilderInterface : MonoBehaviour
         }
         else
         {
-            Mesh.GetComponent<MeshRenderer>().material = ElementsGas[Choices[ATMOSPHERE] - 1];
+            Mesh.GetComponent<MeshRenderer>().material = ElementsGas[Choices[ELEMENT] - 1];
         }
 
         pc.diameter = Diameter[Choices[SIZE] - 1];
-
-        if (Choices[SURFACE_TYPE] == 1) //Rocky
-        {
-            MeshAtmosphere.GetComponent<MeshRenderer>().material.color = Atmospheres[Choices[ATMOSPHERE] - 1];
-        }
-        else
-        {
-            MeshAtmosphere.GetComponent<MeshRenderer>().material.color = Atmospheres[0]; //Empty
-        }
+        MeshAtmosphere.GetComponent<MeshRenderer>().material.color = Atmospheres[Choices[ATMOSPHERE] - 1];
 
         RingObject.GetComponent<MeshRenderer>().material = Rings[Choices[RINGS] - 1];
 
