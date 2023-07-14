@@ -17,6 +17,8 @@ public class PlanetBuilderInterface : MonoBehaviour
      */
 
     public Slider sizeSliderUI;
+    public Slider atmosphereUI;
+
 
     public GameObject Mesh;
     public GameObject MeshAtmosphere;
@@ -82,7 +84,8 @@ public class PlanetBuilderInterface : MonoBehaviour
 
     public float getVelocity()
     {
-        //Debug.Log(DistFromSun[Choices[DIST_FROM_SUN] - 1]);
+        Debug.Log(DistFromSun[Choices[DIST_FROM_SUN] - 1].x + ", " + DistFromSun[Choices[DIST_FROM_SUN] - 1].y + ", " + DistFromSun[Choices[DIST_FROM_SUN] - 1].z);
+        Debug.Log(Velocity[Choices[DIST_FROM_SUN] - 1, Choices[VELOCITY] - 1]);
         return Velocity[Choices[DIST_FROM_SUN] - 1, Choices[VELOCITY] - 1];
     }
 
@@ -118,11 +121,22 @@ public class PlanetBuilderInterface : MonoBehaviour
     public void UpdateChoices(int choice)
     {
         Choices[choice/10] = choice%10;
+        if(choice/10 == ELEMENT)
+        {
+            Debug.Log(choice / 10);
+        }
     }
 
     public void UpdateSize()
     {
         Choices[SIZE] = (int)(Mathf.Round(sizeSliderUI.value));
-        //Debug.Log(sizeSliderUI.value + " -> " + (int)(Mathf.Round(sizeSliderUI.value)));
+        Debug.Log(sizeSliderUI.value + " -> " + (int)(Mathf.Round(sizeSliderUI.value)));
+    }
+
+    public void UpdateAtmosphereOpacity()
+    {
+        Color temp = new Color(MeshAtmosphere.GetComponent<MeshRenderer>().material.color.r, MeshAtmosphere.GetComponent<MeshRenderer>().material.color.b, MeshAtmosphere.GetComponent<MeshRenderer>().material.color.g, (int)(Mathf.Round(atmosphereUI.value)));
+        MeshAtmosphere.GetComponent<MeshRenderer>().material.color = temp;
+        Debug.Log(sizeSliderUI.value + " -> " + (int)(Mathf.Round(sizeSliderUI.value)));
     }
 }

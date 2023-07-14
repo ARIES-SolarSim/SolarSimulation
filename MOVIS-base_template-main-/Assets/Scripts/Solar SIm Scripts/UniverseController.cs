@@ -56,10 +56,6 @@ public class UniverseController : MonoBehaviour
             timeStep = 0.0002f;
             orbitScale = 16; //Scale to have first 4 planets to fill the space
             planetScale = 10000;
-            foreach(PlanetController pc in Planets)
-            {
-                pc.updatePlanetBuilder();
-            }
             //FindObjectOfType<PlanetBuilderInterface>().pc.InitialPosition = FindObjectOfType<PlanetBuilderInterface>().getDistFromSun();
         }
         for (int i = 0; i < Planets.Length; i++)
@@ -73,6 +69,13 @@ public class UniverseController : MonoBehaviour
             Planets[i].mesh.transform.localPosition = Vector3.zero; //Not sure if this is needed any longer
         }
         originalTime = new float[Planets.Length];
+        if(isPlanetBuilder)
+        {
+            foreach (PlanetController pc in Planets)
+            {
+                pc.updatePlanetBuilder();
+            }
+        }
     }
 
     public void Start()
