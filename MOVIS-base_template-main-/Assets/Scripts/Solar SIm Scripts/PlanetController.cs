@@ -201,5 +201,15 @@ public class PlanetController : MonoBehaviour
         if (ID != 0)
             tr.Clear();
     }
+
+    public void updatePlanetBuilder()
+    {
+        if (ID == 10)
+        {
+            InitialPosition = GetComponent<PlanetBuilderInterface>().getDistFromSun();
+            InitialVelocity = new Vector3(0f, 0f, GetComponent<PlanetBuilderInterface>().getVelocity());
+            mass = GetComponent<PlanetBuilderInterface>().getMass();
+        }
+    }
 }
 
