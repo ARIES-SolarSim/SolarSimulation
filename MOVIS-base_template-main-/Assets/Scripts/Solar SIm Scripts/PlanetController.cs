@@ -39,14 +39,17 @@ public class PlanetController : MonoBehaviour
         {
             transform.Rotate(tiltAngle, 0f, 0f);
         }
-       
+
         if (ID == 10)
         {
             InitialPosition = GetComponent<PlanetBuilderInterface>().getDistFromSun();
             InitialVelocity = new Vector3(0f, 0f, GetComponent<PlanetBuilderInterface>().getVelocity());
             mass = GetComponent<PlanetBuilderInterface>().getMass();
         }
-        transform.localPosition = InitialPosition * UniverseController.orbitScale;
+        else
+        {
+            transform.localPosition = InitialPosition * UniverseController.orbitScale;
+        }
         MathPosition = InitialPosition * privateOrbitScale;
     }
     /*
