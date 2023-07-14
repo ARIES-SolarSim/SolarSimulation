@@ -13,7 +13,6 @@ public class LobbyManager : MonoBehaviour
 
     public static bool room1 = true;
 
-
     private void Start()
     {
         PhotonNetwork.AutomaticallySyncScene = true;

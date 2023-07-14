@@ -37,7 +37,7 @@ public class PlanetBuilderInterface : MonoBehaviour
     //Planetary Rings - Currently all just Saturn Rings
     public Material[] Rings; //4
 
-    private float[] DayLength = new float[] { 12f, 24f, 48f };
+    private float[] DayLength = new float[] { 0.4865f, 0.973f, 1.946f };
 
     //Mass                                      Merc        Venus      Earth      10x Mars
     private float[] MassOptions = new float[] { 1.3301176f, 4.171736f, 6.272128f, 6.6422288f };

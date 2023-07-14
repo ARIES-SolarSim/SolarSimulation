@@ -19,6 +19,6 @@ public class SpeedController : MonoBehaviour
     }
     public void ChangeSpeed()
     { 
-        uC.OrbitSpeedKChange((int)this.gameObject.GetComponent<Slider>().value);
+        //uC.OrbitSpeedKChange((int)this.gameObject.GetComponent<Slider>().value);
     }
 }

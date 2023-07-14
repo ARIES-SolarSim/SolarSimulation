@@ -14,8 +14,12 @@ public class MoonOrbitTest2 : MonoBehaviour
     private float currentOrbitAngle = 0f;
     private float currentRotationAngle = 0f;
     // Start is called before the first frame update
+
+    private float maxOrbitSpeed;
+
     void Start()
     {
+        maxOrbitSpeed = orbitSpeed;
         float x;
         float z;
         // Calculate the new position on the elliptical orbit
@@ -38,6 +42,7 @@ public class MoonOrbitTest2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //orbitSpeed = UniverseController.orbitSpeedK / 10f * maxOrbitSpeed;
         if (!LobbyManager.userType)
         {
             float x;

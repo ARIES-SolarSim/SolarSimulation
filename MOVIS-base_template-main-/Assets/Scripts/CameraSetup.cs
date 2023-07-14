@@ -40,6 +40,7 @@ public class CameraSetup : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("Camera: " + view.view);
         if (Tracker3 == null)
         {
             trackerSetup();

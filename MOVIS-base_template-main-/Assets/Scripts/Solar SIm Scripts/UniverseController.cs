@@ -81,6 +81,14 @@ public class UniverseController : MonoBehaviour
         {
             startFunctionality();
         }
+        if(ViewTypeObserver.tempVal == 5) //Is trivia mode
+        {
+            Debug.Log("Trivia Mode Auto-run");
+            for(int i = 0;i < 20000; i ++)
+            {
+                move();
+            }
+        }
     }
 
     public void startFunctionality()
@@ -170,9 +178,9 @@ public class UniverseController : MonoBehaviour
 
     public void StopJitter()
     {
+        //Debug.Log("Start: " + orbitSpeedK);
         if (orbiting)
         {
-
             move();
             currentSpeed = orbitSpeedK;
             if (ViewTypeObserver.immediateTransition == true)
@@ -188,7 +196,9 @@ public class UniverseController : MonoBehaviour
             if (changeState == 0) //Slowing down
             {
                 //Debug.Log("Decreasing Speed: " + accDuration + " " + changeSteps);
+                //Debug.Log("Decrease Speed Before: " + orbitSpeedK);
                 decreaseSpeed(accDuration, 0);
+                //Debug.Log("Decrease Speed After: " + orbitSpeedK);
             }
 
             if (changeState == 1) //Changing
@@ -210,9 +220,10 @@ public class UniverseController : MonoBehaviour
             if (changeState == 2) //Speeding up
             {
                 //Debug.Log("Speeding Back Up: " + accDuration + " " + changeSteps);
-                increaseSpeed(accDuration, 10);
+                increaseSpeed(accDuration, (ViewTypeObserver.tempVal == 5) ? 2 : 10); //If switching to Trivia Mode, use a slower speed
             }
         }
+        //Debug.Log("End: " + orbitSpeedK);
     }
 
     /*
@@ -221,6 +232,7 @@ public class UniverseController : MonoBehaviour
     public void decreaseSpeed(float time, int min)
     {
         orbitSpeedK = Mathf.RoundToInt(((min - currentSpeed) / time * changeSteps) + currentSpeed);
+        //Debug.Log(orbitSpeedK + "(Inside)");
         move();
         if (changeSteps == (int)time)
         {
@@ -327,7 +339,7 @@ public class UniverseController : MonoBehaviour
      */
     public void OrbitSpeedKChange(int i)
     {
-        orbitSpeedK = i;
+        //orbitSpeedK = i;
     }
 
 

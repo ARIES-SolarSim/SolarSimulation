@@ -43,7 +43,7 @@ public class ViewTypeObserver : MonoBehaviour
 
     public RotateScript tempMoonRotate; // moon rotation script
     public MeshScaler tempMoonScale; // moon mesh script
-
+    public static int tempVal;
 
 
     public static bool immediateTransition = false;
@@ -98,8 +98,12 @@ public class ViewTypeObserver : MonoBehaviour
 
     void Update()
     {
+        if (targetViewType != 0)
+        {
+            tempVal = targetViewType;
+        }
+        //Debug.Log(currentViewType + " <-> " + targetViewType + " <-> " + view + " <-> " + tempVal);
 
-        
         int y = (int)transform.localPosition.y;
 
        
