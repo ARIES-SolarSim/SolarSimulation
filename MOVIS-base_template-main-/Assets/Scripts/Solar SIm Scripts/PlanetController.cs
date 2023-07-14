@@ -69,9 +69,12 @@ public class PlanetController : MonoBehaviour
     {
         PhotonView view = GetComponent<PhotonView>();
 
-        if (!LobbyManager.userType || (uc.isPlanetBuilder && LobbyManager.userType))
+        if (!LobbyManager.userType)
         {
             view.RPC("PhotonRotate", RpcTarget.All);
+        }else if(uc.isPlanetBuilder && LobbyManager.userType)
+        {
+            transform.Rotate(0f, rotationSpeed, 0f);
         }
         
         if (FindObjectOfType<UniverseController>().isPlanetBuilder)
