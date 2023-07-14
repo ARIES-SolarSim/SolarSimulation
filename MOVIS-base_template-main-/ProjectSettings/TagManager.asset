@@ -12,6 +12,7 @@ TagManager:
   - Light me
   - SceneCamera
   - view
+  - playerCanvas
   layers:
   - Default
   - TransparentFX

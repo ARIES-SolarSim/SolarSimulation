@@ -14,6 +14,7 @@ public class CameraSetup : MonoBehaviour
     private GameObject[] viewFinderCameras;
     private Camera camera;
     private Camera myCamera;
+    private GameObject playerCanvas;
     public Quaternion cameraOffset;
     void Start()
     {
@@ -33,6 +34,8 @@ public class CameraSetup : MonoBehaviour
             Debug.Log("setting tag myself for " + photonView.Owner.NickName);
             this.gameObject.tag = "Myself";
         }
+
+        playerCanvas = GameObject.FindGameObjectWithTag("playerCanvas");
     }
     // Update is called once per frame
     void Update()
@@ -156,7 +159,7 @@ public class CameraSetup : MonoBehaviour
     {
         try
         {
-            Debug.Log("VIEW: " + view.view);
+            //Debug.Log("VIEW: " + view.view);
             //Debug.Log(FindObjectOfType<UniverseController>().begin);
             if ((view.view != 4 && view.view != 6) || (view.view == 6 && UniverseController.hasStarted))
             {
@@ -168,10 +171,14 @@ public class CameraSetup : MonoBehaviour
                 transform.rotation = newRotation;
                 //transform.position = tracker.transform.position;
                 //transform.rotation = tracker.transform.rotation;
+                if(view.view == 6 && UniverseController.hasStarted)
+                {
+                    playerCanvas.SetActive(false);
+                }
             }
             else
             {
-                Debug.Log("WE ARE IN OCEAN VIEW");
+                //Debug.Log("WE ARE IN OCEAN VIEW");
                 if (null == camera)
                 {
                     camera = GameObject.FindGameObjectWithTag("SceneCamera").GetComponent<Camera>();
@@ -191,7 +198,12 @@ public class CameraSetup : MonoBehaviour
                     myCamera.orthographic = false;
                 }
 
-                
+                if (view.view == 6 && !UniverseController.hasStarted)
+                {
+                    playerCanvas.SetActive(true);
+                }
+
+
 
             }
         }

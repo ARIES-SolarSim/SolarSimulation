@@ -8754,6 +8754,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2512373072536010965, guid: 72f9c4b579847fa4aa1d51bde3d8e3d9, type: 3}
+      propertyPath: m_TagString
+      value: playerCanvas
+      objectReference: {fileID: 0}
     - target: {fileID: 2868267535158801836, guid: 72f9c4b579847fa4aa1d51bde3d8e3d9, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
       value: 0
