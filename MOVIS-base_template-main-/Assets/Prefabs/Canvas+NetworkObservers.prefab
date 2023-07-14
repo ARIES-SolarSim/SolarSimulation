@@ -5269,7 +5269,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2530478634235360241
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8957,6 +8957,10 @@ PrefabInstance:
       propertyPath: check
       value: 
       objectReference: {fileID: 2563611333368433118}
+    - target: {fileID: 6845884718914623655, guid: 88f4a360e1af5504685ff1e37c6cc36f, type: 3}
+      propertyPath: goBack
+      value: 
+      objectReference: {fileID: 3216044564230095226}
     - target: {fileID: 6845884718914623655, guid: 88f4a360e1af5504685ff1e37c6cc36f, type: 3}
       propertyPath: planet
       value: 

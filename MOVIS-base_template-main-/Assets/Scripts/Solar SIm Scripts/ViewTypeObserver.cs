@@ -454,7 +454,7 @@ public class ViewTypeObserver : MonoBehaviour
     {
         UICanvases.SetActive(false);
         loaderCanvas.SetActive(true);
-        character = Random.Range(0, 2);
+        character = Random.Range(0, 3);
         int factInt = Random.Range(0, 21);
         fact.text = factList.FactList[factInt];
         
@@ -551,11 +551,11 @@ public class ViewTypeObserver : MonoBehaviour
         endScreen.SetActive(true);
         PhotonView view = GetComponent<PhotonView>();
         photonView = GetComponent<PhotonView>();
-        if (photonView.Owner.NickName == "9" | photonView.Owner.NickName == "VR Headset Network Player")
+        if (photonView.Owner.NickName == "9" || photonView.Owner.NickName == "VR Headset Network Player")
         {
             goBack.gameObject.SetActive(true);
         }
-
+       
     }
 
    
