@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
-
+//Nah
 public class LobbyManager : MonoBehaviour
 {
     [Tooltip("true is viewFinder, false is headset")]
