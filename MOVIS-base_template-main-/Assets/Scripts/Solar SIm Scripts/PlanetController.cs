@@ -28,6 +28,8 @@ public class PlanetController : MonoBehaviour
     public TrailRenderer tr;
     public float tiltAngle;
     private UniverseController uc;
+
+    private bool hasClearedTrail = false;
     /*
      * The awake initiates several values referencing from the virtualController.
      *
@@ -69,13 +71,7 @@ public class PlanetController : MonoBehaviour
     {
         PhotonView view = GetComponent<PhotonView>();
 
-        if (!LobbyManager.userType)
-        {
-            view.RPC("PhotonRotate", RpcTarget.All);
-        }else if(uc.isPlanetBuilder && LobbyManager.userType)
-        {
-            transform.Rotate(0f, rotationSpeed, 0f);
-        }
+        transform.Rotate(0f, rotationSpeed, 0f);
         
         if (FindObjectOfType<UniverseController>().isPlanetBuilder)
         {
@@ -99,26 +95,20 @@ public class PlanetController : MonoBehaviour
         {
             if (ID != 0 && ID != 4 && (!LobbyManager.userType || (uc.isPlanetBuilder && LobbyManager.userType)))
             {
-                if (trailObserver.transform.localPosition.z == 1)
+                if (trailObserver.transform.localPosition.z == 1 && !hasClearedTrail)
                 {
                     view.RPC("ClearTrail", RpcTarget.All);
+                    hasClearedTrail = true;
                 }
-                else
+                else if(trailObserver.transform.localPosition.z == 0 && hasClearedTrail)
                 {
                     view.RPC("StartTrail", RpcTarget.All);
+                    hasClearedTrail = false;
                 }
             }
         }
     }
 
-    [PunRPC]
-    public void PhotonRotate()
-    {
-        
-        transform.Rotate(0f, rotationSpeed, 0f);
-
-        
-    }
     [PunRPC]
     public void ClearTrail()
     {
@@ -172,7 +162,7 @@ public class PlanetController : MonoBehaviour
         {
             mesh.transform.localScale = Vector3.one * diameter * UniverseController.planetScale;
         }
-       transform.localPosition = (MathPosition - FindObjectOfType<UniverseController>().cameraLockedPlanet.MathPosition) * UniverseController.orbitScale * privateOrbitScale;
+        transform.localPosition = (MathPosition - FindObjectOfType<UniverseController>().cameraLockedPlanet.MathPosition) * UniverseController.orbitScale * privateOrbitScale;
     }
 
     //Placeholder

@@ -15,6 +15,8 @@ public class MeshScaler : MonoBehaviour
     public int steps = 0;
     public TrailRenderer tr;
 
+    private bool hasClearedTrail = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,7 +30,10 @@ public class MeshScaler : MonoBehaviour
         if (isChanging)
         {
             if (!LobbyManager.userType)
-                view2.RPC("ClearTrail", RpcTarget.All);
+            {
+                //view2.RPC("ClearTrail", RpcTarget.All);
+                //NEED TO FIX
+            }
             int targetView = (view == 1) ? 0 : 1;
             transform.localScale = Vector3.Lerp(scales[view], scales[targetView], (steps * 1f) / (UniverseController.changeDuration * 1f)) * UniverseController.planetScale;
             steps++;
@@ -38,20 +43,23 @@ public class MeshScaler : MonoBehaviour
         else
         {
             
-            if (FindObjectOfType<ViewTypeObserver>().transform.localPosition.z == 1)
+            if (FindObjectOfType<ViewTypeObserver>().transform.localPosition.z == 1 && !hasClearedTrail)
             {
                 
                 if (!LobbyManager.userType)
                 {
-                    //Debug.Log("HEHEHEHEHEHEEHEHE");
                     view2.RPC("ClearTrail", RpcTarget.All);
+                    hasClearedTrail = true;
                 }
 
             }
-            else
+            else if (FindObjectOfType<ViewTypeObserver>().transform.localPosition.z == 0 && hasClearedTrail)
             {
                 if (!LobbyManager.userType)
+                {
                     view2.RPC("StartTrail", RpcTarget.All);
+                    hasClearedTrail = false;
+                }
                 
             }
         }

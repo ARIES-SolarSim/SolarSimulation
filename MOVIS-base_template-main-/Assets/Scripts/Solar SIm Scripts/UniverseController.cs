@@ -62,6 +62,12 @@ public class UniverseController : MonoBehaviour
                 pc.updatePlanetBuilder();
             }
         }
+        else //Only needed to fix changes from planet builder when switching from planet builder back to Room 1
+        {
+            timeStep = 0.00018f;
+            orbitScale = 1;
+            planetScale = 1;
+        }
         for (int i = 0; i < Planets.Length; i++)
         {
             Bodies[i] = new VirtualController(Planets[i]); //Sets the virtual controller's planet to one of the planets from the list
