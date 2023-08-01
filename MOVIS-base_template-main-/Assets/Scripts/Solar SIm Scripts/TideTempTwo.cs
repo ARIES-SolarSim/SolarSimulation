@@ -26,7 +26,7 @@ public class TideTempTwo : MonoBehaviour
     {
         
         //Moon = FindObjectOfType<RotateAround>();
-        proxyMoon = GameObject.Find("Arrow");
+        proxyMoon = GameObject.Find("Thumbtack");
         //proxySun = GameObject.Find("proxySun");
         //x: -5.25763, z: 3.989652
 

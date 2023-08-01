@@ -31,8 +31,8 @@ public class dropdownmenu : MonoBehaviour
             {
                 tide.GetComponent<TideTempTwo>().enabled = false;
                 tide.GetComponent<TideTempTwo>().enabled = true;
-                Arrow.transform.localPosition = new Vector3(0.2f, 1, -0.02f);
-                Arrow.transform.rotation = Quaternion.Euler(90f, 90f, 90f);
+                Arrow.transform.localPosition = new Vector3(0.16f, 0.391f, -0.06f);
+                Arrow.transform.localRotation = Quaternion.Euler(-73.359f, 113.345f, -234.088f);
                 //image.GetComponent<RectTransform>().anchoredPosition  = new Vector3(-420, -45, 0);
                 tide.GetComponent<TideTempTwo>().myX = -5.401577f;
                 tide.GetComponent<TideTempTwo>().myZ = -3.792488f;
@@ -58,8 +58,9 @@ public class dropdownmenu : MonoBehaviour
                 Debug.Log("Japan");
                 tide.GetComponent<TideTempTwo>().enabled = false;
                 tide.GetComponent<TideTempTwo>().enabled = true;
-                Arrow.transform.localPosition = new Vector3(-0.34f, 1, 0.24f);
-                Arrow.transform.rotation = Quaternion.Euler(90f, 90f, 90f);
+                Arrow.transform.localPosition = new Vector3(-0.241f, 0.206f, 0.382f);
+                Arrow.transform.localRotation = Quaternion.Euler(-19.648f, -28.411f, -100f);
+                
                 //image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-280, 40, 0);
                 tide.GetComponent<TideTempTwo>().myX = 3.621747f;
                 tide.GetComponent<TideTempTwo>().myZ = 5.517513f;
@@ -75,8 +76,8 @@ public class dropdownmenu : MonoBehaviour
                 //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 tide.GetComponent<TideTempTwo>().enabled = false;
                 tide.GetComponent<TideTempTwo>().enabled = true;
-                Arrow.transform.localPosition = new Vector3(0.06f, 1, 0.46f);
-                Arrow.transform.rotation = Quaternion.Euler(90f, 90f, 90f);
+                Arrow.transform.localPosition = new Vector3(0.07f, 0.168f, 0.413f);
+                Arrow.transform.localRotation = Quaternion.Euler(-15.226f, 11.595f, -104.036f);
                 //image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-290, -85, 0);
                 tide.GetComponent<TideTempTwo>().myX = 3.646949f;
                 tide.GetComponent<TideTempTwo>().myZ = -4.234735f;
@@ -92,8 +93,8 @@ public class dropdownmenu : MonoBehaviour
                 //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 tide.GetComponent<TideTempTwo>().enabled = false;
                 tide.GetComponent<TideTempTwo>().enabled = true;
-                Arrow.transform.localPosition = new Vector3(-0.05f, 1, -0.01f);
-                Arrow.transform.rotation = Quaternion.Euler(90f, 90f, 90f);
+                Arrow.transform.localPosition = new Vector3(-0.011f, 0.4347f, -0.0308f);
+                Arrow.transform.localRotation = Quaternion.Euler(-84.74f, 129.386f, -211.002f);
                 //image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-390, 20, 0);
                 tide.GetComponent<TideTempTwo>().myX = 4.203157f;
                 tide.GetComponent<TideTempTwo>().myZ = -5.088562f;
@@ -109,8 +110,8 @@ public class dropdownmenu : MonoBehaviour
                 //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 tide.GetComponent<TideTempTwo>().enabled = false;
                 tide.GetComponent<TideTempTwo>().enabled = true;
-                Arrow.transform.localPosition = new Vector3(-0.17f, 1, 0.46f);
-                Arrow.transform.rotation = Quaternion.Euler(90f, 90f, 90f);
+                Arrow.transform.localPosition = new Vector3(-0.107f, 0.0148f, 0.4466f);
+                Arrow.transform.localRotation = Quaternion.Euler(-6.191f, -20.791f, -43f);
                 //image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-260, -40, 0);
                 tide.GetComponent<TideTempTwo>().myX = 4.203157f;
                 tide.GetComponent<TideTempTwo>().myZ = -5.088562f;
@@ -126,8 +127,8 @@ public class dropdownmenu : MonoBehaviour
                 //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 tide.GetComponent<TideTempTwo>().enabled = false;
                 tide.GetComponent<TideTempTwo>().enabled = true;
-                Arrow.transform.localPosition = new Vector3(0.023f, 1, -0.45f);
-                Arrow.transform.rotation = Quaternion.Euler(90f, 90f, 90f);
+                Arrow.transform.localPosition = new Vector3(0.071f, 0.2135f, -0.3951f);
+                Arrow.transform.localRotation = Quaternion.Euler(-25.272f, -190.961f, 44.095f);
                 //image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-260, -40, 0);
                 tide.GetComponent<TideTempTwo>().myX = -4.582575f;
                 tide.GetComponent<TideTempTwo>().myZ = 3.54362f;
@@ -143,8 +144,8 @@ public class dropdownmenu : MonoBehaviour
                 //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 tide.GetComponent<TideTempTwo>().enabled = false;
                 tide.GetComponent<TideTempTwo>().enabled = true;
-                Arrow.transform.localPosition = new Vector3(0.05f, 1, -0.38f);
-                Arrow.transform.rotation = Quaternion.Euler(90f, 90f, 90f);
+                Arrow.transform.localPosition = new Vector3(0.0811f, 0.3114f, -0.3459f);
+                Arrow.transform.localRotation = Quaternion.Euler(-27.68f, -193.621f, 45.282f);
                 //image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-260, -40, 0);
                 tide.GetComponent<TideTempTwo>().myX = -4.582575f;
                 tide.GetComponent<TideTempTwo>().myZ = 3.54362f;
@@ -160,8 +161,8 @@ public class dropdownmenu : MonoBehaviour
                 //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 tide.GetComponent<TideTempTwo>().enabled = false;
                 tide.GetComponent<TideTempTwo>().enabled = true;
-                Arrow.transform.localPosition = new Vector3(0.3f, 1, -0.02f);
-                Arrow.transform.rotation = Quaternion.Euler(90f, 90f, 90f);
+                Arrow.transform.localPosition = new Vector3(0.309f, 0.34f, -0.003f);
+                Arrow.transform.localRotation = Quaternion.Euler(-20.582f, -283.212f, 114.958f);
                 //image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-260, -40, 0);
                 tide.GetComponent<TideTempTwo>().myX = -2.871667f;
                 tide.GetComponent<TideTempTwo>().myZ = -4.433514f;
@@ -177,14 +178,16 @@ public class dropdownmenu : MonoBehaviour
                 //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 tide.GetComponent<TideTempTwo>().enabled = false;
                 tide.GetComponent<TideTempTwo>().enabled = true;
-                Arrow.transform.localPosition = new Vector3(-0.4f, 1, 0.4f);
-                Arrow.transform.rotation = Quaternion.Euler(90f, 180f, 90f);
+                Arrow.transform.localPosition = new Vector3(-0.3129f, -0.2695f, 0.1339f);
+                Arrow.transform.localRotation = Quaternion.Euler(19.113f, -419.504f, 113.551f);
                 //image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-260, -40, 0);
                 tide.GetComponent<TideTempTwo>().myX = 6.555146f;
                 tide.GetComponent<TideTempTwo>().myZ = 0.5730919f;
                 tide.GetComponent<TideTempTwo>().minY = 8 + (33.8688f / 90) * (12);
 
             }
+            Debug.Log(Arrow.transform.position);
+            Debug.Log(Arrow.transform.rotation);
         }
 
     }
