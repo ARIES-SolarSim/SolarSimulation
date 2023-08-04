@@ -16,7 +16,7 @@ public class dropdownmenu : MonoBehaviour
     {
         Debug.Log(index);
         PhotonView view = GetComponent<PhotonView>();
-        view.RPC("DropdownSample", RpcTarget.MasterClient, index);
+        view.RPC("DropdownSample", RpcTarget.All, index);
     }
 
     [PunRPC]
@@ -29,6 +29,9 @@ public class dropdownmenu : MonoBehaviour
         {
             if (index == 0)
             {
+
+
+
                 tide.GetComponent<TideTempTwo>().enabled = false;
                 tide.GetComponent<TideTempTwo>().enabled = true;
                 Arrow.transform.localPosition = new Vector3(0.16f, 0.391f, -0.06f);
