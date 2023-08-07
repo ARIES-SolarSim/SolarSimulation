@@ -6,10 +6,9 @@ using UnityEngine.UI;
 public class PlanetBuilderLock : MonoBehaviour
 {
     public static int amountOfObjects = 8;
-    private GameObject[] objectList = new GameObject[amountOfObjects+1];
+    private GameObject[] objectList = new GameObject[amountOfObjects + 1];
     private int lockState = 1;
     //public GameObject sliderObject;
-    public Slider slider;
     private PhotonView view;
     // Start is called before the first frame update
     void Start()
@@ -24,19 +23,19 @@ public class PlanetBuilderLock : MonoBehaviour
 
     }
 
-    public void SliderChangeValue()
+    public void DocentChangeValue(int lockIndex) { 
+        if (!LobbyManager.userType)
+            view.RPC("ChangeLock", RpcTarget.All, lockIndex);
+    } 
+
+    //Lock Index is 1 indexed 
+    public void ChangeLock(int lockIndex)
     {
-        int value = (int)slider.value;
-        if(!LobbyManager.userType)
-            view.RPC("ChangeLock", RpcTarget.All, value);
+        objectList[lockIndex].gameObject.GetComponent<Button>().interactable = (objectList[lockIndex].gameObject.GetComponent<Button>().interactable ^ true);
     }
 
-    public void LocalSliderChangeValue()
-    {
-        //ChangeLock((int)sliderObject.GetComponent<Slider>().value);
-        ChangeLock((int)slider.value);
-    }
 
+    /**
     public void ChangeLock(int newLockState)
     {
         if (newLockState == lockState)
@@ -65,5 +64,5 @@ public class PlanetBuilderLock : MonoBehaviour
             lockState = newLockState; //Update State
         }
     }
-
+    */
 }
