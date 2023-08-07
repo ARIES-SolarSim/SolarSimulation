@@ -54,7 +54,7 @@ public class UniverseController : MonoBehaviour
         if (isPlanetBuilder)
         {
             timeStep = 0.0002f;
-            orbitScale = 16; //Scale to have first 4 planets to fill the space
+            orbitScale = 1.57481688176f; 
             planetScale = 10000;
             //FindObjectOfType<PlanetBuilderInterface>().pc.InitialPosition = FindObjectOfType<PlanetBuilderInterface>().getDistFromSun();
             foreach (PlanetController pc in Planets)

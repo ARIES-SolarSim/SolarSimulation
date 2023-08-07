@@ -38,23 +38,39 @@ public class PlanetBuilderInterface : MonoBehaviour
     public Material[] Rings; //4
     
     private float[] DayLength = new float[] { 1.946f, 0.973f, 0.4865f };
-
-    //Mass                                      Merc        Venus      Earth      10x Mars
-    private float[] MassOptions = new float[] { 1.3301176f, 4.171736f, 6.272128f, 6.6422288f };
-    //                                                                 6.272128f
+    
+    //Need to do next 4 Masses
+    //Mass                                      Merc        Venus      Earth      10x Mars  | Merc        Venus      Earth      10x Mars 
+    private float[] MassOptions = new float[] { 1.3301176f, 4.171736f, 6.272128f, 6.6422288f, 1.3301176f, 4.171736f, 6.272128f, 6.6422288f };
+    
+    //Need to do next 4 Velocities
     //Initial Velocity
-    private float[,] Velocity = new float[4, 3] 
+    private float[,] Velocity = new float[8, 3] 
     {
-        { 0.048f, 0.055f, 0.09f },
-        { 0.035f, 0.04f, 0.05f },
-        { 0.025f, 0.032f, 0.038f }, //0.032
+        { 0.048f, 0.055f, 0.090f },
+        { 0.035f, 0.040f, 0.050f },
+        { 0.025f, 0.032f, 0.038f },
+        { 0.021f, 0.027f, 0.028f },
+
+        { 0.048f, 0.055f, 0.090f },
+        { 0.035f, 0.040f, 0.050f },
+        { 0.025f, 0.032f, 0.038f },
         { 0.021f, 0.027f, 0.028f }
     };
-    //0.126470588
-    private Vector3[] DistFromSun = {new Vector3(0.041176471f, 0f, 0f), new Vector3(0.082352941f, 0f, 0f), new Vector3(0.126470588f, 0f, 0f), new Vector3(0.185294118f, 0f, 0f)};
+
+    //Need to do next 4 Distances
+    private Vector3[] DistFromSun = {new Vector3(0.041176471f, 0f, 0f),
+                                     new Vector3(0.082352941f, 0f, 0f), 
+                                     new Vector3(0.126470588f, 0f, 0f), 
+                                     new Vector3(0.185294118f, 0f, 0f),
+
+                                     new Vector3(0.041176471f, 0f, 0f),
+                                     new Vector3(0.082352941f, 0f, 0f),
+                                     new Vector3(0.126470588f, 0f, 0f),
+                                     new Vector3(0.185294118f, 0f, 0f)};
 
     private int[] Choices = new int[] { 1, 2, 1, 2, 2, 2, 3, 2 };
-    //Surface Type (1-2), Size (1-3), Element (1-3), Atmosphere (1-3), Rings (1-4), Day Length (1-3), Distance From Sun (1-4), Velocity (1-3)
+    //Surface Type (1-2), Size (1-3), Element (1-6), Atmosphere (1-3), Rings (1-4), Day Length (1-3), Distance From Sun (1-4), Velocity (1-3)
 
     public readonly int SURFACE_TYPE = 0;
     public readonly int SIZE = 1;
@@ -71,27 +87,40 @@ public class PlanetBuilderInterface : MonoBehaviour
         updateVisuals();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public Vector3 getDistFromSun()
     {
-        return DistFromSun[Choices[DIST_FROM_SUN] - 1];
+        if (Choices[SURFACE_TYPE] == 1) //Rocky
+        {
+            return DistFromSun[Choices[DIST_FROM_SUN] - 1];
+        }
+        else //Gas
+        {
+            return DistFromSun[Choices[DIST_FROM_SUN] - 1 + 4];
+        }
     }
 
     public float getVelocity()
     {
-        Debug.Log(DistFromSun[Choices[DIST_FROM_SUN] - 1].x + ", " + DistFromSun[Choices[DIST_FROM_SUN] - 1].y + ", " + DistFromSun[Choices[DIST_FROM_SUN] - 1].z);
-        Debug.Log(Velocity[Choices[DIST_FROM_SUN] - 1, Choices[VELOCITY] - 1]);
-        return Velocity[Choices[DIST_FROM_SUN] - 1, Choices[VELOCITY] - 1];
+        if (Choices[SURFACE_TYPE] == 1) //Rocky
+        {
+            return Velocity[Choices[DIST_FROM_SUN] - 1, Choices[VELOCITY] - 1];
+        }
+        else
+        {
+            return Velocity[Choices[DIST_FROM_SUN] - 1 + 4, Choices[VELOCITY] - 1];
+        }
     }
 
     public float getMass()
     {
-        return MassOptions[Choices[DIST_FROM_SUN] - 1];
+        if (Choices[SURFACE_TYPE] == 1) //Rocky
+        {
+            return MassOptions[Choices[DIST_FROM_SUN] - 1];
+        }
+        else
+        {
+            return MassOptions[Choices[DIST_FROM_SUN] - 1 + 4];
+        }
     }
 
     public void updateVisuals()
