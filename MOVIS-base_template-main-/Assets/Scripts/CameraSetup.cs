@@ -162,7 +162,7 @@ public class CameraSetup : MonoBehaviour
         {
             //Debug.Log("VIEW: " + view.view);
             //Debug.Log(FindObjectOfType<UniverseController>().begin);
-            if ((view.view != 4 && view.view != 6) || (view.view == 6 && UniverseController.hasStarted))
+            if ((view.view != 6) || (view.view == 6 && UniverseController.hasStarted))
             {
                 Vector3 newPosition = tracker.transform.position;
                 Quaternion newRotation = tracker.transform.rotation;
@@ -186,18 +186,9 @@ public class CameraSetup : MonoBehaviour
                 }
                 transform.position = camera.transform.position;
                 transform.rotation = camera.transform.rotation;
-                myCamera.orthographic = true;
-                myCamera.orthographicSize = 8;
-
-                if (view.view == 4)
-                {
-                    myCamera.orthographic = true;
-                    myCamera.orthographicSize = 8;
-                }
-                else
-                {
-                    myCamera.orthographic = false;
-                }
+                
+                myCamera.orthographic = false;
+                
 
                 if (view.view == 6 && !UniverseController.hasStarted)
                 {

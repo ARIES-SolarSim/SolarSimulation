@@ -10,8 +10,8 @@ public class TideTempTwo : MonoBehaviour
     //private RotateAround Moon;
     public float minY;
     public float maxY;
-    public float myX;
     public float myZ;
+    public float myX;
     public Camera cam;
     private MeshFilter m;
     private Mesh p;
@@ -48,14 +48,14 @@ public class TideTempTwo : MonoBehaviour
             float original_number2 = proxyMoon.transform.position.z;
             //float sun_number = proxySun.transform.position.x;
             //float sun_number2 = proxySun.transform.position.z;
-            float subtraction_factor = Mathf.PI - Mathf.Atan(myZ / myX);
+            float subtraction_factor = Mathf.PI - Mathf.Atan(myZ / transform.position.x);
             float newNum, newNum2;
 
             newNum = Mathf.Atan2(original_number2, original_number);
             //newNum2 = Mathf.Atan2(sun_number2, sun_number);
             float newY = ((Mathf.Cos(2 * newNum + subtraction_factor) + 1) / 2.0f) * (maxY - minY) + minY;
             //float newY2 = ((Mathf.Cos(12 * newNum2 + subtraction_factor) + 1) / 2.0f) * (sunmaxY - sunminY) + sunminY;
-            transform.localPosition = new Vector3(5, newY, 4.67f);
+            transform.localPosition = new Vector3(myX, newY, 4.67f);
             
         }
 
