@@ -43,8 +43,8 @@ public class dropdownmenu : MonoBehaviour
                 
                 //image.GetComponent<RectTransform>().anchoredPosition  = new Vector3(-420, -45, 0);
                 
-                tide1.GetComponent<TideTempTwo>().minY = 8 + (51.5072f / 90) * (12);
-                tide2.GetComponent<TideTempTwo>().minY = 8 + (51.5072f / 90) * (12);
+                tide1.GetComponent<TideTempTwo>().minY = (8 + (51.5072f / 90) * (12)) + 285;
+                tide2.GetComponent<TideTempTwo>().minY = 8 + (51.5072f / 90) * (12) + 285;
 
             }
             //Egypt
@@ -79,8 +79,8 @@ public class dropdownmenu : MonoBehaviour
                 
                 //image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-280, 40, 0);
                
-                tide1.GetComponent<TideTempTwo>().minY = 8 + (35.6762f / 90) * (12);
-                tide2.GetComponent<TideTempTwo>().minY = 8 + (35.6762f / 90) * (12);
+                tide1.GetComponent<TideTempTwo>().minY = 8 + (35.6762f / 90) * (12) + 285;
+                tide2.GetComponent<TideTempTwo>().minY = 8 + (35.6762f / 90) * (12) + 285;
 
             }
             //India
@@ -102,8 +102,8 @@ public class dropdownmenu : MonoBehaviour
                 
                 //image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-290, -85, 0);
                 
-                tide1.GetComponent<TideTempTwo>().minY = 8 + (8.5241f / 90) * (12);
-                tide2.GetComponent<TideTempTwo>().minY = 8 + (8.5241f / 90) * (12);
+                tide1.GetComponent<TideTempTwo>().minY = 8 + (8.5241f / 90) * (12) + 285;
+                tide2.GetComponent<TideTempTwo>().minY = 8 + (8.5241f / 90) * (12) + 285;
 
             }
             //North Pole
@@ -125,8 +125,8 @@ public class dropdownmenu : MonoBehaviour
                 
                 //image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-390, 20, 0);
                 
-                tide1.GetComponent<TideTempTwo>().minY = 8 + (90.00f / 90) * (12);
-                tide2.GetComponent<TideTempTwo>().minY = 8 + (90.00f / 90) * (12);
+                tide1.GetComponent<TideTempTwo>().minY = 8 + (90.00f / 90) * (12) + 285;
+                tide2.GetComponent<TideTempTwo>().minY = 8 + (90.00f / 90) * (12) + 285;
 
             }
             //Singapore
@@ -148,7 +148,8 @@ public class dropdownmenu : MonoBehaviour
                 
                 //image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-260, -40, 0);
                 
-                tide1.GetComponent<TideTempTwo>().minY = 8 + (1.3521f / 90) * (12);
+                tide1.GetComponent<TideTempTwo>().minY = 8 + (1.3521f / 90) * (12) + 285;
+                tide2.GetComponent<TideTempTwo>().minY = 8 + (1.3521f / 90) * (12) + 285;
 
             }
             //Miami
@@ -170,8 +171,8 @@ public class dropdownmenu : MonoBehaviour
                 
                 //image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-260, -40, 0);
               
-                tide1.GetComponent<TideTempTwo>().minY = 8 + (25.7617f / 90) * (12);
-                tide2.GetComponent<TideTempTwo>().minY = 8 + (25.7617f / 90) * (12);
+                tide1.GetComponent<TideTempTwo>().minY = 8 + (25.7617f / 90) * (12) + 285;
+                tide2.GetComponent<TideTempTwo>().minY = 8 + (25.7617f / 90) * (12) + 285;
 
             }
             //Virginia Beach
@@ -193,8 +194,8 @@ public class dropdownmenu : MonoBehaviour
                 
                 //image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-260, -40, 0);
                
-                tide1.GetComponent<TideTempTwo>().minY = 8 + (36.8516f / 90) * (12);
-                tide2.GetComponent<TideTempTwo>().minY = 8 + (36.8516f / 90) * (12);
+                tide1.GetComponent<TideTempTwo>().minY = 8 + (36.8516f / 90) * (12) + 285;
+                tide2.GetComponent<TideTempTwo>().minY = 8 + (36.8516f / 90) * (12) + 285;
 
             }
             //Barcelona
@@ -216,8 +217,8 @@ public class dropdownmenu : MonoBehaviour
                 
                 //image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-260, -40, 0);
                
-                tide1.GetComponent<TideTempTwo>().minY = 8 + (41.3874f / 90) * (12);
-                tide2.GetComponent<TideTempTwo>().minY = 8 + (41.3874f / 90) * (12);
+                tide1.GetComponent<TideTempTwo>().minY = 8 + (41.3874f / 90) * (12) + 285;
+                tide2.GetComponent<TideTempTwo>().minY = 8 + (41.3874f / 90) * (12) + 285;
 
             }
             //Sydney
@@ -239,8 +240,8 @@ public class dropdownmenu : MonoBehaviour
                 
                 //image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-260, -40, 0);
            
-                tide1.GetComponent<TideTempTwo>().minY = 8 + (33.8688f / 90) * (12);
-                tide2.GetComponent<TideTempTwo>().minY = 8 + (33.8688f / 90) * (12);
+                tide1.GetComponent<TideTempTwo>().minY = 8 + (33.8688f / 90) * (12) + 285;
+                tide2.GetComponent<TideTempTwo>().minY = 8 + (33.8688f / 90) * (12) + 285;
 
 
             }
