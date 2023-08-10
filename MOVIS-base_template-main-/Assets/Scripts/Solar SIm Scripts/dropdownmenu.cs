@@ -31,7 +31,8 @@ public class dropdownmenu : MonoBehaviour
             if (index == 0)
             {
 
-
+                Arrow.transform.localPosition = new Vector3(0.16f, 0.391f, -0.06f);
+                Arrow.transform.localRotation = Quaternion.Euler(-73.359f, 113.345f, -234.088f);
 
                 tide1.GetComponent<TideTempTwo>().enabled = false;
                 tide1.GetComponent<TideTempTwo>().enabled = true;
@@ -39,8 +40,7 @@ public class dropdownmenu : MonoBehaviour
                 tide2.GetComponent<TideTempTwo>().enabled = false;
                 tide2.GetComponent<TideTempTwo>().enabled = true;
 
-                Arrow.transform.localPosition = new Vector3(0.16f, 0.391f, -0.06f);
-                Arrow.transform.localRotation = Quaternion.Euler(-73.359f, 113.345f, -234.088f);
+                
                 //image.GetComponent<RectTransform>().anchoredPosition  = new Vector3(-420, -45, 0);
                 
                 tide1.GetComponent<TideTempTwo>().minY = 8 + (51.5072f / 90) * (12);
@@ -63,6 +63,10 @@ public class dropdownmenu : MonoBehaviour
             //Japan
             if (index == 1)
             {
+
+                Arrow.transform.localPosition = new Vector3(-0.241f, 0.206f, 0.382f);
+                Arrow.transform.localRotation = Quaternion.Euler(-19.648f, -28.411f, -100f);
+
                 Debug.Log("Japan");
                 tide1.GetComponent<TideTempTwo>().enabled = false;
                 tide1.GetComponent<TideTempTwo>().enabled = true;
@@ -71,8 +75,7 @@ public class dropdownmenu : MonoBehaviour
                 tide2.GetComponent<TideTempTwo>().enabled = true;
 
 
-                Arrow.transform.localPosition = new Vector3(-0.241f, 0.206f, 0.382f);
-                Arrow.transform.localRotation = Quaternion.Euler(-19.648f, -28.411f, -100f);
+               
                 
                 //image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-280, 40, 0);
                
@@ -83,6 +86,9 @@ public class dropdownmenu : MonoBehaviour
             //India
             if (index == 2)
             {
+                Arrow.transform.localPosition = new Vector3(0.07f, 0.168f, 0.413f);
+                Arrow.transform.localRotation = Quaternion.Euler(-15.226f, 11.595f, -104.036f);
+
                 Debug.Log("India");
                 //Destroy(tide.GetComponent<TideTempTwo>());
                 //tide.AddComponent<TideTempTwo>();
@@ -93,8 +99,7 @@ public class dropdownmenu : MonoBehaviour
                 tide2.GetComponent<TideTempTwo>().enabled = false;
                 tide2.GetComponent<TideTempTwo>().enabled = true;
 
-                Arrow.transform.localPosition = new Vector3(0.07f, 0.168f, 0.413f);
-                Arrow.transform.localRotation = Quaternion.Euler(-15.226f, 11.595f, -104.036f);
+                
                 //image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-290, -85, 0);
                 
                 tide1.GetComponent<TideTempTwo>().minY = 8 + (8.5241f / 90) * (12);
@@ -104,6 +109,9 @@ public class dropdownmenu : MonoBehaviour
             //North Pole
             if (index == 3)
             {
+                Arrow.transform.localPosition = new Vector3(-0.011f, 0.4347f, -0.0308f);
+                Arrow.transform.localRotation = Quaternion.Euler(-84.74f, 129.386f, -211.002f);
+
                 Debug.Log("North Pole");
                 //Destroy(tide.GetComponent<TideTempTwo>());
                 //tide.AddComponent<TideTempTwo>();
@@ -114,8 +122,7 @@ public class dropdownmenu : MonoBehaviour
                 tide2.GetComponent<TideTempTwo>().enabled = false;
                 tide2.GetComponent<TideTempTwo>().enabled = true;
 
-                Arrow.transform.localPosition = new Vector3(-0.011f, 0.4347f, -0.0308f);
-                Arrow.transform.localRotation = Quaternion.Euler(-84.74f, 129.386f, -211.002f);
+                
                 //image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-390, 20, 0);
                 
                 tide1.GetComponent<TideTempTwo>().minY = 8 + (90.00f / 90) * (12);
@@ -125,6 +132,9 @@ public class dropdownmenu : MonoBehaviour
             //Singapore
             if (index == 4)
             {
+                Arrow.transform.localPosition = new Vector3(-0.107f, 0.0148f, 0.4466f);
+                Arrow.transform.localRotation = Quaternion.Euler(-6.191f, -20.791f, -43f);
+
                 Debug.Log("Singapore");
                 //Destroy(tide.GetComponent<TideTempTwo>());
                 //tide.AddComponent<TideTempTwo>();
@@ -135,8 +145,7 @@ public class dropdownmenu : MonoBehaviour
                 tide2.GetComponent<TideTempTwo>().enabled = false;
                 tide2.GetComponent<TideTempTwo>().enabled = true;
 
-                Arrow.transform.localPosition = new Vector3(-0.107f, 0.0148f, 0.4466f);
-                Arrow.transform.localRotation = Quaternion.Euler(-6.191f, -20.791f, -43f);
+                
                 //image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-260, -40, 0);
                 
                 tide1.GetComponent<TideTempTwo>().minY = 8 + (1.3521f / 90) * (12);
@@ -145,6 +154,9 @@ public class dropdownmenu : MonoBehaviour
             //Miami
             if (index == 5)
             {
+                Arrow.transform.localPosition = new Vector3(0.071f, 0.2135f, -0.3951f);
+                Arrow.transform.localRotation = Quaternion.Euler(-25.272f, -190.961f, 44.095f);
+
                 Debug.Log("Miami");
                 //Destroy(tide.GetComponent<TideTempTwo>());
                 //tide.AddComponent<TideTempTwo>();
@@ -155,8 +167,7 @@ public class dropdownmenu : MonoBehaviour
                 tide2.GetComponent<TideTempTwo>().enabled = false;
                 tide2.GetComponent<TideTempTwo>().enabled = true;
 
-                Arrow.transform.localPosition = new Vector3(0.071f, 0.2135f, -0.3951f);
-                Arrow.transform.localRotation = Quaternion.Euler(-25.272f, -190.961f, 44.095f);
+                
                 //image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-260, -40, 0);
               
                 tide1.GetComponent<TideTempTwo>().minY = 8 + (25.7617f / 90) * (12);
@@ -166,6 +177,9 @@ public class dropdownmenu : MonoBehaviour
             //Virginia Beach
             if (index == 6)
             {
+                Arrow.transform.localPosition = new Vector3(0.0811f, 0.3114f, -0.3459f);
+                Arrow.transform.localRotation = Quaternion.Euler(-27.68f, -193.621f, 45.282f);
+
                 Debug.Log("Virginia Beach");
                 //Destroy(tide.GetComponent<TideTempTwo>());
                 //tide.AddComponent<TideTempTwo>();
@@ -176,8 +190,7 @@ public class dropdownmenu : MonoBehaviour
                 tide2.GetComponent<TideTempTwo>().enabled = false;
                 tide2.GetComponent<TideTempTwo>().enabled = true;
 
-                Arrow.transform.localPosition = new Vector3(0.0811f, 0.3114f, -0.3459f);
-                Arrow.transform.localRotation = Quaternion.Euler(-27.68f, -193.621f, 45.282f);
+                
                 //image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-260, -40, 0);
                
                 tide1.GetComponent<TideTempTwo>().minY = 8 + (36.8516f / 90) * (12);
@@ -187,6 +200,9 @@ public class dropdownmenu : MonoBehaviour
             //Barcelona
             if (index == 7)
             {
+                Arrow.transform.localPosition = new Vector3(0.309f, 0.34f, -0.003f);
+                Arrow.transform.localRotation = Quaternion.Euler(-20.582f, -283.212f, 114.958f);
+
                 Debug.Log("Barcelona");
                 //Destroy(tide.GetComponent<TideTempTwo>());
                 //tide.AddComponent<TideTempTwo>();
@@ -197,8 +213,7 @@ public class dropdownmenu : MonoBehaviour
                 tide2.GetComponent<TideTempTwo>().enabled = false;
                 tide2.GetComponent<TideTempTwo>().enabled = true;
 
-                Arrow.transform.localPosition = new Vector3(0.309f, 0.34f, -0.003f);
-                Arrow.transform.localRotation = Quaternion.Euler(-20.582f, -283.212f, 114.958f);
+                
                 //image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-260, -40, 0);
                
                 tide1.GetComponent<TideTempTwo>().minY = 8 + (41.3874f / 90) * (12);
@@ -208,6 +223,9 @@ public class dropdownmenu : MonoBehaviour
             //Sydney
             if (index == 8)
             {
+                Arrow.transform.localPosition = new Vector3(-0.3129f, -0.2695f, 0.1339f);
+                Arrow.transform.localRotation = Quaternion.Euler(19.113f, -419.504f, 113.551f);
+
                 Debug.Log("Sydney");
                 //Destroy(tide.GetComponent<TideTempTwo>());
                 //tide.AddComponent<TideTempTwo>();
@@ -218,8 +236,7 @@ public class dropdownmenu : MonoBehaviour
                 tide2.GetComponent<TideTempTwo>().enabled = false;
                 tide2.GetComponent<TideTempTwo>().enabled = true;
 
-                Arrow.transform.localPosition = new Vector3(-0.3129f, -0.2695f, 0.1339f);
-                Arrow.transform.localRotation = Quaternion.Euler(19.113f, -419.504f, 113.551f);
+                
                 //image.GetComponent<RectTransform>().anchoredPosition = new Vector3(-260, -40, 0);
            
                 tide1.GetComponent<TideTempTwo>().minY = 8 + (33.8688f / 90) * (12);
