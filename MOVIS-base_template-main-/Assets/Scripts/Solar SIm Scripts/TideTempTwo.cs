@@ -19,7 +19,7 @@ public class TideTempTwo : MonoBehaviour
     public GameObject drop;
     //public float sunminY;
     //public float sunmaxY;
-    public GameObject proxyMoon;
+    private GameObject proxyMoon;
     //public GameObject proxySun;
 
     private void Start()
