@@ -13,6 +13,7 @@ TagManager:
   - SceneCamera
   - view
   - playerCanvas
+  - planet
   layers:
   - Default
   - TransparentFX

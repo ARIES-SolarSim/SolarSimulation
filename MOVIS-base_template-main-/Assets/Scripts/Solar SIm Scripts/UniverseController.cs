@@ -87,6 +87,7 @@ public class UniverseController : MonoBehaviour
         {
             startFunctionality();
         }
+
         if(ViewTypeObserver.tempVal == 5) //Is trivia mode
         {
             Debug.Log("Trivia Mode Auto-run");

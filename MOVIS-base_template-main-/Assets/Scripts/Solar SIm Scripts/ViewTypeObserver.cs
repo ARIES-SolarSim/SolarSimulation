@@ -51,7 +51,7 @@ public class ViewTypeObserver : MonoBehaviour
 
     public static TrailRenderer[] trails;
     
-    private static string[] levelNames = { "Lobby", "Room1", "Room1", "Room2", "Room3", "Room1", "Room4" }; // names of each scene, in order (update as we add more)
+    private static string[] levelNames = { "Lobby", "Room1", "Room1", "Room2", "Room3", "Room5", "Room4" }; // names of each scene, in order (update as we add more)
 
     private void Start()
     {
@@ -260,8 +260,26 @@ public class ViewTypeObserver : MonoBehaviour
             }
             else if (y == 5) //Trivia -- NEW AND MIGHT BREAK 
             {
+                
+                steps = -1;
+                transform.localPosition = Vector3.zero;
+                LobbyManager.room1 = false;
+                LobbyManager.room = 5;
+                targetViewType = 5;
+                view = 5;
+                currentViewType = 5;
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PhotonView view = GetComponent<PhotonView>();
+
+                    view.RPC("LoadingSomeLevel", RpcTarget.All, levelNames[5]);
 
 
+                }
+                
+                
+                /*
+                
                 // If not in room 1, go to it, then immediately toggle to view 2
                 // (does not work because new scene reloads everything. May need a separate
                 // scene for going directly into view 2, but don't worry about that right now)
@@ -272,7 +290,7 @@ public class ViewTypeObserver : MonoBehaviour
                     {
 
                         PhotonView view = GetComponent<PhotonView>();
-                        view.RPC("LoadingSomeLevel", RpcTarget.All, levelNames[1]);
+                        view.RPC("LoadingSomeLevel", RpcTarget.All, levelNames[5]);
                         targetViewType = 5;
 
                     }
@@ -294,6 +312,7 @@ public class ViewTypeObserver : MonoBehaviour
 
                 }
                 LobbyManager.room1 = true;
+                */
                
             }
             else if (y == 6) //Planet Builder -- NEW AND MIGHT BREAK 
@@ -341,7 +360,7 @@ public class ViewTypeObserver : MonoBehaviour
         }
       
         // Transitions between view 1, view 2, and view 6
-        if (LobbyManager.room == 1 || LobbyManager.room == 2 || LobbyManager.room == 5)
+        if (LobbyManager.room == 1 || LobbyManager.room == 2)
         {
 
             if (steps > -1)
