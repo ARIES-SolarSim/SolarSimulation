@@ -161,8 +161,9 @@ public class PlanetBuilderInterface : MonoBehaviour
     }
 
     public void UpdateSize()
-    {
-        Choices[SIZE] = (int)(Mathf.Round(sizeSliderUI.value));
+    { //Temporary, limits the size range. Should be chanegd to a slider-like value range.
+        int val = (int)(Mathf.Round(sizeSliderUI.value));
+        Choices[SIZE] = (val > 3) ? 3 : val;
         Debug.Log(sizeSliderUI.value);
     }
 }
