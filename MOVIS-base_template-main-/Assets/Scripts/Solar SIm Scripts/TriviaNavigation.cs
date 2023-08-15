@@ -1,15 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class TriviaNavigation : MonoBehaviour
 {
-
+    private Vector3 Origin;
+    private Vector3 Destination;
     private GameObject[] planets;
+    public Button ScatterButton;
+    public int planetId;
     // Start is called before the first frame update
     void Start()
     {
         planets = GameObject.FindGameObjectsWithTag("planet");
+
+        if(!LobbyManager.userType || PhotonNetwork.NickName == "9")
+        {
+            ScatterButton.gameObject.SetActive(true);
+        }
     }
 
     // Update is called once per frame
@@ -20,48 +31,125 @@ public class TriviaNavigation : MonoBehaviour
 
     public void Scatter()
     {
+        
         Debug.Log("IN SCATTER");
-        for (int i = 0; i < planets.Length; i++)
-        {
-            if (i == 0)
+            if (planetId == 0)
             {
-                planets[i].transform.localPosition = new Vector3(0, 0, 0);
+                Origin = transform.position;
+                Destination = new Vector3(0, 0, 0);
+
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PhotonView view = GetComponent<PhotonView>();
+                    view.RPC("moveObject", RpcTarget.All, Origin, Destination);
+                }
 
             }
-            else if(i == 1)
+            else if(planetId == 1)
             {
-                planets[i].transform.localPosition = new Vector3(0.5166248f, 0.04224792f, 0.4812764f);
+                Origin = transform.position;
+                Destination = new Vector3(0.7072551f, 0.05784007f, 0.05060094f);
+
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PhotonView view = GetComponent<PhotonView>();
+                    view.RPC("moveObject", RpcTarget.All, Origin, Destination);
+                }
             }
-            else if (i == 2)
+            else if (planetId == 2)
             {
-                planets[i].transform.localPosition = new Vector3(-0.4128868f, -0.007746019f, -0.9266148f);
+                Origin = transform.position;
+                Destination = new Vector3(0.0752404f, 0.001417816f, -1.011935f);
+
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PhotonView view = GetComponent<PhotonView>();
+                    view.RPC("moveObject", RpcTarget.All, Origin, Destination);
+                }
             }
-            else if (i == 3)
+            else if (planetId == 3)
             {
-                planets[i].transform.localPosition = new Vector3(-1.121581f, 0.04553582f, 0.08777341f);
+                Origin = transform.position;
+                Destination = new Vector3(-0.24499f, 0.009951003f, 1.403397f);
+
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PhotonView view = GetComponent<PhotonView>();
+                    view.RPC("moveObject", RpcTarget.All, Origin, Destination);
+                }
             }
-            else if (i == 4)
+            else if (planetId == 4)
             {
-                planets[i].transform.localPosition = new Vector3(0.08973803f, -0.000822f, 1.822217f);
+                Origin = transform.position;
+                Destination = new Vector3(-1.816775f, 0.01664971f, 0.09624183f);
+
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PhotonView view = GetComponent<PhotonView>();
+                    view.RPC("moveObject", RpcTarget.All, Origin, Destination);
+                }
 
             }
-            else if (i == 5)
+            else if (planetId == 5)
             {
-                planets[i].transform.localPosition = new Vector3(1.956572f, -0.03500602f, 1.624338f);
+                Origin = transform.position;
+                Destination = new Vector3(1.61201f, -0.02882987f, -1.972728f);
+
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PhotonView view = GetComponent<PhotonView>();
+                    view.RPC("moveObject", RpcTarget.All, Origin, Destination);
+                }
 
             }
-            else if (i == 6)
+            else if (planetId == 6)
             {
+                Origin = transform.position;
+                Destination = new Vector3(-1.83732f, -0.005745246f, 2.609222f);
 
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PhotonView view = GetComponent<PhotonView>();
+                    view.RPC("moveObject", RpcTarget.All, Origin, Destination);
+                }
             }
-            else if (i == 7)
+            else if (planetId == 7)
             {
+                Origin = transform.position;
+                Destination = new Vector3(2.713179f, -0.07243448f, 2.615502f);
 
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PhotonView view = GetComponent<PhotonView>();
+                    view.RPC("moveObject", RpcTarget.All, Origin, Destination);
+                }
             }
             else
             {
+                Origin = transform.position;
+                Destination = new Vector3(4.267019f, -0.0390997f, 0.003761596f);
 
+                if (PhotonNetwork.IsMasterClient)
+                {
+                    PhotonView view = GetComponent<PhotonView>();
+                    view.RPC("moveObject", RpcTarget.All, Origin, Destination);
+                }
             }
+        
+    }
+
+    
+    [PunRPC]
+    public IEnumerator moveObject(Vector3 Origin, Vector3 Destination)
+    {
+        float totalMovementTime = 5f;
+
+        float currentMovementTime = 0f;
+
+        while(Vector3.Distance(transform.localPosition, Destination) > 0){
+            currentMovementTime += Time.deltaTime;
+            transform.localPosition = Vector3.Lerp(Origin, Destination, currentMovementTime / totalMovementTime);
+            yield return null;
         }
     }
 }
