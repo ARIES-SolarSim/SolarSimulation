@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class MoonOrbitTest2 : MonoBehaviour
 {
@@ -10,6 +11,13 @@ public class MoonOrbitTest2 : MonoBehaviour
     public float orbitSpeed;
     public float rotationSpeed;
     public float tiltAngle;
+
+    
+    public ViewTypeObserver trailObserver;
+    public float trailTime;
+    public TrailRenderer tr;
+    private bool hasClearedTrail = false;
+    
 
     private float currentOrbitAngle = 0f;
     private float currentRotationAngle = 0f;
@@ -42,6 +50,22 @@ public class MoonOrbitTest2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+        PhotonView view = GetComponent<PhotonView>();
+
+
+        if (trailObserver.transform.localPosition.z == 1 && !hasClearedTrail)
+        {
+            view.RPC("ClearTrail", RpcTarget.All);
+            hasClearedTrail = true;
+        }
+        else if (trailObserver.transform.localPosition.z == 0 && hasClearedTrail)
+        {
+            view.RPC("StartTrail", RpcTarget.All);
+            hasClearedTrail = false;
+        }
+        
+
         //orbitSpeed = UniverseController.orbitSpeedK / 10f * maxOrbitSpeed;
         if (!LobbyManager.userType)
         {
@@ -90,4 +114,18 @@ public class MoonOrbitTest2 : MonoBehaviour
             //transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
         }
     }
+
+    
+
+    [PunRPC]
+    public void ClearTrail()
+    {
+        tr.time = 0;
+    }
+    [PunRPC]
+    public void StartTrail()
+    {
+        tr.time = trailTime;
+    }
+    
 }
