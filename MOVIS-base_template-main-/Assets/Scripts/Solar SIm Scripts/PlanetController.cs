@@ -48,6 +48,7 @@ public class PlanetController : MonoBehaviour
         {
             InitialPosition = GetComponent<PlanetBuilderInterface>().getDistFromSun();
             InitialVelocity = new Vector3(0f, 0f, GetComponent<PlanetBuilderInterface>().getVelocity());
+            privateOrbitScale = GetComponent<PlanetBuilderInterface>().getOrbitScale();
             mass = GetComponent<PlanetBuilderInterface>().getMass();
         }
         else
@@ -178,7 +179,7 @@ public class PlanetController : MonoBehaviour
         }
         else if(ID == 10)
         {
-            mesh.transform.localScale = Vector3.one * diameter * 10000;
+            mesh.transform.localScale = Vector3.one * diameter * UniverseController.planetScale; //Used to be * 10000
         }
         else
         {

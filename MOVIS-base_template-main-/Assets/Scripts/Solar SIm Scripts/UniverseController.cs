@@ -53,9 +53,6 @@ public class UniverseController : MonoBehaviour
         Bodies = new VirtualController[Planets.Length]; //Creates a list for all the virtual controllers
         if (isPlanetBuilder)
         {
-            timeStep = 0.0002f;
-            orbitScale = 1.57481688176f; 
-            planetScale = 10000;
             //FindObjectOfType<PlanetBuilderInterface>().pc.InitialPosition = FindObjectOfType<PlanetBuilderInterface>().getDistFromSun();
             foreach (PlanetController pc in Planets)
             {
@@ -94,6 +91,17 @@ public class UniverseController : MonoBehaviour
             for(int i = 0;i < 20000; i ++)
             {
                 move();
+            }
+        }
+        if(isPlanetBuilder)
+        {
+            timeStep = 0.0002f;
+            orbitScale = 2.1f;
+            planetScale = 5000;
+            foreach (PlanetController pc in FindObjectsOfType<PlanetController>())
+            {
+                if (pc.ID == 10)
+                    pc.updateScale();
             }
         }
     }
@@ -179,6 +187,17 @@ public class UniverseController : MonoBehaviour
         foreach (PlanetController pc in Planets)
         {
             pc.resetLocation();
+        }
+        if (isPlanetBuilder)
+        {
+            timeStep = 0.0002f;
+            orbitScale = 2.1f;
+            planetScale = 5000;
+            foreach (PlanetController pc in FindObjectsOfType<PlanetController>())
+            {
+                if (pc.ID == 10)
+                    pc.updateScale();
+            }
         }
     }
 
