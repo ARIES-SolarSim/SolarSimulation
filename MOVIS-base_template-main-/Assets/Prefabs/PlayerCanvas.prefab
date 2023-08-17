@@ -1932,7 +1932,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4627198015207730048}
   m_Layer: 0
-  m_Name: Placeholder(FixesOffBy1ErrorDoNotMoveTY)
+  m_Name: Placeholder(DoNotMove)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5974,7 +5974,7 @@ GameObject:
   - component: {fileID: 271046184015751401}
   - component: {fileID: 2778368872398957217}
   m_Layer: 0
-  m_Name: Placeholder(FixesOffBy1ErrorDoNotMoveTY)
+  m_Name: Placeholder(DoNotMove)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7361,7 +7361,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8231466917688549920}
   m_Layer: 0
-  m_Name: Planet Type
+  m_Name: PlanetType
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10783,7 +10783,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 1a38044e04409d34993ee006e340bae6, type: 3}
-    m_FontSize: 19
+    m_FontSize: 18
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
