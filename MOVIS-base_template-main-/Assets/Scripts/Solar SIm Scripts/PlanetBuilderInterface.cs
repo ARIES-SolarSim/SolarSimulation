@@ -1,4 +1,4 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,7 +25,7 @@ public class PlanetBuilderInterface : MonoBehaviour
     public GameObject RingObject;
     public PlanetController pc;
 
-    private float[] Diameter = new float[] { 6.880739e-06f, 0.910831e-05f, 1.176055e-05f };
+    private float[] Diameter = new float[] { 6.880739e-06f, 4.176055e-05f };
 
     //Elements
     public Material[] ElementsRocky;
@@ -52,10 +52,10 @@ public class PlanetBuilderInterface : MonoBehaviour
         { 0.025f, 0.032f, 0.038f },
         { 0.021f, 0.027f, 0.028f },
 
-        { 0.048f, 0.0231f, 0.090f },
-        { 0.035f, 0.0181f, 0.050f },
-        { 0.025f, 0.0131f, 0.038f },
-        { 0.021f, 0.0101f, 0.028f }
+        { 0.018f, 0.0231f, 0.0283f },
+        { 0.013f, 0.0181f, 0.021f },
+        { 0.010f, 0.0131f, 0.016f },
+        { 0.008f, 0.0101f, 0.012f }
     };
 
     //Need to do next 4 Distances
@@ -85,6 +85,7 @@ public class PlanetBuilderInterface : MonoBehaviour
     void Start()
     {
         updateVisuals();
+        UpdateSize();
     }
 
     public Vector3 getDistFromSun()
@@ -145,12 +146,10 @@ public class PlanetBuilderInterface : MonoBehaviour
             Mesh.GetComponent<MeshRenderer>().material = ElementsGas[Choices[ELEMENT] - 1];
         }
 
-        pc.diameter = Diameter[Choices[SIZE] - 1];
-        pc.updateScale();
-
         Color temp = Atmospheres[Choices[ATMOSPHERE] - 1];
         temp.a = (float)(Mathf.Round(atmosphereUI.value)) / 255;
         MeshAtmosphere.GetComponent<MeshRenderer>().material.color = temp;
+        Debug.Log(temp.r + ", " + temp.g + ", " + temp.b + ", " + temp.a);
 
         RingObject.GetComponent<MeshRenderer>().material = Rings[Choices[RINGS] - 1];
 
@@ -172,9 +171,10 @@ public class PlanetBuilderInterface : MonoBehaviour
     }
 
     public void UpdateSize()
-    { //Temporary, limits the size range. Should be chanegd to a slider-like value range.
-        int val = (int)(Mathf.Round(sizeSliderUI.value));
-        Choices[SIZE] = (val > 3) ? 3 : val;
+    {   //0 - 255
+        float val = sizeSliderUI.value / 255f * (Diameter[1] - Diameter[0]) + Diameter[0];
         Debug.Log(sizeSliderUI.value);
+        pc.diameter = val;
+        pc.updateScale();
     }
 }
