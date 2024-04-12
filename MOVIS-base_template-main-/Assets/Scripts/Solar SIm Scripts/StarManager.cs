@@ -12,7 +12,7 @@ public class StarManager : MonoBehaviour
     {
         for (int i = 0; i < starCount; i++)
         {
-            float rRadius = Random.Range(20f, 50f);
+            float rRadius = Random.Range(10f, 200f);
             float rPhi = Random.Range(0, Mathf.PI / 2f);
             float rAngle = Random.Range(0, 2 * Mathf.PI);
 
@@ -20,7 +20,7 @@ public class StarManager : MonoBehaviour
             float y = rRadius * Mathf.Sin(rPhi);
             float z = rRadius * Mathf.Cos(rPhi) * Mathf.Sin(rAngle);
 
-            float rScale = Random.Range(0.05f, 0.3f);
+            float rScale = Random.Range(0.01f, 0.1f);
 
             GameObject star = Instantiate(starPrefab, this.transform);
             star.transform.localPosition = new Vector3(x, y, z);

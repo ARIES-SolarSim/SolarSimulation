@@ -16,6 +16,7 @@ public class MeshScaler : MonoBehaviour
     public TrailRenderer tr;
 
     private bool hasClearedTrail = false;
+    public bool isOnPC;
 
     // Start is called before the first frame update
     void Start()
@@ -42,25 +43,32 @@ public class MeshScaler : MonoBehaviour
 
         else
         {
-            
-            if (FindObjectOfType<ViewTypeObserver>().transform.localPosition.z == 1 && !hasClearedTrail)
+            //PC TODO
+            if(isOnPC)
             {
-                
-                if (!LobbyManager.userType)
-                {
-                    view2.RPC("ClearTrail", RpcTarget.All);
-                    hasClearedTrail = true;
-                }
-
+                //TODO
             }
-            else if (FindObjectOfType<ViewTypeObserver>().transform.localPosition.z == 0 && hasClearedTrail)
+            else
             {
-                if (!LobbyManager.userType)
+                if (FindObjectOfType<ViewTypeObserver>().transform.localPosition.z == 1 && !hasClearedTrail)
                 {
-                    view2.RPC("StartTrail", RpcTarget.All);
-                    hasClearedTrail = false;
+
+                    if (!LobbyManager.userType)
+                    {
+                        view2.RPC("ClearTrail", RpcTarget.All);
+                        hasClearedTrail = true;
+                    }
+
                 }
-                
+                else if (FindObjectOfType<ViewTypeObserver>().transform.localPosition.z == 0 && hasClearedTrail)
+                {
+                    if (!LobbyManager.userType)
+                    {
+                        view2.RPC("StartTrail", RpcTarget.All);
+                        hasClearedTrail = false;
+                    }
+
+                }
             }
         }
         

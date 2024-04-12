@@ -33,7 +33,7 @@ public class MoonOrbitTest2 : MonoBehaviour
         // Calculate the new position on the elliptical orbit
         if (LobbyManager.room == 1)
         {
-            Debug.Log("we are entering lobby manager if statement");
+            //Debug.Log("we are entering lobby manager if statement");
             tiltAngle = 0;
             x = center.position.x + (semiMajorAxis * 0.01f) * Mathf.Cos(0);
             z = center.position.z + (semiMinorAxis * 0.01f) * Mathf.Sin(0);

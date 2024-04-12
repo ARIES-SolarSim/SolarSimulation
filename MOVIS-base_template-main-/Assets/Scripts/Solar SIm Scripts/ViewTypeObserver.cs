@@ -53,6 +53,8 @@ public class ViewTypeObserver : MonoBehaviour
     
     private static string[] levelNames = { "Lobby", "Room1", "Room1", "Room2", "Room3", "Room5", "Room4" }; // names of each scene, in order (update as we add more)
 
+    public bool isOnPc;
+
     private void Start()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
@@ -98,6 +100,10 @@ public class ViewTypeObserver : MonoBehaviour
 
     void Update()
     {
+        if(isOnPc)
+        {
+
+        }
         if (targetViewType != 0)
         {
             tempVal = targetViewType;
