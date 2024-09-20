@@ -15,6 +15,7 @@ public class playerMovement : MonoBehaviour
     public KeyCode downKey;
     public KeyCode hideGroundPlane;
     public GameObject groundPlane;
+    public GameObject bigEarth;
     public float hideDuration;
     public float maxDistance;
     public float fallOffDist;
@@ -29,21 +30,23 @@ public class playerMovement : MonoBehaviour
 
     public float drag;
 
-    private Material mat;
     private bool isFadingOut = true;
     private float startAlpha;
-    // Start is called before the first frame update
 
-    public bool doesGroundPlaneExist;
+    public int sceneID;
 
-    public float mouseSpeedCoef;
+    Material groundPlaneMaterial;
 
     void Start()
     {
-        if (doesGroundPlaneExist)
+        if (sceneID == 1)
         {
-            mat = groundPlane.GetComponent<Renderer>().material;
-            startAlpha = mat.color.a;
+            groundPlaneMaterial = groundPlane.GetComponent<Renderer>().material;
+            startAlpha = groundPlaneMaterial.color.a;
+        }
+        else if(sceneID == 2)
+        {
+            startAlpha = bigEarth.GetComponent<Renderer>().material.color.a;
         }
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
@@ -53,9 +56,25 @@ public class playerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Mouse rotation
         float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
         float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
-        if(Input.GetKey(upKey))
+
+        // Update rotation based on mouse movement
+        yRot += mouseX;
+        xRot -= mouseY;
+        xRot = Mathf.Clamp(xRot, -90f, 90f);
+
+        // Apply rotation to player object and orientation
+        transform.rotation = Quaternion.Euler(xRot, yRot, 0);
+        orientation.rotation = Quaternion.Euler(0, yRot, 0);
+
+        // Movement input
+        hInput = Input.GetAxisRaw("Horizontal");
+        vInput = Input.GetAxisRaw("Vertical");
+
+        // Elevation input (Q/E for up/down)
+        if (Input.GetKey(upKey))
         {
             zInput++;
         }
@@ -63,68 +82,62 @@ public class playerMovement : MonoBehaviour
         {
             zInput--;
         }
-        if(Input.GetKeyDown(hideGroundPlane))
+        if (Input.GetKeyDown(hideGroundPlane))
         {
-            ToggleFade();
+            if (sceneID == 1)
+                ToggleFade(groundPlaneMaterial);
+            else if (sceneID == 2)
+                ToggleFade(bigEarth.GetComponent<Renderer>().material);
+                
         }
 
-        yRot += mouseX;
-        xRot -= mouseY;
-        xRot = Mathf.Clamp(xRot, -90f, 90f);
-        transform.rotation = Quaternion.Euler(xRot * mouseSpeedCoef, yRot * mouseSpeedCoef, 0);
-        orientation.rotation = Quaternion.Euler(0, yRot, 0);
+        // Move direction relative to player's current orientation
+        Vector3 moveDirection = orientation.forward * vInput + orientation.right * hInput + Vector3.up * zInput;
 
-        hInput = Input.GetAxisRaw("Horizontal");
-        vInput = Input.GetAxisRaw("Vertical");
-        moveDirection = orientation.forward * vInput + orientation.right * hInput + orientation.up * zInput;
-        //rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+        // Normalize the moveDirection so movement speed remains constant
+        moveDirection = moveDirection.normalized;
 
-        
+        // Handle movement based on distance to origin
         float distance = Vector3.Distance(transform.position, Vector3.zero);
-
-        // Calculate the dot product
         float dotProduct = Vector3.Dot(moveDirection.normalized, transform.position.normalized);
 
-        //Log.Debug(distance);
         if (distance < maxDistance)
         {
-            // Object is within 25 meters, apply your desired force
-            //Vector3 moveDirection = -transform.position;
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+            // Apply force when within range
+            rb.AddForce(moveDirection * moveSpeed * 10f, ForceMode.Force);
         }
         else
         {
-            //Debug.Log(dotProduct);
-            // Object is beyond 25 meters, apply force towards the origin
-            //Vector3 forceDirection = -transform.position; // Direction from object to origin
-            if(dotProduct > 0) //Moving Away
+            if (dotProduct > 0) // Moving away
             {
-                float t = Mathf.Clamp((Vector3.Distance(transform.position, Vector3.zero) - maxDistance) / fallOffDist, 1f, 0f);  // Normalize t to 0-1
-                rb.AddForce(moveDirection.normalized * moveSpeed * 10f * t, ForceMode.Force);
+                float t = Mathf.Clamp((Vector3.Distance(transform.position, Vector3.zero) - maxDistance) / fallOffDist, 1f, 0f);
+                rb.AddForce(moveDirection * moveSpeed * 10f * t, ForceMode.Force);
             }
-            else //Moving Back
+            else // Moving back towards origin
             {
-                rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+                rb.AddForce(moveDirection * moveSpeed * 10f, ForceMode.Force);
             }
         }
+
+        // Apply drag and reset zInput for the next frame
         rb.drag = drag;
         zInput = 0;
     }
 
-    public void ToggleFade()
+    public void ToggleFade(Material m)
     {
         if (isFadingOut)
         {
-            StartCoroutine(FadeOut());
+            StartCoroutine(FadeOut(m, groundPlane, sceneID != 2));
         }
         else
         {
-            StartCoroutine(FadeIn());
+            StartCoroutine(FadeIn(m, groundPlane, sceneID != 2));
         }
         isFadingOut = !isFadingOut;
     }
 
-    IEnumerator FadeOut()
+    IEnumerator FadeOut(Material m, GameObject gb, bool shouldSet)
     {
         float duration = hideDuration; // Duration in seconds
         float currentTime = 0f;
@@ -132,26 +145,28 @@ public class playerMovement : MonoBehaviour
         while (currentTime < duration)
         {
             float alpha = Mathf.Lerp(startAlpha, 0.0f, currentTime / duration);
-            mat.color = new Color(mat.color.r, mat.color.g, mat.color.b, alpha);
+            m.color = new Color(m.color.r, m.color.g, m.color.b, alpha);
             currentTime += Time.deltaTime;
             yield return null;
         }
-        groundPlane.SetActive(false);
+        if(shouldSet)
+            gb.SetActive(false);
     }
 
-    IEnumerator FadeIn()
+    IEnumerator FadeIn(Material m, GameObject gb, bool shouldSet)
     {
-        groundPlane.SetActive(true);
+        if(shouldSet)
+            gb.SetActive(true);
         float duration = hideDuration; // Duration in seconds
         float currentTime = 0f;
 
         while (currentTime < duration)
         {
             float alpha = Mathf.Lerp(0.0f, startAlpha, currentTime / duration);
-            mat.color = new Color(mat.color.r, mat.color.g, mat.color.b, alpha);
+            m.color = new Color(m.color.r, m.color.g, m.color.b, alpha);
             currentTime += Time.deltaTime;
             yield return null;
         }
-        mat.color = new Color(mat.color.r, mat.color.g, mat.color.b, startAlpha);
+        m.color = new Color(m.color.r, m.color.g, m.color.b, startAlpha);
     }
 }

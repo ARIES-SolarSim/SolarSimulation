@@ -302,45 +302,10 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents:
-  - {fileID: 29956715}
+  ObservedComponents: []
   sceneViewId: 8
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &29956715
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 29956713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 1
-  m_UseLocal: 1
---- !u!114 &29956716
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 29956713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9dcc6691ed084e84e8a9d44a62c9c20b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  center: {fileID: 1281706705}
-  semiMajorAxis: 6.6
-  semiMinorAxis: 5
-  orbitSpeed: 0.23
-  rotationSpeed: 0
-  tiltAngle: 5
 --- !u!54 &29956717
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -618,7 +583,6 @@ GameObject:
   m_Component:
   - component: {fileID: 169192564}
   - component: {fileID: 169192568}
-  - component: {fileID: 169192567}
   - component: {fileID: 169192566}
   - component: {fileID: 169192565}
   m_Layer: 0
@@ -667,22 +631,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa9823022d20bbe4da9e583b5533abab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &169192567
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 169192563}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 1
-  m_UseLocal: 1
 --- !u!114 &169192568
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -701,8 +649,7 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents:
-  - {fileID: 169192567}
+  ObservedComponents: []
   sceneViewId: 2
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -1365,22 +1312,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 595108582910594282, guid: 05dabf559e39499458dcdb8d51dcb345, type: 3}
   m_PrefabInstance: {fileID: 1281706704}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1281706707
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1281706706}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 1
-  m_UseLocal: 1
 --- !u!108 &1281706708
 Light:
   m_ObjectHideFlags: 0
@@ -1593,45 +1524,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   earth: {fileID: 1281706705}
   speed: 6.7
---- !u!114 &1378741425
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1378741423}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObservedComponentsFoldoutOpen: 1
-  Group: 0
-  prefixField: -1
-  Synchronization: 3
-  OwnershipTransfer: 0
-  observableSearch: 2
-  ObservedComponents:
-  - {fileID: 1378741426}
-  sceneViewId: 3
-  InstantiationId: 0
-  isRuntimeInstantiated: 0
---- !u!114 &1378741426
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1378741423}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 1
-  m_UseLocal: 1
 --- !u!54 &1378741427
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1701,24 +1593,40 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4160310320361253224, guid: f333ff0d416531545884d04ea0a6b50d, type: 3}
       propertyPath: sensX
-      value: 800
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 4160310320361253224, guid: f333ff0d416531545884d04ea0a6b50d, type: 3}
       propertyPath: sensY
-      value: 800
+      value: 220
       objectReference: {fileID: 0}
     - target: {fileID: 4160310320361253224, guid: f333ff0d416531545884d04ea0a6b50d, type: 3}
+      propertyPath: sceneID
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4160310320361253224, guid: f333ff0d416531545884d04ea0a6b50d, type: 3}
+      propertyPath: bigEarth
+      value: 
+      objectReference: {fileID: 1281706706}
+    - target: {fileID: 4160310320361253224, guid: f333ff0d416531545884d04ea0a6b50d, type: 3}
       propertyPath: moveSpeed
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4160310320361253224, guid: f333ff0d416531545884d04ea0a6b50d, type: 3}
       propertyPath: maxDistance
-      value: 0
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4160310320361253224, guid: f333ff0d416531545884d04ea0a6b50d, type: 3}
       propertyPath: orientation
       value: 
       objectReference: {fileID: 1965759326}
+    - target: {fileID: 4160310320361253224, guid: f333ff0d416531545884d04ea0a6b50d, type: 3}
+      propertyPath: mouseSpeedXCoef
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4160310320361253224, guid: f333ff0d416531545884d04ea0a6b50d, type: 3}
+      propertyPath: mouseSpeedYCoef
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4160310320361253224, guid: f333ff0d416531545884d04ea0a6b50d, type: 3}
       propertyPath: doesGroundPlaneExist
       value: 0
