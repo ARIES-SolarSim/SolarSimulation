@@ -56,6 +56,8 @@ public class ViewTypeObserver : MonoBehaviour
 
     public bool isOnPc;
 
+    public int pcTargetView = 0;
+
     private void Start()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
@@ -83,20 +85,26 @@ public class ViewTypeObserver : MonoBehaviour
             transform.localPosition = new Vector3(0, targetViewType, 1);
         }
 
-        if (PhotonNetwork.NickName == "9" || !LobbyManager.userType)
+        if(!isOnPc)
         {
+            if (PhotonNetwork.NickName == "9" || !LobbyManager.userType)
+            {
+                UICanvases.SetActive(true);
+            }
 
-            UICanvases.SetActive(true);
+
+            view = targetViewType;
+
+            if (PhotonNetwork.NickName != "9" && view == 6)
+            {
+                playerCanvas.SetActive(true);
+            }
         }
+    }
 
-
-        view = targetViewType;
-
-        if (PhotonNetwork.NickName != "9" && view == 6)
-        {
-            playerCanvas.SetActive(true);
-        }
-
+    public void setPCTargetView(int i)
+    {
+        pcTargetView = i;
     }
 
     void Update()
@@ -107,35 +115,155 @@ public class ViewTypeObserver : MonoBehaviour
         }
         if (isOnPc)
         {
-            if(Input.GetKeyDown(KeyCode.Alpha1))
+            if (pcTargetView != currentViewType)
             {
-                //View 1 (Scene 1)
-                SceneManager.LoadScene(levelNamesPC[1], LoadSceneMode.Single);
+                // Scene 1 has special cases
+                if (pcTargetView == 1)
+                {
+                    // If not in room 1, go to it
+                    if (!LobbyManager.room1)
+                    {
+                        PCLoadingSomeLevel(levelNamesPC[1]);
+                        LobbyManager.room1 = true;
+                    }
+
+                    // If in room 1, toggle viewtype
+                    else
+                    {
+                        if (LobbyManager.room < 3 || LobbyManager.room == 5)
+                        {
+                            LobbyManager.room = 1;
+                        }
+                        steps = 0;
+                        targetViewType = 1;
+                        transform.localPosition = new Vector3(1, 0, 0);
+                    }
+                }
+
+                // Scene 2 has special cases
+                else if (pcTargetView == 2)
+                {
+                    // If not in room 1, go to it, then immediately toggle to view 2
+                    // (does not work because new scene reloads everything. May need a separate
+                    // scene for going directly into view 2, but don't worry about that right now)
+                    if (!LobbyManager.room1)
+                    {
+                        PCLoadingSomeLevel(levelNamesPC[1]);
+                        targetViewType = 2;
+                    }
+                    // If in room 1, toggle
+                    else
+                    {
+                        if (LobbyManager.room == 1)
+                        {
+                            LobbyManager.room = 2;
+                        }
+                        steps = 0;
+                        targetViewType = 2;
+
+                        transform.localPosition = new Vector3(2, 0, 1);
+                    }
+                    LobbyManager.room1 = true;
+                }
+
+                // Scene 6 has special cases
+                else if (pcTargetView == 3)
+                {
+                    steps = -1;
+                    transform.localPosition = Vector3.zero;
+                    LobbyManager.room1 = false;
+                    LobbyManager.room = 3;
+                    targetViewType = 3;
+                    view = 3;
+                    currentViewType = 3;
+                    PCLoadingSomeLevel(levelNamesPC[3]);
+                }
+                else if (pcTargetView == 4)
+                {
+                    steps = -1;
+                    transform.localPosition = Vector3.zero;
+                    LobbyManager.room1 = false;
+                    LobbyManager.room = 4;
+                    targetViewType = 4;
+                    view = 4;
+                    currentViewType = 4;
+                    PCLoadingSomeLevel(levelNames[4]);
+                }
+                else if (pcTargetView == 5) //Trivia -- NEW AND MIGHT BREAK 
+                {
+                    steps = -1;
+                    transform.localPosition = Vector3.zero;
+                    LobbyManager.room1 = false;
+                    LobbyManager.room = 5;
+                    targetViewType = 5;
+                    view = 5;
+                    currentViewType = 5;
+                    PCLoadingSomeLevel(levelNamesPC[5]);
+                }
+                else if (pcTargetView == 6) //Planet Builder -- NEW AND MIGHT BREAK 
+                {
+                    steps = -1;
+                    transform.localPosition = Vector3.zero;
+                    LobbyManager.room1 = false;
+                    LobbyManager.room = 6;
+                    targetViewType = 6;
+                    view = 6;
+                    currentViewType = 6;
+                    PCLoadingSomeLevel(levelNamesPC[6]);
+                }
+                else
+                {
+                    currentViewType = pcTargetView;
+                    targetViewType = pcTargetView;
+                }
             }
-            if (Input.GetKeyDown(KeyCode.Alpha2))
+
+            // Transitions between view 1, view 2, and view 6
+            if (LobbyManager.room == 1 || LobbyManager.room == 2)
             {
-                //View 2 (Scene 1)
-                SceneManager.LoadScene(levelNamesPC[1], LoadSceneMode.Single);
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha3))
-            {
-                //View 3 (Scene 2)
-                SceneManager.LoadScene(levelNamesPC[3], LoadSceneMode.Single);
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha4))
-            {
-                //View 4 (Scene 3)
-                SceneManager.LoadScene(levelNamesPC[4], LoadSceneMode.Single);
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha5))
-            {
-                //View 5 (Scene 4)
-                SceneManager.LoadScene(levelNamesPC[6], LoadSceneMode.Single);
-            }
-            if (Input.GetKeyDown(KeyCode.Alpha6))
-            {
-                //View 6 (Scene 5)
-                SceneManager.LoadScene(levelNamesPC[5], LoadSceneMode.Single);
+                if (steps > -1)
+                {
+                    transform.localPosition = new Vector3(targetViewType, 0, 1);
+                    tempMoonScale.changing();
+                    UniverseController.orbiting = false;
+                    FindObjectOfType<UniverseController>().gameObject.transform.localEulerAngles = Vector3.zero; //May need to become 
+                    if (steps == 0)
+                    {
+                        FindObjectOfType<RotateScript>().changing = true;
+                        foreach (PlanetController pc in FindObjectsOfType<PlanetController>())
+                        {
+                            if (targetViewType == 5)
+                            {
+                                pc.changeViewType(3);
+                            }
+                            else
+                            {
+                                pc.changeViewType(targetViewType);
+                            }
+                        }
+                    }
+                    steps++;
+                }
+                if (steps == (UniverseController.changeDuration + UniverseController.accDuration))
+                {
+                    FindObjectOfType<RotateScript>().changing = false;
+                    MeshScaler.view = (MeshScaler.view == 1) ? 0 : 1;
+                    FindObjectOfType<RotateScript>().view = LobbyManager.room;
+                    steps = -1; //Finished view type transistion
+                    currentViewType = targetViewType;
+                    transform.localPosition = new Vector3(0, 0, 0);
+                    tempMoonScale.doneChanging();
+
+                    if (LobbyManager.room == 1)
+                    {
+                        FindObjectOfType<UniverseController>().ArrowToggle(true);
+                    }
+
+                    if (LobbyManager.room == 2)
+                    {
+                        FindObjectOfType<UniverseController>().ArrowToggle(false);
+                    }
+                }
             }
         }
         else
@@ -382,8 +510,15 @@ public class ViewTypeObserver : MonoBehaviour
     {
         if (pressedTwice & buttonNum == i)
         {
-            PhotonView view = GetComponent<PhotonView>();
-            view.RPC("changeScene", RpcTarget.MasterClient, i);
+            if (isOnPc)
+            {
+                changeScene(i);
+            }
+            else
+            {
+                PhotonView view = GetComponent<PhotonView>();
+                view.RPC("changeScene", RpcTarget.MasterClient, i);
+            }
         }
         else
         {
@@ -407,7 +542,7 @@ public class ViewTypeObserver : MonoBehaviour
     [PunRPC]
     private void changeScene(int i)
     {
-        PhotonView view = GetComponent<PhotonView>();
+        //PhotonView view = GetComponent<PhotonView>();
         // docentManager.GetComponent<DocentUI_Manager>().changeState((int)transform.localPosition.y, i);
         // Currently, DocentUI_Manager is unused, but if that changes, uncomment - Shane
         if (!LobbyManager.userType)
@@ -417,6 +552,83 @@ public class ViewTypeObserver : MonoBehaviour
                 transform.localPosition = new Vector3(0, i, 0);
             }
         }
+    }
+
+    //PC LoadLevel
+    [PunRPC]
+    IEnumerator PCLoadingSomeLevel(string sceneValue)
+    {
+        UICanvases.SetActive(false);
+        loaderCanvas.SetActive(true);
+        character = Random.Range(0, 3);
+        int factInt = Random.Range(0, 21);
+        fact.text = factList.FactList[factInt];
+
+        float progress = 0f;
+
+        while (progress < 1f)
+        {
+            progress += 0.5f * 0.01f;
+            if (character == 0)
+            {
+                rocket.enabled = false;
+                planet.enabled = false;
+                astronaut.enabled = true;
+
+                astronaut.rectTransform.localPosition = new Vector3(-375 + (progress * 721), 75f, 0);
+                progressBar.fillAmount = progress;
+
+                if (progress >= 0.9f)
+                {
+                    progressBar.fillAmount = 1;
+                    astronaut.rectTransform.localPosition = new Vector3(-375 + 721, 75f, 0);
+                }
+            }
+            else if (character == 1)
+            {
+                astronaut.enabled = false;
+                planet.enabled = false;
+                rocket.enabled = true;
+
+                rocket.rectTransform.localPosition = new Vector3(-320 + (progress * 721), 0, 0);
+                progressBar.fillAmount = progress;
+
+                if (progress >= 0.9f)
+                {
+                    progressBar.fillAmount = 1;
+                    rocket.rectTransform.localPosition = new Vector3(-320 + 721, 0, 0);
+                }
+            }
+            else if (character == 2)
+            {
+                astronaut.enabled = false;
+                rocket.enabled = false;
+                planet.enabled = true;
+
+                planet.rectTransform.localPosition = new Vector3(-300 + (progress * 721), 0, 0);
+                progressBar.fillAmount = progress;
+
+                if (progress >= 0.9f)
+                {
+                    progressBar.fillAmount = 1;
+                    planet.rectTransform.localPosition = new Vector3(-300 + 721, 0, 0);
+                }
+            }
+
+            if (progress < 0.9f)
+            {
+                if (!LobbyManager.userType)
+                {
+                    yield return new WaitForSeconds(.03f);
+                }
+                else
+                {
+                    yield return new WaitForSeconds(.001f);
+                }
+            }
+        }
+        PhotonNetwork.LoadLevel(sceneValue);
+        yield return new WaitForSeconds(2f);
     }
 
     [PunRPC]
