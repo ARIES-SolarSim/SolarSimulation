@@ -96,15 +96,31 @@ public class PlanetController : MonoBehaviour
         {
             if (ID != 0 && ID != 4 && (!LobbyManager.userType || (uc.isPlanetBuilder && LobbyManager.userType)))
             {
-                if (trailObserver.transform.localPosition.z == 1 && !hasClearedTrail)
+                if (trailObserver.isOnPc)
                 {
-                    view.RPC("ClearTrail", RpcTarget.All);
-                    hasClearedTrail = true;
+                    if (trailObserver.transform.localPosition.z == 1 && !hasClearedTrail)
+                    {
+                        tr.time = 0;
+                        hasClearedTrail = true;
+                    }
+                    else if (trailObserver.transform.localPosition.z == 0 && hasClearedTrail)
+                    {
+                        tr.time = trailTime;
+                        hasClearedTrail = false;
+                    }
                 }
-                else if(trailObserver.transform.localPosition.z == 0 && hasClearedTrail)
+                else
                 {
-                    view.RPC("StartTrail", RpcTarget.All);
-                    hasClearedTrail = false;
+                    if (trailObserver.transform.localPosition.z == 1 && !hasClearedTrail)
+                    {
+                        view.RPC("ClearTrail", RpcTarget.All);
+                        hasClearedTrail = true;
+                    }
+                    else if (trailObserver.transform.localPosition.z == 0 && hasClearedTrail)
+                    {
+                        view.RPC("StartTrail", RpcTarget.All);
+                        hasClearedTrail = false;
+                    }
                 }
             }
         }
@@ -125,16 +141,13 @@ public class PlanetController : MonoBehaviour
      */
     public void changeViewType(int ViewType)
     {
+        //Debug.Log("AHHHHH");
         UniverseController uc = FindObjectOfType<UniverseController>();
         PlanetData pd = GetComponentInParent<PlanetData>();
         float[][] changeMatrix = new float[2][];
         for (int i = 0; i < changeMatrix.Length; i++) //Sets up the changematrices
         {
             changeMatrix[i] = new float[UniverseController.changeDuration];
-        }
-        if (ID == 5)
-        {
-            //Debug.Log(pd.PlanetList[ID].Diameter[0] + " " + pd.PlanetList[ID].Diameter[1] + " " + ViewType);
         }
         for (int i = 0; i < UniverseController.changeDuration; i++)
         {

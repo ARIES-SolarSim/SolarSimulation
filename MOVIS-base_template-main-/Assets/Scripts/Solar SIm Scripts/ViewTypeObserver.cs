@@ -104,7 +104,15 @@ public class ViewTypeObserver : MonoBehaviour
 
     public void setPCTargetView(int i)
     {
-        pcTargetView = i;
+        if (pressedTwice & buttonNum == i)
+        {
+            pcTargetView = i;
+        }
+        else
+        {
+            buttonNum = i;
+            StartCoroutine(Check());
+        }
     }
 
     void Update()
@@ -134,8 +142,9 @@ public class ViewTypeObserver : MonoBehaviour
                         {
                             LobbyManager.room = 1;
                         }
+                        Debug.Log("Setting steps to 0 FIRST");
                         steps = 0;
-                        targetViewType = 1;
+                        currentViewType = 1;
                         transform.localPosition = new Vector3(1, 0, 0);
                     }
                 }
@@ -149,7 +158,7 @@ public class ViewTypeObserver : MonoBehaviour
                     if (!LobbyManager.room1)
                     {
                         PCLoadingSomeLevel(levelNamesPC[1]);
-                        targetViewType = 2;
+                        pcTargetView = 2;
                     }
                     // If in room 1, toggle
                     else
@@ -158,8 +167,9 @@ public class ViewTypeObserver : MonoBehaviour
                         {
                             LobbyManager.room = 2;
                         }
+                        Debug.Log("Setting steps to 0 SECOND");
                         steps = 0;
-                        targetViewType = 2;
+                        currentViewType = 2;
 
                         transform.localPosition = new Vector3(2, 0, 1);
                     }
@@ -169,44 +179,48 @@ public class ViewTypeObserver : MonoBehaviour
                 // Scene 6 has special cases
                 else if (pcTargetView == 3)
                 {
+                    Debug.Log("Test2");
                     steps = -1;
                     transform.localPosition = Vector3.zero;
                     LobbyManager.room1 = false;
                     LobbyManager.room = 3;
-                    targetViewType = 3;
+                    pcTargetView = 3;
                     view = 3;
                     currentViewType = 3;
                     PCLoadingSomeLevel(levelNamesPC[3]);
                 }
                 else if (pcTargetView == 4)
                 {
+                    Debug.Log("Test3");
                     steps = -1;
                     transform.localPosition = Vector3.zero;
                     LobbyManager.room1 = false;
                     LobbyManager.room = 4;
-                    targetViewType = 4;
+                    pcTargetView = 4;
                     view = 4;
                     currentViewType = 4;
                     PCLoadingSomeLevel(levelNames[4]);
                 }
                 else if (pcTargetView == 5) //Trivia -- NEW AND MIGHT BREAK 
                 {
+                    Debug.Log("Test4");
                     steps = -1;
                     transform.localPosition = Vector3.zero;
                     LobbyManager.room1 = false;
                     LobbyManager.room = 5;
-                    targetViewType = 5;
+                    pcTargetView = 5;
                     view = 5;
                     currentViewType = 5;
                     PCLoadingSomeLevel(levelNamesPC[5]);
                 }
                 else if (pcTargetView == 6) //Planet Builder -- NEW AND MIGHT BREAK 
                 {
+                    Debug.Log("Test5");
                     steps = -1;
                     transform.localPosition = Vector3.zero;
                     LobbyManager.room1 = false;
                     LobbyManager.room = 6;
-                    targetViewType = 6;
+                    pcTargetView = 6;
                     view = 6;
                     currentViewType = 6;
                     PCLoadingSomeLevel(levelNamesPC[6]);
@@ -217,13 +231,14 @@ public class ViewTypeObserver : MonoBehaviour
                     targetViewType = pcTargetView;
                 }
             }
-
+            //Debug.Log("Before: " + steps);
             // Transitions between view 1, view 2, and view 6
             if (LobbyManager.room == 1 || LobbyManager.room == 2)
             {
+                //Debug.Log(steps);
                 if (steps > -1)
                 {
-                    transform.localPosition = new Vector3(targetViewType, 0, 1);
+                    transform.localPosition = new Vector3(pcTargetView, 0, 1);
                     tempMoonScale.changing();
                     UniverseController.orbiting = false;
                     FindObjectOfType<UniverseController>().gameObject.transform.localEulerAngles = Vector3.zero; //May need to become 
@@ -232,13 +247,14 @@ public class ViewTypeObserver : MonoBehaviour
                         FindObjectOfType<RotateScript>().changing = true;
                         foreach (PlanetController pc in FindObjectsOfType<PlanetController>())
                         {
-                            if (targetViewType == 5)
+                            Debug.Log("PC Change View Type");
+                            if (pcTargetView == 5)
                             {
                                 pc.changeViewType(3);
                             }
                             else
                             {
-                                pc.changeViewType(targetViewType);
+                                pc.changeViewType(pcTargetView);
                             }
                         }
                     }
@@ -246,11 +262,12 @@ public class ViewTypeObserver : MonoBehaviour
                 }
                 if (steps == (UniverseController.changeDuration + UniverseController.accDuration))
                 {
+                    //Debug.Log("huh");
                     FindObjectOfType<RotateScript>().changing = false;
                     MeshScaler.view = (MeshScaler.view == 1) ? 0 : 1;
                     FindObjectOfType<RotateScript>().view = LobbyManager.room;
                     steps = -1; //Finished view type transistion
-                    currentViewType = targetViewType;
+                    currentViewType = pcTargetView;
                     transform.localPosition = new Vector3(0, 0, 0);
                     tempMoonScale.doneChanging();
 
@@ -265,6 +282,7 @@ public class ViewTypeObserver : MonoBehaviour
                     }
                 }
             }
+            //Debug.Log("After: " + steps);
         }
         else
         {
@@ -294,7 +312,7 @@ public class ViewTypeObserver : MonoBehaviour
                             LobbyManager.room = 1;
                         }
                         steps = 0;
-                        Debug.Log("aqui");
+                        Debug.Log("Setting steps to 0 THIRD");
                         targetViewType = 1;
                         transform.localPosition = new Vector3(1, 0, 0);
                     }
@@ -323,6 +341,7 @@ public class ViewTypeObserver : MonoBehaviour
                         {
                             LobbyManager.room = 2;
                         }
+                        Debug.Log("Setting steps to 0 FOURTH");
                         steps = 0;
                         targetViewType = 2;
 
@@ -337,9 +356,7 @@ public class ViewTypeObserver : MonoBehaviour
                     // If not in room 1, go to it, then immediately toggle to view 6
                     // (does not work because new scene reloads everything. May need a separate
                     // scene for going directly into view 6, but don't worry about that right now)
-                    //if (currentViewType > 2)
-                    //{
-                    steps = -1;
+                    //if (currentViewType > 2)                                                                                                                             
                     transform.localPosition = Vector3.zero;
                     LobbyManager.room1 = false;
                     LobbyManager.room = 3;
@@ -470,6 +487,7 @@ public class ViewTypeObserver : MonoBehaviour
                         FindObjectOfType<RotateScript>().changing = true;
                         foreach (PlanetController pc in FindObjectsOfType<PlanetController>())
                         {
+                            Debug.Log("NOT PC Change View Type");
                             if (targetViewType == 5)
                             {
                                 pc.changeViewType(3);
@@ -484,6 +502,7 @@ public class ViewTypeObserver : MonoBehaviour
                 }
                 if (steps == (UniverseController.changeDuration + UniverseController.accDuration))
                 {
+                    Debug.Log("Change Complete");
                     FindObjectOfType<RotateScript>().changing = false;
                     MeshScaler.view = (MeshScaler.view == 1) ? 0 : 1;
                     FindObjectOfType<RotateScript>().view = LobbyManager.room;
@@ -508,22 +527,18 @@ public class ViewTypeObserver : MonoBehaviour
 
     public void PhotonChangeScene(int i)
     {
-        if (pressedTwice & buttonNum == i)
+        if (!isOnPc)
         {
-            if (isOnPc)
-            {
-                changeScene(i);
-            }
-            else
+            if (pressedTwice & buttonNum == i)
             {
                 PhotonView view = GetComponent<PhotonView>();
                 view.RPC("changeScene", RpcTarget.MasterClient, i);
             }
-        }
-        else
-        {
-            buttonNum = i;
-            StartCoroutine(Check());
+            else
+            {
+                buttonNum = i;
+                StartCoroutine(Check());
+            }
         }
     }
 

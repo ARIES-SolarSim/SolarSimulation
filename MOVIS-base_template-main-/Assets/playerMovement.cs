@@ -24,6 +24,13 @@ public class playerMovement : MonoBehaviour
     public float maxDistance;
     public float fallOffDist;
 
+    [SerializeField]
+    Material bigEarthOpaque;
+
+    [SerializeField]
+    Material bigEarthAlpha;
+    public bool isAlpha = true;
+
     float xRot;
     float yRot;
 
@@ -42,17 +49,13 @@ public class playerMovement : MonoBehaviour
     Material groundPlaneMaterial;
 
     public GameObject UI;
-
+     
     void Start()
     {
         if (sceneID == 1)
         {
             groundPlaneMaterial = groundPlane.GetComponent<Renderer>().material;
             startAlpha = groundPlaneMaterial.color.a;
-        }
-        else if (sceneID == 2)
-        {
-            startAlpha = bigEarth.GetComponent<Renderer>().material.color.a;
         }
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
@@ -104,9 +107,22 @@ public class playerMovement : MonoBehaviour
         if (Input.GetKeyDown(hideGroundPlane))
         {
             if (sceneID == 1)
-                ToggleFade(groundPlaneMaterial);
+                ToggleFade(groundPlaneMaterial, Color.white, Color.white);
             else if (sceneID == 2)
-                ToggleFade(bigEarth.GetComponent<Renderer>().material);
+            {
+                //ToggleFade(bigEarth.GetComponent<Renderer>().material, (isAlpha ? bigEarthAlpha : bigEarthOpaque), (!isAlpha ? bigEarthAlpha : bigEarthOpaque));
+                if(isAlpha)
+                {
+                    Color c = bigEarth.GetComponent<Renderer>().material.color;
+                    bigEarth.GetComponent<Renderer>().material.color = new Color(c.r, c.g, c.b, 1f);
+                }
+                else
+                {
+                    Color c = bigEarth.GetComponent<Renderer>().material.color;
+                    bigEarth.GetComponent<Renderer>().material.color = new Color(c.r, c.g, c.b, 0.1f);
+                }
+                isAlpha = !isAlpha;
+            }
         }
 
         Vector3 moveDirection = orientation.forward * vInput + orientation.right * hInput + Vector3.up * zInput;
@@ -136,17 +152,38 @@ public class playerMovement : MonoBehaviour
         zInput = 0;
     }
 
-    public void ToggleFade(Material m)
+    public void ToggleFade(Material m, Color c1, Color c2)
     {
-        if (isFadingOut)
+        if (sceneID == 2)
         {
-            StartCoroutine(FadeOut(m, groundPlane, sceneID != 2));
+            StartCoroutine(EarthFade(m, c1, c2));
         }
         else
         {
-            StartCoroutine(FadeIn(m, groundPlane, sceneID != 2));
+            if (isFadingOut)
+            {
+                StartCoroutine(FadeOut(m, groundPlane, sceneID != 2));
+            }
+            else
+            {
+                StartCoroutine(FadeIn(m, groundPlane, sceneID != 2));
+            }
+            isFadingOut = !isFadingOut;
         }
-        isFadingOut = !isFadingOut;
+    }
+
+    IEnumerator EarthFade(Material m, Color c1, Color c2)
+    {
+        float duration = hideDuration;
+        float currentTime = 0f;
+
+        while (currentTime < duration)
+        {
+            m.color = Color.Lerp(c1, c2, currentTime / duration);
+            currentTime += Time.deltaTime;
+            yield return null;
+        }
+        m.color = c2;
     }
 
     IEnumerator FadeOut(Material m, GameObject gb, bool shouldSet)

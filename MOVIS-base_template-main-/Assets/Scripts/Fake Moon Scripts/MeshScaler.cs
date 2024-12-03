@@ -32,8 +32,7 @@ public class MeshScaler : MonoBehaviour
         {
             if (!LobbyManager.userType)
             {
-                //view2.RPC("ClearTrail", RpcTarget.All);
-                //NEED TO FIX
+                PCClearTrail();
             }
             int targetView = (view == 1) ? 0 : 1;
             transform.localScale = Vector3.Lerp(scales[view], scales[targetView], (steps * 1f) / (UniverseController.changeDuration * 1f)) * UniverseController.planetScale;
@@ -43,10 +42,9 @@ public class MeshScaler : MonoBehaviour
 
         else
         {
-            //PC TODO
             if(isOnPC)
             {
-                //TODO
+                PCStartTrail();
             }
             else
             {
@@ -83,6 +81,16 @@ public class MeshScaler : MonoBehaviour
 
     [PunRPC]
     public void StartTrail()
+    {
+        tr.time = trailTime;
+    }
+
+    public void PCClearTrail()
+    {
+        tr.time = 0;
+    }
+
+    public void PCStartTrail()
     {
         tr.time = trailTime;
     }
