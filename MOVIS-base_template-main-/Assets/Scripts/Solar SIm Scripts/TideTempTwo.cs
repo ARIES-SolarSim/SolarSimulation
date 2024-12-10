@@ -55,7 +55,7 @@ public class TideTempTwo : MonoBehaviour
             //newNum2 = Mathf.Atan2(sun_number2, sun_number);
             float newY = ((Mathf.Cos(2 * newNum + subtraction_factor) + 1) / 2.0f) * (maxY - minY) + minY;
             //float newY2 = ((Mathf.Cos(12 * newNum2 + subtraction_factor) + 1) / 2.0f) * (sunmaxY - sunminY) + sunminY;
-            transform.localPosition = new Vector3(myX, newY, 4.67f);
+            transform.localPosition = new Vector3(transform.localPosition.x, newY, 4.67f);
             
         }
 

@@ -39,6 +39,13 @@ public class UniverseController : MonoBehaviour
     /*
      * Sets up all planets and virtual controllers
      */
+
+    public bool isOnPc;
+
+    public Camera planetCamera;
+    public Camera playerCamera;
+    public GameObject planetUI;
+
     private void Awake()
     {
         if (begin)
@@ -159,8 +166,24 @@ public class UniverseController : MonoBehaviour
     
     public void startPlanets()
     {
-        PhotonView view = GetComponent<PhotonView>();
-        view.RPC("PhotonStartPlanets", RpcTarget.All);
+        if (isOnPc)
+        {
+            PCPhotonStartPlanets();
+            planetCamera.gameObject.SetActive(false);
+            playerCamera.gameObject.SetActive(true);
+            Cursor.visible = false;
+            planetUI.SetActive(false);
+        }
+        else
+        {
+            PhotonView view = GetComponent<PhotonView>();
+            view.RPC("PhotonStartPlanets", RpcTarget.All);
+        }
+    }
+
+    public void PCPhotonStartPlanets()
+    {
+        begin = true;
     }
 
     [PunRPC]
@@ -174,8 +197,42 @@ public class UniverseController : MonoBehaviour
 
     public void resetPlanets()
     {
-        PhotonView view = GetComponent<PhotonView>();
-        view.RPC("PhotonResetPlanets", RpcTarget.All);
+        if (isOnPc)
+        {
+            PCPhotonResetPlanets();
+            planetCamera.gameObject.SetActive(true);
+            playerCamera.gameObject.SetActive(false);
+            planetUI.SetActive(true);
+            Cursor.visible = true;
+            Debug.Log("UI Active");
+        }
+        else
+        {
+            PhotonView view = GetComponent<PhotonView>();
+            view.RPC("PhotonResetPlanets", RpcTarget.All);
+        }
+    }
+
+    public void PCPhotonResetPlanets()
+    {
+        begin = false;
+        hasStarted = false;
+        trailCount = 0;
+        foreach (PlanetController pc in Planets)
+        {
+            pc.resetLocation();
+        }
+        if (isPlanetBuilder)
+        {
+            timeStep = 0.0002f;
+            orbitScale = 2.1f;
+            planetScale = 5000;
+            foreach (PlanetController pc in FindObjectsOfType<PlanetController>())
+            {
+                if (pc.ID == 10)
+                    pc.updateScale();
+            }
+        }
     }
 
     [PunRPC]

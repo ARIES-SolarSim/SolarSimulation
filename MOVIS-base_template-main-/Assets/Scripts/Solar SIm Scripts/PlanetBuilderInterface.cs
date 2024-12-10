@@ -149,7 +149,7 @@ public class PlanetBuilderInterface : MonoBehaviour
         Color temp = Atmospheres[Choices[ATMOSPHERE] - 1];
         temp.a = (float)(Mathf.Round(atmosphereUI.value)) / 255;
         MeshAtmosphere.GetComponent<MeshRenderer>().material.color = temp;
-        Debug.Log(temp.r + ", " + temp.g + ", " + temp.b + ", " + temp.a);
+        //Debug.Log(temp.r + ", " + temp.g + ", " + temp.b + ", " + temp.a);
 
         RingObject.GetComponent<MeshRenderer>().material = Rings[Choices[RINGS] - 1];
 
@@ -173,7 +173,7 @@ public class PlanetBuilderInterface : MonoBehaviour
     public void UpdateSize()
     {   //0 - 255
         float val = sizeSliderUI.value / 255f * (Diameter[1] - Diameter[0]) + Diameter[0];
-        Debug.Log(sizeSliderUI.value);
+        //Debug.Log(sizeSliderUI.value);
         pc.diameter = val;
         pc.updateScale();
     }

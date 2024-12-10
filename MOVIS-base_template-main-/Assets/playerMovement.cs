@@ -57,6 +57,11 @@ public class playerMovement : MonoBehaviour
             groundPlaneMaterial = groundPlane.GetComponent<Renderer>().material;
             startAlpha = groundPlaneMaterial.color.a;
         }
+        if (sceneID == 5)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.Confined;
+        }
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         Cursor.lockState = CursorLockMode.Locked;
@@ -67,9 +72,18 @@ public class playerMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(switchUI))
         {
-            UI.SetActive(!UI.activeSelf);
-            Cursor.visible = UI.activeSelf;
-            Cursor.lockState = (UI.activeSelf ? CursorLockMode.Confined : CursorLockMode.Locked);
+            if (sceneID == 5)
+            {
+                UI.SetActive(!UI.activeSelf);
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.Confined;
+            }
+            else
+            {
+                UI.SetActive(!UI.activeSelf);
+                Cursor.visible = UI.activeSelf;
+                Cursor.lockState = (UI.activeSelf ? CursorLockMode.Confined : CursorLockMode.Locked);
+            }
         }
 
         // Mouse rotation

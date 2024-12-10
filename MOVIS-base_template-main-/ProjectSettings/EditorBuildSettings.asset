@@ -6,32 +6,44 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/MainScenes/Lobby.unity
-    guid: 22b662a96168bba4e93fbc66c565a3ef
-  - enabled: 1
-    path: Assets/Scenes/MainScenes/Room1.unity
-    guid: cef94879cdca9f34892f09a966df9c1c
-  - enabled: 1
-    path: Assets/Scenes/MainScenes/Room2.unity
-    guid: 106f948350594444793b3e45632c3d4c
-  - enabled: 1
-    path: Assets/Scenes/MainScenes/Room3.unity
-    guid: 57a8b65e70e8bac42a5bc7e1faa355ea
-  - enabled: 1
-    path: Assets/Scenes/MainScenes/Room4.unity
-    guid: 920e79155bdf9c64aba2c990af4fc33c
-  - enabled: 1
-    path: Assets/Mobile Console/Assets/LogConsole.unity
-    guid: 6d2ee6336ff704f55b20f3b62801afd5
-  - enabled: 1
-    path: Assets/Scenes/MainScenes/Room5.unity
-    guid: 46991603db5a4394e8c946fa26df57a3
+    path: Assets/Scenes/MainScenes/LobbyPC.unity
+    guid: cfab31dd01d88ca459fb6cf730b0a69f
   - enabled: 1
     path: Assets/Scenes/MainScenes/Room1PC.unity
     guid: c5bd775237f7d124287c0e15fa7c6889
   - enabled: 1
     path: Assets/Scenes/MainScenes/Room2PC.unity
     guid: ee7008f0d5c57c64680b442e3d004fa7
+  - enabled: 1
+    path: Assets/Scenes/MainScenes/Room3PC.unity
+    guid: ad1fb4733c0de864699e9dfd35873ba7
+  - enabled: 1
+    path: Assets/Scenes/MainScenes/Room4PC.unity
+    guid: 503034180bcbbfa409ff1860849a5185
+  - enabled: 1
+    path: Assets/Scenes/MainScenes/Room5PC.unity
+    guid: 71390e43062215a468e19091e0129da7
+  - enabled: 0
+    path: Assets/Scenes/MainScenes/Lobby.unity
+    guid: 22b662a96168bba4e93fbc66c565a3ef
+  - enabled: 0
+    path: Assets/Scenes/MainScenes/Room1.unity
+    guid: cef94879cdca9f34892f09a966df9c1c
+  - enabled: 0
+    path: Assets/Scenes/MainScenes/Room2.unity
+    guid: 106f948350594444793b3e45632c3d4c
+  - enabled: 0
+    path: Assets/Scenes/MainScenes/Room3.unity
+    guid: 57a8b65e70e8bac42a5bc7e1faa355ea
+  - enabled: 0
+    path: Assets/Scenes/MainScenes/Room4.unity
+    guid: 920e79155bdf9c64aba2c990af4fc33c
+  - enabled: 1
+    path: Assets/Mobile Console/Assets/LogConsole.unity
+    guid: 6d2ee6336ff704f55b20f3b62801afd5
+  - enabled: 0
+    path: Assets/Scenes/MainScenes/Room5.unity
+    guid: 46991603db5a4394e8c946fa26df57a3
   m_configObjects:
     Unity.XR.OpenVR.Settings: {fileID: 11400000, guid: f0611482585fa9c40ab627302fd56c37, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 67f9bccd9026dbd409c561e0d03e6f64, type: 2}

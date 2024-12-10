@@ -20,10 +20,11 @@ public class movement : MonoBehaviour
             }
         }
 
-        offset = earth.transform.position - transform.position;
+        //PC CHANGE
+        //offset = earth.transform.position - transform.position;
     }
     void Update()
     {
-        transform.position = earth.transform.position;
+        //transform.position = earth.transform.position;
     }
 }

@@ -239,7 +239,8 @@ public class ViewTypeObserver : MonoBehaviour
                 if (steps > -1)
                 {
                     transform.localPosition = new Vector3(pcTargetView, 0, 1);
-                    tempMoonScale.changing();
+                    if(tempMoonScale != null)
+                        tempMoonScale.changing();
                     UniverseController.orbiting = false;
                     FindObjectOfType<UniverseController>().gameObject.transform.localEulerAngles = Vector3.zero; //May need to become 
                     if (steps == 0)
